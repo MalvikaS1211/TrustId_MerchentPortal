@@ -1,0 +1,20 @@
+.qr-container {
+  width: fit-content;
+}
+
+.qr-head {
+  /* font-family: Aileron Regular; */
+  font-size: 1.125rem;
+  line-height: 18px;
+  margin-bottom: 25px;
+}
+
+.qr-code {
+  /* background-color: var(--main-bg-primary-alt); */
+  border-radius: 2px;
+  height: auto;
+  min-height: 230px !important;
+  min-width: 400px !important;
+  padding: 25px;
+  width: fit-content;
+}
