@@ -987,7 +987,7 @@ export default function Header({
               </ul>
             </div>
           </div>
-          <div className="relative mb-6 md:p-4 py-4 px-3 border border-dashed border-border-color rounded-xl">
+          {/* <div className="relative mb-6 md:p-4 py-4 px-3 border border-dashed border-border-color rounded-xl">
             <span className="inline-block bg-card-color px-5 font-semibold absolute -top-3">
               Light/Dark & RTL Mode
             </span>
@@ -1201,7 +1201,7 @@ export default function Header({
                 </div>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="md:px-6 px-4 md:py-4 py-3 flex items-center gap-10 border-t border-border-color">
           <button className="btn btn-primary w-full">Save Changes</button>

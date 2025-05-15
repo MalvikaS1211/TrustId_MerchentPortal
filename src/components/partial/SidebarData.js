@@ -18,21 +18,26 @@ export const menuList = [
   {
     icon: IconHome,
     link: "My Dashboard",
-    children: [
-      {
-        link: "Analysis",
-        url: "/",
-      },
-      //   {
-      //     link: "My Wallet",
-      //     url: "/index-wallet",
-      //   },
-      //   {
-      //     link: "Smart IOT",
-      //     url: "/index-iot",
-      //   },
-    ],
+    url: "/",
   },
+  //   {
+  //     icon: IconHome,
+  //     link: "My Dashboard",
+  //     children: [
+  //       {
+  //         link: "Analysis",
+  //         url: "/",
+  //       },
+  //       //   {
+  //       //     link: "My Wallet",
+  //       //     url: "/index-wallet",
+  //       //   },
+  //       //   {
+  //       //     link: "Smart IOT",
+  //       //     url: "/index-iot",
+  //       //   },
+  //     ],
+  //   },
   //   {
   //     icon: IconApps,
   //     link: "Applications",
@@ -163,10 +168,10 @@ export const menuList = [
         link: "Sign In",
         url: "/auth-signin",
       },
-      {
-        link: "Sign Up",
-        url: "/auth-signup",
-      },
+      //   {
+      //     link: "Sign Up",
+      //     url: "/auth-signup",
+      //   },
       //   {
       //     link: "Forgot Password",
       //     url: "/auth-forgot-password",

@@ -328,7 +328,7 @@ export default function Sidebar({
             <IconNote className="stroke-[1.5] w-[20px] h-[20px]" />
           </span>
         </button>
-        <button
+        {/* <button
           onClick={toggleChat}
           className={`transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${
             chat
@@ -339,7 +339,7 @@ export default function Sidebar({
           <span title="My Chat">
             <IconMessage className="stroke-[1.5] w-[20px] h-[20px]" />
           </span>
-        </button>
+        </button> */}
         <Link
           to="/auth-signin"
           title="Log Out"
