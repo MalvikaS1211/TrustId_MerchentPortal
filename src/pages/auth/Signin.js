@@ -98,7 +98,7 @@ export default function Signin() {
             Forgot Password?
           </Link>
         </div> */}
-        <Link to="/" className="btn btn-secondary large w-full uppercase">
+        <Link to="/" className="btn btn-secondary large w-full uppercase ">
           Log In
         </Link>
         {/* <div className="text-center sm:mt-30 mt-6 text-font-color-100">

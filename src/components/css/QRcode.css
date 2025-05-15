@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxanium&display=swap");
-body {
+/* body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -7,7 +7,7 @@ body {
   background: #f0f2f5;
   font-family: "Oxanium", serif;
   overflow: hidden;
-}
+} */
 .scanbox {
   width: 350px;
   height: 300px;
