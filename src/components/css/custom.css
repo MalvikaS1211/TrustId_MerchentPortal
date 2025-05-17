@@ -22,3 +22,19 @@
 .width-80 {
   width: 80% !important;
 }
+.card-bg {
+  background-color: #f6eee3;
+  border: 1px solid var(--color-line);
+}
+
+.btn-bg {
+  background-color: var(--color-line);
+}
+
+.text-brown {
+  color: #734116 !important;
+}
+.before\:text-brown::before {
+  content: var(--tw-content);
+  background-color: #734116;
+}

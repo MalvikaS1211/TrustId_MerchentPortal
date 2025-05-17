@@ -27,15 +27,16 @@
 }
 .content-layout {
   display: flex;
-  -webkit-box-pack: start;
+
   justify-content: start;
   -webkit-box-align: center;
   align-items: center;
-  padding: 80px 24px 48px;
+  /* padding: 80px 24px 48px; */
+  padding: 169px 20px;
   flex-direction: column;
 }
 .content-card {
-  padding: 40px;
+  padding: 20px;
   border-radius: 24px;
   width: 425px;
   min-height: 580px;
@@ -106,7 +107,7 @@
 }
 
 .username-input-field {
-  border-color: var(--color-InputLine);
+  border-color: var(--color-line) !important;
   border-radius: 10px !important;
   font-size: 16px !important;
   height: 48px !important;
@@ -208,7 +209,7 @@
   transform: translateY(-50%);
   z-index: 1;
 }
-.qrcode-login-popup
+/* .qrcode-login-popup
   .bn-bubble.bn-bubble__normal.bn-tooltips
   .bn-bubble-content {
   max-width: none !important;
@@ -219,7 +220,7 @@
   border-color: var(--color-Line) !important;
   box-shadow: rgba(71, 77, 87, 0.08) 0px 8px 14px 0px !important;
   background: var(--color-CardBg) !important;
-}
+} */
 
 .card-page-title {
   font-weight: 600;
@@ -239,4 +240,79 @@
   right: 12px;
   border-left: 1px solid #d9bda5 !important;
   border-top: 1px solid #d9bda5 !important;
+}
+@media only screen and (max-width: 767px) {
+  .content-layout {
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    /* flex-direction: row; */
+    min-height: 100vh;
+  }
+}
+.qrcode-login-popup {
+  position: relative; /* Needed for absolute positioning of tooltip */
+}
+
+.qrcode-login-popup:hover::after {
+  content: "Scan to login"; /* Your tooltip text */
+  position: absolute;
+  bottom: 120%; /* Position it above the element */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.qrcode-login-popup:hover::before {
+  content: "";
+  position: absolute;
+  bottom: 110%; /* Just below the tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.country-code-div {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 10px !important;
+  font-size: 13px;
+}
+
+.iJsgQd {
+  width: 40px;
+  height: 4px;
+  border-radius: 40px;
+  background-color: #fff;
+  opacity: 0.2;
+}
+.side-section {
+  width: 25% !important;
+  display: block;
+  background-repeat: no-repeat, no-repeat;
+  background-image: url(/src/assets/images/LeftSideBg.png);
+  background-size: cover;
+  /* background-position: right top, center 95%; */
+}
+@media (max-width: 768px) {
+  .side-section {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1000px) {
+  .side-section {
+    width: 40% !important;
+  }
 }

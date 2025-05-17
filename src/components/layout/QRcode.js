@@ -17,18 +17,11 @@ const QRcode = () => {
   }, []);
 
   return (
-    <div className="scanbox">
-      <p>Scan QR Code</p>
-      <div className="sb-container">
-        <canvas
-          id="sb-qr"
-          ref={canvasRef}
-          style={{ height: "180px", width: "180px" }}
-        ></canvas>
-        <div className="sb-frame"></div>
-        <div className="sb-divider active"></div>
-      </div>
-    </div>
+    <canvas
+      id="sb-qr"
+      ref={canvasRef}
+      style={{ height: "180px", width: "180px" }}
+    ></canvas>
   );
 };
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChromePicker } from "react-color";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import CompanyLogo from "../common/CompanyLogo";
+import Logo from "../../assets/images/TrustIdLogo.png";
 import {
   IconArrowsMaximize,
   IconWorld,
@@ -404,7 +405,8 @@ export default function Header({
               />
             </button>
             <Link to="/">
-              <CompanyLogo />
+              <img src={Logo} alt="" width={40}></img>
+              {/* <CompanyLogo /> */}
             </Link>
           </div>
           <div ref={searchRef} className="relative px-4 flex-1 md:block hidden">

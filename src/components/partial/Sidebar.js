@@ -133,8 +133,8 @@ export default function Sidebar({
     <>
       <div className="sidebar-header px-3 mb-6 flex items-center justify-between gap-2">
         <h4 className="sidebar-title text-[24px]/[30px] font-medium mb-0">
-          <span className="sm-txt">L</span>
-          <span>UNO Admin</span>
+          <span className="sm-txt">T</span>
+          <span>rustId Merchent Portal</span>
         </h4>
         <div className="sidebar-dropdown relative flex">
           <button
@@ -193,8 +193,8 @@ export default function Sidebar({
             <li key={key} className="sidebar-listitem">
               <button
                 onClick={() => menuToggle(key)}
-                className={`sidebar-list-button flex items-center gap-10 w-full py-10 transition-all hover:text-secondary ${
-                  menuActive === key ? "text-secondary" : ""
+                className={`sidebar-list-button flex items-center gap-10 w-full py-10 transition-all hover:text-brown ${
+                  menuActive === key ? "text-brown" : ""
                 }`}
               >
                 <item.icon className="stroke-[1.5] w-[22px] h-[22px]" />
@@ -206,7 +206,7 @@ export default function Sidebar({
                 )}
               </button>
               <ul
-                className={`sidebar-sublist ps-30 relative before:absolute before:h-full before:w-[1px] ltr:before:left-10 rtl:before:right-10 before:top-0 before:bg-secondary ${
+                className={`sidebar-sublist ps-30 relative before:absolute before:h-full before:w-[1px] ltr:before:left-10 rtl:before:right-10 before:top-0 before:text-brown ${
                   menuActive === key ? "block" : "hidden"
                 }`}
               >
