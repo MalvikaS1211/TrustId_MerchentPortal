@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 
-// export const URLApi = "https://trst.ink/merchnat";
-export const URLApi = "http://localhost:8080/merchnat";
+export const URLApi = "https://trst.ink/merchnat";
+// export const URLApi = "http://localhost:8080/merchnat";
 export async function generateOTP(mobile_Number) {
   try {
     const response = await axios.post(`${URLApi}/loginOtp`, {

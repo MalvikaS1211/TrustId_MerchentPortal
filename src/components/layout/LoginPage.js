@@ -95,7 +95,6 @@ export default function LoginPage() {
   const [countryCode, setCountryCode] = useState("+91");
   const [phone, setPhone] = useState("");
 
-  const clearPhone = () => setPhone("");
 
   useEffect(() => {
     if (showTooltip) {
@@ -105,12 +104,12 @@ export default function LoginPage() {
   const genrateSeeionId = async () => {
     try {
       const response = await createSession()
-      console.log(response, "response", response?.sessionId)
+      console.log(response, "response", response?.session)
       if (response) {
-        toast.success("response")
-        setSessionId(response?.sessionId)
+        setSessionId(response?.session)
+      } else {
+        toast.error("Something Went Wrong!")
       }
-
     } catch (error) {
       toast.error("Something Went Wrong")
       console.log(error, "Erroe In the genrateSeeionId()")
@@ -124,7 +123,10 @@ export default function LoginPage() {
         const response = await checkSession(sessionId);
         if (response?.status === 200 && response?.token) {
           console.log("Session Verified!", response);
-          clearInterval(interval); // ⛔ stop polling once session is valid
+          localStorage.setItem("Token", response?.token);
+          navigate("/");
+          toast.success("login successful")
+          clearInterval(interval);
         }
       } catch (error) {
         console.error("Error in checkSession():", error);
@@ -249,8 +251,8 @@ export default function LoginPage() {
                       >
                         {timer > 0
                           ? `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
-                              .toString()
-                              .padStart(2, "0")}`
+                            .toString()
+                            .padStart(2, "0")}`
                           : sendOTPBtn}
                       </button>
                       {phone && (
