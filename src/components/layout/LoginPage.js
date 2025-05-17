@@ -83,7 +83,7 @@ export default function LoginPage() {
     }
   }
   useEffect(() => {
-  if (!showTooltip || !sessionId) return;
+    if (!showTooltip || !sessionId) return;
 
     const interval = setInterval(async () => {
       try {
