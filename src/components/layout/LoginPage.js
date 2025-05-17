@@ -110,8 +110,7 @@ export default function LoginPage() {
     try {
       const response = await createSession()
       console.log(response, "response", response?.session)
-      const response = await createSession();
-      console.log(response, "response", response?.sessionId);
+      
       if (response) {
         toast.success("response")
         setSessionId(response?.sessionId)
