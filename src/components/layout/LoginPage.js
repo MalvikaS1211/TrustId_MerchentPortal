@@ -11,6 +11,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import LoginLeftSide from "./LoginLeftSide";
 import { generateOTP, verifyOTP } from "../Helper/ApiFunction";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const wrapperRef = useRef(null);
@@ -46,7 +47,8 @@ export default function LoginPage() {
       const res = await verifyOTP(phone, OTP);
       console.log(res, "handleLogin");
 
-      if (res?.success) {
+      if (res?.status == 200) {
+        toast(res.message);
         navigate("/");
       } else {
         console.error("OTP verification failed:", res?.message || res);
@@ -55,7 +57,6 @@ export default function LoginPage() {
       console.error("Error during OTP verification:", error);
     }
   };
-
   const [countryCode, setCountryCode] = useState("+91");
   const [phone, setPhone] = useState("");
 
@@ -230,7 +231,7 @@ export default function LoginPage() {
                 <button
                   className="bn-button bn-button__primary data-size-large mt-6"
                   style={{ width: "100%" }}
-                  type="submit"
+                  type="button"
                   data-e2e="btn-accounts-form-submit"
                   onClick={handleLogin}
                 >
