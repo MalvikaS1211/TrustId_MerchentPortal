@@ -12,6 +12,7 @@ export async function generateOTP(mobile_Number) {
     return response.data;
   } catch (error) {
     console.log("Error generateOTP :", error);
+    throw error;
   }
 }
 export async function verifyOTP(mobile_Number, otp) {

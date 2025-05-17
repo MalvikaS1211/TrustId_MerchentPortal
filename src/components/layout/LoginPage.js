@@ -14,6 +14,14 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showOTP, setshowOTP] = useState(false);
+  const [showOTPSection, setshowOTPSection] = useState(false);
+  const [inputMobile, setInputMobile] = useState();
+  const [OTP, setOTP] = useState();
+  const [sendOTPBtn, setSendOTPBtn] = useState("Send OTP");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [timer, setTimer] = useState(0);
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
   // Close tooltip on outside click
@@ -26,22 +34,41 @@ export default function LoginPage() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  useEffect(() => {
+    if (timer <= 0) return;
 
-  const [showOTP, setshowOTP] = useState(false);
-  const [showOTPSection, setshowOTPSection] = useState(false);
-  const [inputMobile, setInputMobile] = useState();
-  const [OTP, setOTP] = useState();
-  const [showPassword, setShowPassword] = useState(false);
+    const countdown = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [timer]);
   const togglePasswordVisibility = () => {
     setshowOTP(!showOTP);
   };
   const [sessionId, setSessionId] = useState('');
 
   const handleOTP = async () => {
-    const res = await generateOTP(phone);
-    console.log(res, generateOTP);
-    setshowOTPSection(true);
-    console.log("send otp");
+    if (!phone || phone.trim().length !== 10 || !/^\d{10}$/.test(phone)) {
+      toast.error("Please enter a valid 10-digit phone number");
+      return;
+    }
+
+    try {
+      const res = await generateOTP(phone);
+      if (res?.status === 200) {
+        setshowOTPSection(true);
+        setSendOTPBtn("Resend OTP");
+        setTimer(120); // Start 2-minute countdown
+      } else {
+        toast.error(res?.message || "User Not Exist");
+      }
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        "Something went wrong. Please try again.";
+      toast.error(message);
+    }
   };
 
   const handleLogin = async () => {
@@ -49,9 +76,16 @@ export default function LoginPage() {
       const res = await verifyOTP(phone, OTP);
       console.log(res, "handleLogin");
 
-      if (res?.success) {
-        navigate("/");
+      if (res?.status == 200) {
+        localStorage.setItem("Token", res?.token);
+        toast.success(res.message);
+        setshowOTPSection(false);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } else {
+        toast.error(res.message);
+        setOTP("");
         console.error("OTP verification failed:", res?.message || res);
       }
     } catch (error) {
@@ -182,48 +216,42 @@ export default function LoginPage() {
                     Phone Number
                   </label>
                   <div>
-                    <div className="relative w-full max-w-md mx-auto">
-                      {/* <input
-                      className="w-full border border-gray-300 rounded px-4 py-2 pr-28 text-sm username-input-field"
-                      placeholder="Enter your phone number"
-                      type="text"
-                      name="no-autofill-phone"
-                      id="no-autofill-phone"
-                      autoComplete="off"
-                      inputMode="tel"
-                    /> */}
-                      {/* 
-                    <button
-                      type="button"
-                      className="btn-primary absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 text-sm whitespace-nowrap"
-                      onClick={handleOTP}
-                    >
-                      Send OTP
-                    </button> */}
-                    </div>
+                    <div className="relative w-full max-w-md mx-auto"></div>
                   </div>
                   <div className="flex items-center gap-1 ">
-                    {/* Country Code Selector */}
                     <div className="flex items-center pl-[7px] pr-[13px] py-[12px]  rounded-md border gap-1 country-code-div">
                       <img src={IndiaFlag} width={20}></img>
                       <span>+91</span>
                     </div>
-
-                    {/* Phone Input */}
+                    {/* <span>|</span> */}
                     <div className="relative">
                       <input
                         type="text"
-                        className="w-full border border-gray-300 rounded px-4 py-2 pr-28 text-sm username-input-field"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={10}
+                        className="w-full border border-gray-300 rounded px-4 py-2 pr-28 text-sm max-w-360:text-[13px] username-input-field"
                         placeholder="Enter number"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (/^\d*$/.test(value)) {
+                            setPhone(value);
+                          }
+                        }}
                       />
+
                       <button
                         type="button"
-                        className="btn-primary absolute right-2 top-1/2 -translate-y-1/2 pl-3 pr-[18px] py-1 text-sm whitespace-nowrap"
+                        className="btn-primary absolute right-2 top-1/2 -translate-y-1/2 pl-3 pr-[18px] py-1 max-w-360:text-[13px] text-sm whitespace-nowrap send-otp-btn"
                         onClick={handleOTP}
+                        disabled={timer > 0}
                       >
-                        Send OTP
+                        {timer > 0
+                          ? `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
+                              .toString()
+                              .padStart(2, "0")}`
+                          : sendOTPBtn}
                       </button>
                       {phone && (
                         <button
@@ -265,12 +293,17 @@ export default function LoginPage() {
                     </div>
                   )}
                 </div>
-
                 <button
-                  className="bn-button bn-button__primary data-size-large mt-6"
+                  className="bn-button bn-button__primary data-size-large mt-6 "
                   style={{ width: "100%" }}
                   type="button"
                   data-e2e="btn-accounts-form-submit"
+                  disabled={
+                    !phone ||
+                    phone.trim().length !== 10 ||
+                    !OTP ||
+                    OTP.trim().length === 0
+                  }
                   onClick={handleLogin}
                 >
                   Log In
