@@ -47,8 +47,7 @@ export default function LoginPage() {
       const res = await verifyOTP(phone, OTP);
       console.log(res, "handleLogin");
 
-      if (res?.status == 200) {
-        toast(res.message);
+      if (res?.success) {
         navigate("/");
       } else {
         console.error("OTP verification failed:", res?.message || res);
