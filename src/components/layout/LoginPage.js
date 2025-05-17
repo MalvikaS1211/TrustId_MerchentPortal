@@ -121,16 +121,20 @@ export default function LoginPage() {
     }
   };
   useEffect(() => {
-  if (!showTooltip || !sessionId) return;
-
-    const interval = setInterval(async () => {
+    if (!showTooltip || !sessionId) return;
+    let interval;
+    const pollSession = async () => {
       try {
         if (!showTooltip) return;
 
         const response = await checkSession(sessionId);
         if (response?.status === 200 && response?.token) {
           console.log("Session Verified!", response);
-          clearInterval(interval); // ⛔ stop polling once session is valid
+          localStorage.setItem("Token", response.token);
+          toast.success("Login successful");
+          navigate("/");
+
+          clearInterval(interval);
         }
       } catch (error) {
         console.error("Error in checkSession():", error);
