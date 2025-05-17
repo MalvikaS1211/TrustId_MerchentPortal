@@ -41,13 +41,15 @@ export default function LoginPage() {
     console.log("send otp");
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+      e.preventDefault(); 
     try {
       const res = await verifyOTP(phone, OTP);
       console.log(res, "handleLogin");
 
       if (res?.success) {
-        navigate("/");
+        console.log("caleddd")
+        // navigate("/");
       } else {
         console.error("OTP verification failed:", res?.message || res);
       }
@@ -230,7 +232,7 @@ export default function LoginPage() {
                 <button
                   className="bn-button bn-button__primary data-size-large mt-6"
                   style={{ width: "100%" }}
-                  type="submit"
+                  type="button"
                   data-e2e="btn-accounts-form-submit"
                   onClick={handleLogin}
                 >
