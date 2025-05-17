@@ -117,23 +117,29 @@ export default function LoginPage() {
   }
   useEffect(() => {
     if (!showTooltip || !sessionId) return;
-
-    const interval = setInterval(async () => {
+    let interval;
+    const pollSession = async () => {
       try {
+        if (!showTooltip) return;
+
         const response = await checkSession(sessionId);
         if (response?.status === 200 && response?.token) {
           console.log("Session Verified!", response);
-          localStorage.setItem("Token", response?.token);
+          localStorage.setItem("Token", response.token);
+          toast.success("Login successful");
           navigate("/");
-          toast.success("login successful")
+
           clearInterval(interval);
         }
       } catch (error) {
         console.error("Error in checkSession():", error);
       }
-    }, 3000);
+    };
+
+    interval = setInterval(pollSession, 3000);
+
     return () => clearInterval(interval);
-  }, [sessionId]);
+  }, [sessionId, showTooltip, navigate]);
 
   return (
     <>
