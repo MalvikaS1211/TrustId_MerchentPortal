@@ -298,7 +298,7 @@
   opacity: 0.2;
 }
 .side-section {
-  width: 25% !important;
+  width: 50% !important;
   display: block;
   background-repeat: no-repeat, no-repeat;
   background-image: url(/src/assets/images/LeftSideBg.png);

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Logo from "../../assets/images/LeftsideImg1.png";
 import LeftSideImg2 from "../../assets/images/LeftSideImg2.png";
+import FaceRecognition from "./FaceRecognition";
 
 export default function LoginLeftSide() {
   const slides = [
@@ -41,21 +42,20 @@ export default function LoginLeftSide() {
   return (
     <aside className="w-full side-section">
       <div className="flex flex-col p-4 pt-[100px] relative h-[500px] md:h-[600px]">
-        {/* Carousel Slides */}
-        {slides.map((slide, index) => (
+        {/* {slides.map((slide, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out px-4 flex flex-col items-center ${
               current === index ? "opacity-100 z-20" : "opacity-0 z-10"
             }`}
           >
-            {/* Text Content */}
+       
             <div className=" w-full max-w-md mx-auto mb-6 mt-[40%]">
               <div className="text-2xl font-semibold ">{slide.title}</div>
               <div className=" mt-3">{slide.description}</div>
             </div>
 
-            {/* Navigation Dots */}
+         
             <div className="flex space-x-3 mb-6">
               {slides.map((_, dotIndex) => (
                 <div
@@ -68,7 +68,7 @@ export default function LoginLeftSide() {
               ))}
             </div>
 
-            {/* Image */}
+        
             <div className="flex justify-center mt-auto">
               <img
                 src={slide.image}
@@ -77,7 +77,8 @@ export default function LoginLeftSide() {
               />
             </div>
           </div>
-        ))}
+        ))} */}
+        <FaceRecognition />
       </div>
     </aside>
   );
