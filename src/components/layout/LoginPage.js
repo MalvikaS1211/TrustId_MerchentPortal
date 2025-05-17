@@ -5,11 +5,11 @@ import QRious from "qrious";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import Logo from "../../assets/images/TrustIdLogo.png";
 import IndiaFlag from "../../assets/images/IndiaFlag.png";
-
+import QRCode, { QRCodeCanvas } from 'qrcode.react';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import LoginLeftSide from "./LoginLeftSide";
-import { generateOTP, verifyOTP } from "../Helper/ApiFunction";
+import { checkSession, createSession, generateOTP, verifyOTP } from "../Helper/ApiFunction";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 export default function LoginPage() {
@@ -35,6 +35,8 @@ export default function LoginPage() {
   const togglePasswordVisibility = () => {
     setshowOTP(!showOTP);
   };
+  const [sessionId, setSessionId] = useState('');
+
   const handleOTP = async () => {
     const res = await generateOTP(phone);
     console.log(res, generateOTP);
@@ -60,6 +62,43 @@ export default function LoginPage() {
   const [phone, setPhone] = useState("");
 
   const clearPhone = () => setPhone("");
+
+  useEffect(() => {
+    if (showTooltip) {
+      genrateSeeionId();
+    }
+  }, [showTooltip]);
+  const genrateSeeionId = async () => {
+    try {
+      const response = await createSession()
+      console.log(response, "response", response?.sessionId)
+      if (response) {
+        toast.success("response")
+        setSessionId(response?.sessionId)
+      }
+
+    } catch (error) {
+      toast.error("Something Went Wrong")
+      console.log(error, "Erroe In the genrateSeeionId()")
+    }
+  }
+  useEffect(() => {
+  if (!showTooltip || !sessionId) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const response = await checkSession(sessionId);
+        if (response?.status === 200 && response?.token) {
+          console.log("Session Verified!", response);
+          clearInterval(interval); // ⛔ stop polling once session is valid
+        }
+      } catch (error) {
+        console.error("Error in checkSession():", error);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [sessionId]);
+
   return (
     <>
       <div className="flex flex-col lg:flex-row md:flex-row  w-full min-h-screen">
@@ -118,7 +157,7 @@ export default function LoginPage() {
                             <div className="flex flex-col items-center">
                               <div className="relative w-[180px] h-[180px] border border-gray-200 rounded-2xl bg-white flex items-center justify-center">
                                 <div className="absolute w-[26px] h-[26px] bg-white flex items-center justify-center rounded">
-                                  <QRcode />
+                                  {sessionId && <QRCodeCanvas value={sessionId} />}
                                 </div>
                               </div>
 
