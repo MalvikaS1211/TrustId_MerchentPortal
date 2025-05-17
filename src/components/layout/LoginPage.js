@@ -100,7 +100,6 @@ export default function LoginPage() {
   const [countryCode, setCountryCode] = useState("+91");
   const [phone, setPhone] = useState("");
 
-  const clearPhone = () => setPhone("");
 
   useEffect(() => {
     if (showTooltip) {
@@ -109,11 +108,13 @@ export default function LoginPage() {
   }, [showTooltip]);
   const genrateSeeionId = async () => {
     try {
+      const response = await createSession()
+      console.log(response, "response", response?.session)
       const response = await createSession();
       console.log(response, "response", response?.sessionId);
       if (response) {
-        toast.success("response");
-        setSessionId(response?.sessionId);
+        toast.success("response")
+        setSessionId(response?.sessionId)
       }
     } catch (error) {
       toast.error("Something Went Wrong");
@@ -121,21 +122,26 @@ export default function LoginPage() {
     }
   };
   useEffect(() => {
-    if (!showTooltip || !sessionId) return;
+  if (!showTooltip || !sessionId) return;
 
     const interval = setInterval(async () => {
       try {
+        if (!showTooltip) return;
+
         const response = await checkSession(sessionId);
         if (response?.status === 200 && response?.token) {
           console.log("Session Verified!", response);
-          clearInterval(interval);
+          clearInterval(interval); // ⛔ stop polling once session is valid
         }
       } catch (error) {
         console.error("Error in checkSession():", error);
       }
-    }, 3000);
+    };
+
+    interval = setInterval(pollSession, 3000);
+
     return () => clearInterval(interval);
-  }, [sessionId]);
+  }, [sessionId, showTooltip, navigate]);
 
   return (
     <>
@@ -255,8 +261,8 @@ export default function LoginPage() {
                       >
                         {timer > 0
                           ? `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
-                              .toString()
-                              .padStart(2, "0")}`
+                            .toString()
+                            .padStart(2, "0")}`
                           : sendOTPBtn}
                       </button>
                       {phone && (
