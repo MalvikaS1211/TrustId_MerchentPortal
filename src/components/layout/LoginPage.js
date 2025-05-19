@@ -17,6 +17,7 @@ import {
 } from "../Helper/ApiFunction";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Webcam from "react-webcam";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showOTP, setshowOTP] = useState(false);
@@ -110,10 +111,10 @@ export default function LoginPage() {
     try {
       const response = await createSession()
       console.log(response, "response", response?.session)
-      
+
       if (response) {
-        toast.success("response")
-        setSessionId(response?.sessionId)
+        // toast.success("response")
+        setSessionId(response?.session)
       }
     } catch (error) {
       toast.error("Something Went Wrong");
@@ -339,6 +340,8 @@ export default function LoginPage() {
                 Connect with Trust Id
               </button>
             </div>
+
+          
           </div>
         </main>
         <LoginLeftSide />
