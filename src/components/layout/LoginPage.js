@@ -112,7 +112,7 @@ export default function LoginPage() {
 
       if (response) {
         toast.success("response");
-        setSessionId(response?.sessionId);
+        setSessionId(response?.session);
       }
     } catch (error) {
       toast.error("Something Went Wrong");
