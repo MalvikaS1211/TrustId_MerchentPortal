@@ -49,13 +49,11 @@ export default function LoginLeftSide() {
               current === index ? "opacity-100 z-20" : "opacity-0 z-10"
             }`}
           >
-       
             <div className=" w-full max-w-md mx-auto mb-6 mt-[40%]">
               <div className="text-2xl font-semibold ">{slide.title}</div>
               <div className=" mt-3">{slide.description}</div>
             </div>
 
-         
             <div className="flex space-x-3 mb-6">
               {slides.map((_, dotIndex) => (
                 <div
@@ -68,7 +66,6 @@ export default function LoginLeftSide() {
               ))}
             </div>
 
-        
             <div className="flex justify-center mt-auto">
               <img
                 src={slide.image}

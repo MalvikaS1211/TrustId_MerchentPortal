@@ -5,83 +5,71 @@ const FaceRecognition = () => {
   const videoRef = useRef();
   const canvasRef = useRef();
 
+  // LOAD FROM USEEFFECT
   useEffect(() => {
-    const loadModels = async () => {
-      await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
-      await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
-      await faceapi.nets.faceRecognitionNet.loadFromUri("/models");
-      // Add more models as needed
-    };
-
-    const startVideo = () => {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-        })
-        .catch((err) => console.error(err));
-    };
-
-    const detectFaces = async () => {
-      if (videoRef.current && canvasRef.current) {
-        const detections = await faceapi
-          .detectAllFaces(
-            videoRef.current,
-            new faceapi.TinyFaceDetectorOptions()
-          )
-          .withFaceLandmarks()
-          .withFaceDescriptors();
-
-        // Clear canvas
-        const canvas = canvasRef.current;
-        faceapi.matchDimensions(canvas, {
-          width: videoRef.current.width,
-          height: videoRef.current.height,
-        });
-
-        // Resize detections to match canvas
-        const resizedDetections = faceapi.resizeResults(detections, {
-          width: videoRef.current.width,
-          height: videoRef.current.height,
-        });
-
-        // Draw detections
-        faceapi.draw.drawDetections(canvas, resizedDetections);
-        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-      }
-      requestAnimationFrame(detectFaces);
-    };
-
-    loadModels().then(() => {
-      startVideo();
-      videoRef.current.onplay = () => {
-        detectFaces();
-      };
-    });
-
-    return () => {
-      if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
-      }
-    };
+    startVideo();
+    videoRef && loadModels();
   }, []);
 
+  // OPEN YOU FACE WEBCAM
+  const startVideo = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((currentStream) => {
+        videoRef.current.srcObject = currentStream;
+      })
+      .catch((err) => {
+        console.log("error in startVideo", err);
+      });
+  };
+  // LOAD MODELS FROM FACE API
+
+  const loadModels = () => {
+    Promise.all([
+      // THIS FOR FACE DETECT AND LOAD FROM YOU PUBLIC/MODELS DIRECTORY
+      faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+      faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+      faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+      faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+    ]).then(() => {
+      faceMyDetect();
+    });
+  };
+
+  const faceMyDetect = () => {
+    setInterval(async () => {
+      const detections = await faceapi
+        .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks()
+        .withFaceExpressions();
+
+      // DRAW YOU FACE IN WEBCAM
+      canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(
+        videoRef.current
+      );
+      faceapi.matchDimensions(canvasRef.current, {
+        width: 940,
+        height: 650,
+      });
+
+      const resized = faceapi.resizeResults(detections, {
+        width: 940,
+        height: 650,
+      });
+
+      faceapi.draw.drawDetections(canvasRef.current, resized);
+      faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
+      faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
+    }, 1000);
+  };
+
   return (
-    <div style={{ position: "relative" }}>
-      <video
-        ref={videoRef}
-        width="720"
-        height="560"
-        autoPlay
-        muted
-        style={{ position: "absolute" }}
-      />
-      <canvas
-        ref={canvasRef}
-        width="720"
-        height="560"
-        style={{ position: "absolute" }}
-      />
+    <div className="myapp">
+      <h1>Face Detection</h1>
+      <div className="appvide">
+        <video crossOrigin="anonymous" ref={videoRef} autoPlay></video>
+      </div>
+      <canvas ref={canvasRef} width="940" height="650" className="appcanvas" />
     </div>
   );
 };
