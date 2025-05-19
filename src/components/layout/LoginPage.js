@@ -83,6 +83,8 @@ export default function LoginPage() {
 
       if (res?.status == 200) {
         localStorage.setItem("Token", res?.token);
+        localStorage.setItem("UserId", res?.data?.userId);
+        console.log("UserId", res?.data?.userId);
         toast.success(res.message);
         setshowOTPSection(false);
         setTimeout(() => {

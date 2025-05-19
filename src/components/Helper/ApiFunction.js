@@ -34,7 +34,7 @@ export async function createSession() {
 
     return response.data;
   } catch (error) {
-    console.log("Error verifyOTP :", error);
+    console.log("Error createSession :", error);
   }
 }
 
@@ -46,6 +46,20 @@ export async function checkSession(sessionId) {
 
     return response.data;
   } catch (error) {
-    console.log("Error verifyOTP :", error);
+    console.log("Error checkSession :", error);
+  }
+}
+
+export async function registerFace(userId, descriptor) {
+  try {
+    const response = await axios.post(`${URLApi}/register-face`, {
+      userId,
+      descriptor,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(" Error in registerFace:", error);
+    return null;
   }
 }

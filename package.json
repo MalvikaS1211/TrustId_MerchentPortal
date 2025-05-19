@@ -1,7 +1,6 @@
 {
   "name": "luno-react-tailwind",
   "version": "0.1.0",
-  "homepage": "/templates/luno-react-tailwind/",
   "private": true,
   "dependencies": {
     "@fullcalendar/core": "^6.1.11",

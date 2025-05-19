@@ -120,7 +120,7 @@ export default function Routers() {
   };
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <RouterContent />
     </BrowserRouter>
   );

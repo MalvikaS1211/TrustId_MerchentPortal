@@ -342,3 +342,34 @@
     font-size: 13px !important;
   }
 }
+
+/* face recognition */
+
+.appvide {
+  display: flex;
+  align-items: center;
+}
+
+.appcanvas {
+  position: absolute;
+  top: 100px;
+}
+
+.face-recognition-container {
+  display: flex;
+  /* width: 100vw; */
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.face-scanner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.camera-section {
+  position: relative;
+  padding: 9px;
+  border-radius: 30px !important;
+}
