@@ -42,7 +42,7 @@ export default function LoginLeftSide() {
   return (
     <aside className="w-full side-section">
       <div className="flex flex-col p-4 pt-[100px] relative h-[500px] md:h-[600px]">
-        {/* {slides.map((slide, index) => (
+        {slides.map((slide, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out px-4 flex flex-col items-center ${
@@ -74,8 +74,8 @@ export default function LoginLeftSide() {
               />
             </div>
           </div>
-        ))} */}
-        <FaceRecognition />
+        ))}
+        {/* <FaceRecognition /> */}
       </div>
     </aside>
   );
