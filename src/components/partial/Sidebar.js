@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useLocation } from "react-router-dom";
 import { menuList, documentationItem, crmManagement } from "./SidebarData";
@@ -47,7 +47,7 @@ export default function Sidebar({
   toggleChat,
 }) {
   const pageUrl = useLocation().pathname;
-
+  const navigate = useNavigate();
   const [adminMenu, setAdminMenu] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -129,6 +129,13 @@ export default function Sidebar({
     });
   }, [pageUrl, data]);
 
+  useEffect(() => {
+    const islogin = sessionStorage.getItem("Login");
+    console.log(islogin, "islogin");
+    if (islogin == "false" || !islogin) {
+      navigate("/auth-signin");
+    }
+  }, []);
   return (
     <>
       <div className="sidebar-header px-3 mb-6 flex items-center justify-between gap-2">
@@ -344,6 +351,7 @@ export default function Sidebar({
           to="/auth-signin"
           title="Log Out"
           className="transition-all duration-300 hover:text-secondary"
+          onClick={() => sessionStorage.setItem("Login", false)}
         >
           <IconPower className="stroke-[1.5] w-[20px] h-[20px]" />
         </Link>

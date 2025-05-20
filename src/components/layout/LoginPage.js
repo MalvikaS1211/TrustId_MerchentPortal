@@ -59,6 +59,14 @@ export default function LoginPage() {
     setshowOTP(!showOTP);
   };
   const [sessionId, setSessionId] = useState("");
+  useEffect(() => {
+    const islogin = sessionStorage.getItem("Login");
+    console.log(islogin == "true", "islogddsin");
+    if (islogin == "true") {
+      console.log("naviogate");
+      navigate("/dashboard");
+    }
+  }, []);
 
   const handleOTP = async () => {
     if (!phone || phone.trim().length !== 10 || !/^\d{10}$/.test(phone)) {
@@ -92,6 +100,8 @@ export default function LoginPage() {
         localStorage.setItem("Token", res?.token);
         localStorage.setItem("UserId", res?.data?.userId);
         localStorage.setItem("businessAdd", res?.data?.businessAdd);
+        sessionStorage.setItem("Login", true);
+
         console.log("UserId", res?.data?.userId);
         toast.success(res.message);
         setshowOTPSection(false);

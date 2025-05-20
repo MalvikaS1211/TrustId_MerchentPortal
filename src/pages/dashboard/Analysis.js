@@ -137,7 +137,7 @@ export default function Analysis() {
           <div className="lg:col-span-3 sm:col-span-6 col-span-12 card flex flex-col bg-card-color rounded-xl overflow-hidden border border-dashed border-border-color">
             <div className="md:p-6 p-4">
               <div className="flex items-center justify-between gap-5 mb-2">
-                <p>NEW EMPLOYEE</p>
+                <p>NEW Visitor</p>
                 <IconUserScan className="stroke-primary stroke-[1.5] w-[32px] h-[32px]" />
               </div>
               <div className="flex items-end gap-1 mb-1">
@@ -160,7 +160,7 @@ export default function Analysis() {
           <div className="lg:col-span-3 sm:col-span-6 col-span-12 card flex flex-col bg-card-color rounded-xl overflow-hidden border border-dashed border-border-color">
             <div className="md:p-6 p-4">
               <div className="flex items-center justify-between gap-5 mb-2">
-                <p>EXPENSE</p>
+                <p>Loop Visitor</p>
                 <IconCreditCard className="stroke-primary stroke-[1.5] w-[32px] h-[32px]" />
               </div>
               <div className="flex items-end gap-1 mb-1">
@@ -183,7 +183,7 @@ export default function Analysis() {
           <div className="lg:col-span-3 sm:col-span-6 col-span-12 card flex flex-col bg-card-color rounded-xl overflow-hidden border border-dashed border-border-color">
             <div className="md:p-6 p-4">
               <div className="flex items-center justify-between gap-5 mb-2">
-                <p>REVENUE</p>
+                <p>Employee</p>
                 <IconCash className="stroke-primary stroke-[1.5] w-[32px] h-[32px]" />
               </div>
               <div className="flex items-end gap-1 mb-1">
@@ -242,7 +242,7 @@ export default function Analysis() {
           </div>
           <div className="xxl:col-span-6 lg:col-span-8 col-span-12 card rounded-xl bg-card-color border border-dashed border-border-color">
             <div className="flex items-center justify-between gap-15 md:p-6 p-4">
-              <div className="font-semibold">LUNO Revenue</div>
+              <div className="font-semibold">Verified Identity</div>
               <button className="bg-primary-10 p-[2px] rounded-full text-primary transition-all hover:bg-primary hover:text-white">
                 <IconDots className="w-[18px] h-[18px]" />
               </button>
