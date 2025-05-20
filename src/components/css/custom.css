@@ -38,3 +38,23 @@
   content: var(--tw-content);
   background-color: #734116;
 }
+
+/* business registration */
+
+.business-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.dropdownArrow {
+  position: absolute;
+  top: 42px !important;
+  right: 1rem !important;
+  cursor: pointer;
+}
+
+select option:hover {
+  background-color: #d9bda5 !important;
+}

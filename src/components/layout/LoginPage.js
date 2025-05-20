@@ -17,6 +17,7 @@ import {
 } from "../Helper/ApiFunction";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import FaceRecognition from "./FaceRecognition";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showOTP, setshowOTP] = useState(false);
@@ -29,6 +30,12 @@ export default function LoginPage() {
   const [timer, setTimer] = useState(0);
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   // Close tooltip on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -84,12 +91,18 @@ export default function LoginPage() {
       if (res?.status == 200) {
         localStorage.setItem("Token", res?.token);
         localStorage.setItem("UserId", res?.data?.userId);
+        localStorage.setItem("businessAdd", res?.data?.businessAdd);
         console.log("UserId", res?.data?.userId);
         toast.success(res.message);
         setshowOTPSection(false);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        console.log(res?.data?.businessAdd, "businessAdd");
+
+        // if (res?.data?.businessAdd === true) {
+        //   navigate("/");
+        // } else {
+        //   navigate("/add-business");
+        // }
+        navigate("/dashboard");
       } else {
         toast.error(res.message);
         setOTP("");
@@ -134,7 +147,7 @@ export default function LoginPage() {
           console.log("Session Verified!", response);
           localStorage.setItem("Token", response.token);
           toast.success("Login successful");
-          navigate("/");
+          navigate("/dashboard");
 
           clearInterval(interval);
         }
@@ -335,11 +348,48 @@ export default function LoginPage() {
               <button
                 className="bn-button bn-button__primary data-size-large mt-6"
                 style={{ width: "100%" }}
-                type="submit"
+                type="button"
                 data-e2e="btn-accounts-form-submit"
               >
                 Connect with Trust Id
               </button>
+
+              {/* <div className="face-detection-mobile block md:hidden">
+                <div className="flex items-center my-4 md:mt-6 md:mb-2">
+                  <div className="flex-1 bg-[--color-line] h-[1px]"></div>
+                  <div className="px-4">or</div>
+                  <div className="flex-1 bg-[--color-line] h-[1px]"></div>
+                </div>
+
+                <button
+                  className="bn-button bn-button__primary data-size-large w-full"
+                  type="button"
+                  data-e2e="btn-accounts-form-submit"
+                  onClick={openModal}
+                >
+                  Log In with Face ID
+                </button>
+
+                {isModalOpen && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <FaceRecognition />
+                    <div className="bg-white p-8 rounded-lg w-[90%] max-w-md text-center">
+                      <h2 className="text-xl font-semibold mb-4">
+                        Face ID Authentication
+                      </h2>
+                      <p className="mb-6">
+                        Please look into your camera to log in.
+                      </p>
+                      <button
+                        onClick={closeModal}
+                        className="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div> */}
             </div>
           </div>
         </main>

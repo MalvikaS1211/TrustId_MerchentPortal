@@ -167,7 +167,7 @@
 }
 
 .custom-scrollbar:hover {
-  scrollbar-color: var(--secondary) var(--card-color);
+  scrollbar-color: #734116 var(--card-color);
 }
 
 .container-fluid {

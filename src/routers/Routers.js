@@ -49,6 +49,7 @@ import HelperClass from "../pages/documentation/HelperClass";
 import ChangeLog from "../pages/documentation/ChangeLog";
 import Widget from "../pages/Widget";
 import LoginPage from "../components/layout/LoginPage";
+import BusinessRegistration from "../components/BusinessRegistration";
 
 export default function Routers() {
   const RouterContent = () => {
@@ -65,7 +66,8 @@ export default function Routers() {
     return (
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Analysis />} />
+          <Route path="/dashboard" element={<Analysis />} />
+
           <Route path="/index-wallet" element={<MyWallet />} />
           <Route path="/index-iot" element={<SmartIot />} />
           <Route path="/app-calendar" element={<Calendar />} />
@@ -104,9 +106,12 @@ export default function Routers() {
           <Route path="/doc-helperclass" element={<HelperClass />} />
           <Route path="/doc-changelog" element={<ChangeLog />} />
           <Route path="/widget" element={<Widget />} />
+          <Route path="/add-business" element={<BusinessRegistration />} />
         </Route>
         {/* <Route element={<AuthLayout />}> */}
         {/* <Route path="/auth-signin" element={<Signin />} /> */}
+        <Route path="/" element={<LoginPage />} />
+
         <Route path="/auth-signin" element={<LoginPage />} />
         <Route path="/auth-signup" element={<Signup />} />
         <Route path="/auth-forgot-password" element={<ForgotPassword />} />

@@ -63,3 +63,46 @@ export async function registerFace(userId, descriptor) {
     return null;
   }
 }
+
+export async function getCategory() {
+  try {
+    const response = await axios.get(`${URLApi}/fetch-category`);
+
+    return response.data;
+  } catch (error) {
+    console.log("Error getCategory :", error);
+  }
+}
+
+export async function addBusiness(
+  userId,
+  category,
+  businessName,
+  addresh,
+  owner,
+  number
+) {
+  try {
+    console.log(
+      userId,
+      category,
+      businessName,
+      addresh,
+      owner,
+      number,
+      "In addBusiness api call"
+    );
+    const response = await axios.post(`${URLApi}/merchantAdd-Business`, {
+      userId,
+      category,
+      businessName,
+      addresh,
+      owner,
+      number,
+    });
+    console.log(response.data, "response.data in addBusiness");
+    return response.data;
+  } catch (error) {
+    console.log("Error addBusiness :", error);
+  }
+}
