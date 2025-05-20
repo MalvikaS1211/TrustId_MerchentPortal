@@ -49,7 +49,7 @@ export default function LoginLeftSide() {
               current === index ? "opacity-100 z-20" : "opacity-0 z-10"
             }`}
           >
-            <div className=" w-full max-w-md mx-auto mb-6 mt-[40%]">
+            <div className=" w-full max-w-md mx-auto mb-6 mt-[20%]">
               <div className="text-2xl font-semibold ">{slide.title}</div>
               <div className=" mt-3">{slide.description}</div>
             </div>
