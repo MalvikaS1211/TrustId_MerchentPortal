@@ -137,7 +137,7 @@ export default function Analysis() {
           <div className="lg:col-span-3 sm:col-span-6 col-span-12 card flex flex-col bg-card-color rounded-xl overflow-hidden border border-dashed border-border-color">
             <div className="md:p-6 p-4">
               <div className="flex items-center justify-between gap-5 mb-2">
-                <p>NEW Visitor</p>
+                <p>New Visitor</p>
                 <IconUserScan className="stroke-primary stroke-[1.5] w-[32px] h-[32px]" />
               </div>
               <div className="flex items-end gap-1 mb-1">
@@ -368,7 +368,7 @@ export default function Analysis() {
                 </button>
               </div>
               <p className="md:text-[24px]/[30px] text-[20px]/[26px] font-bold mb-2">
-                $7,431.14 USD
+                7,431.14 USD
               </p>
               <div className="progress overflow-hidden h-10 bg-border-color rounded-full flex">
                 <div className="progress-bar w-[15%] bg-chart-color1 h-full"></div>
@@ -391,7 +391,7 @@ export default function Analysis() {
                       </p>
                     </td>
                     <td className="px-4 py-3 border-e border-b border-dashed border-border-color">
-                      $3,500.71
+                      3,500.71
                     </td>
                     <td className="px-4 py-3 border-b border-dashed border-border-color">
                       <span className="py-1 px-2 rounded-md text-white text-[12px]/[1] bg-success">
@@ -407,7 +407,7 @@ export default function Analysis() {
                       </p>
                     </td>
                     <td className="px-4 py-3 border-e border-b border-dashed border-border-color">
-                      $2,980.45
+                      2,980.45
                     </td>
                     <td className="px-4 py-3 border-b border-dashed border-border-color">
                       <span className="py-1 px-2 rounded-md text-black text-[12px]/[1] bg-warning">
@@ -423,7 +423,7 @@ export default function Analysis() {
                       </p>
                     </td>
                     <td className="px-4 py-3 border-e border-b border-dashed border-border-color">
-                      $950.00
+                      950.00
                     </td>
                     <td className="px-4 py-3 border-b border-dashed border-border-color">
                       <span className="py-1 px-2 rounded-md text-white text-[12px]/[1] bg-danger">
