@@ -67,7 +67,6 @@ export default function MyProfile() {
         }
         fetchData();
     }, [])
-    console.log('getProfileData :>> ', profileData);
     return (
         <div className='md:px-6 sm:px-3 pt-4'>
             <div className='container-fluid'>
