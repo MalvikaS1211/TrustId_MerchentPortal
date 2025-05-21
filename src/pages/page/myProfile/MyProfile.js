@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Breadcrumb from '../../../components/common/Breadcrumb';
 import WelcomeHeader from '../../../components/common/WelcomeHeader';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
@@ -20,10 +20,11 @@ import Group from './Group';
 import Project from './Project';
 import Campaign from './Campaign';
 import Activity from './Activity';
-
+import { getProfile } from '../../../components/Helper/ApiFunction';
 export default function MyProfile() {
 
     const [editProfileSidebar, setEditProfileSidebar] = useState(false)
+    const [profileData, setProfileData] = useState(null)
     const toggleEditProfile = () => {
         setEditProfileSidebar(!editProfileSidebar)
     }
@@ -41,25 +42,43 @@ export default function MyProfile() {
     };
 
     const breadcrumbItem = [
+        // {
+        //     name: "App",
+        // },
+        // {
+        //     name: "My Contact",
+        // },
+        // {
+        //     name: "Dashboard",
+        // },
+        // {
+        //     name: "App",
+        // },
         {
-            name: "App",
-        },
-        {
-            name: "My Contact",
+            name: "My Profile",
+            url: "/my-profile",
         },
     ]
-
+    useEffect(() => {
+        const userId = localStorage.getItem('UserId');
+        const fetchData = async () => {
+            const res = await getProfile(userId);
+            setProfileData(res.data);
+        }
+        fetchData();
+    }, [])
+    console.log('getProfileData :>> ', profileData);
     return (
         <div className='md:px-6 sm:px-3 pt-4'>
             <div className='container-fluid'>
                 <Breadcrumb breadcrumbItem={breadcrumbItem} />
-                <WelcomeHeader income />
+                <WelcomeHeader income profileData={profileData} />
                 <Tabs>
                     <div className='card bg-card-color rounded-xl border border-dashed border-border-color'>
                         <div className='md:p-6 p-4 border-b border-border-color'>
                             <div className='flex md:items-start items-center md:gap-12 gap-4 md:flex-row flex-col'>
                                 <img src={profile_av} alt='user profile' width="160" height="160" className='sm:w-[160px] sm:h-[160px] sm:min-w-[160px] w-[100px] h-[100px] min-w-[100px] object-cover rounded-xl' />
-                                <div className='md:text-start text-center'>
+                                {/* <div className='md:text-start text-center'>
                                     <p className='mb-1 text-[24px]/[30px] font-light flex gap-2 items-center md:justify-start justify-center'>
                                         Allie Grater
                                         <button onClick={toggleEditProfile} className={`text-primary transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${editProfileSidebar ? 'after:opacity-1 after:visible after:overflow-auto' : 'after:opacity-0 after:invisible after:overflow-hidden'}`}>
@@ -107,6 +126,82 @@ export default function MyProfile() {
                                             </div>
                                         </div>
                                     </div>
+                                </div> */}
+                                <div className='md:text-start text-center'>
+                                    <p className='mb-1 text-[24px]/[30px] font-light flex gap-2 items-center md:justify-start justify-center'>
+                                        {profileData?.name || "Allie Grater"}
+                                        <button
+                                            onClick={toggleEditProfile}
+                                            className={`text-primary transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${editProfileSidebar ? 'after:opacity-1 after:visible after:overflow-auto' : 'after:opacity-0 after:invisible after:overflow-hidden'}`}
+                                        >
+                                            <IconEdit className='w-[20px] h-[20px]' />
+                                        </button>
+                                    </p>
+
+                                    <p className='mb-1'>
+                                        {/* alliegrater@luno.com */}
+                                        <span className='font-semibold'>Gender:</span> {profileData?.gender || "N/A"}
+                                    </p>
+
+                                    <p className='mb-1 '>
+                                        <span className='font-semibold'>Date of Birth:</span> {profileData?.dateOfBirth || "N/A"}
+                                    </p>
+
+                                    <p className='mb-1'>
+                                        <span className='font-semibold'>Country:</span> {profileData?.address?.country || "N/A"}
+                                    </p>
+
+                                    <p className='mb-1'>
+                                        <span className='font-semibold'>State:</span> {profileData?.address?.state || "N/A"}
+                                    </p>
+
+                                    <p className='mb-1'>
+                                        <span className='font-semibold'>City / Village:</span> {profileData?.address?.village || "N/A"}
+                                    </p>
+
+                                    <p className='mb-3'>
+                                        <span className='font-semibold'>Post Office:</span> {profileData?.address?.postOffice || "N/A"}
+                                    </p>
+
+                                    {/* <p className="md:mb-3 mb-4 text-font-color-100 max-w-[550px]">
+                                        It is a long established fact that a reader will be distracted by the readable
+                                        content of a page when looking at its layout.
+                                    </p> */}
+
+                                    {/* <div className='flex gap-3 flex-wrap md:justify-start justify-center'>
+                                        <div className='px-4 py-1 border border-dashed border-border-color rounded-xl'>
+                                            <small className='text-font-color-100'>
+                                                Total Earnings
+                                            </small>
+                                            <div className="md:text-[20px]/[30px] text-[16px]/[22px]">
+                                                $10,705
+                                            </div>
+                                        </div>
+                                        <div className='px-4 py-1 border border-dashed border-border-color rounded-xl'>
+                                            <small className='text-font-color-100'>
+                                                Awards
+                                            </small>
+                                            <div className="md:text-[20px]/[30px] text-[16px]/[22px]">
+                                                45
+                                            </div>
+                                        </div>
+                                        <div className='px-4 py-1 border border-dashed border-border-color rounded-xl'>
+                                            <small className='text-font-color-100'>
+                                                Experience
+                                            </small>
+                                            <div className="md:text-[20px]/[30px] text-[16px]/[22px]">
+                                                8+
+                                            </div>
+                                        </div>
+                                        <div className='px-4 py-1 border border-dashed border-border-color rounded-xl'>
+                                            <small className='text-font-color-100'>
+                                                City
+                                            </small>
+                                            <div className="md:text-[20px]/[30px] text-[16px]/[22px]">
+                                                {profileData?.address?.village || "New york"}
+                                            </div>
+                                        </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
