@@ -115,3 +115,21 @@ export async function addBusiness(
     console.log("Error addBusiness :", error);
   }
 }
+export async function myProfile(userId, token) {
+  try {
+    const response = await axios.get(`${URLApi}/my-profile`, {
+      params: {
+        userId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response.data, "in myProfile");
+    return response.data;
+  } catch (error) {
+    console.log("Error in myProfile:", error);
+    return null;
+  }
+}

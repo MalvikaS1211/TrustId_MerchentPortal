@@ -51,6 +51,7 @@ import {
   sidebarImg3,
   sidebarImg2,
 } from "../../assets/images";
+import { checkSession, myProfile } from "../Helper/ApiFunction";
 
 export default function Header({
   toggleMobileNav,
@@ -278,7 +279,25 @@ export default function Header({
     sessionStorage.removeItem("Token");
     sessionStorage.removeItem("UserId");
     sessionStorage.removeItem("Login");
+    sessionStorage.removeItem("SessionId");
   };
+
+  const [userData, setUserData] = useState({});
+  const handleData = async () => {
+    // const sessionId = sessionStorage.getItem("SessionId");
+    // const res = await checkSession(sessionId);
+    // setUserData(res?.userInfo);
+    // console.log(res?.userInfo, "handleData");
+    const userId = sessionStorage.getItem("UserId");
+    const token = sessionStorage.getItem("Token");
+
+    const res = await myProfile(userId, token);
+    console.log(res, "handleData");
+    setUserData(res?.data);
+  };
+  useEffect(() => {
+    handleData();
+  }, []);
   const colorItem = [
     {
       name: "indigo",
@@ -857,7 +876,7 @@ export default function Header({
               </button>
               <div className="bg-card-color text-font-color rounded-xl overflow-hidden md:w-[240px] w-[calc(100%-30px)] shadow-shadow-lg md:absolute fixed md:end-0 end-15 md:top-full top-[55px] origin-top-right rtl:origin-top-left z-[1] opacity-0 invisible scale-0 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:scale-100">
                 <div className="p-4 border-b border-border-color">
-                  <div className="font-semibold">Allie Grater</div>
+                  <div className="font-semibold">{userData?.name}</div>
                   <div className="text-font-color-100">
                     alliegrater@luno.com
                   </div>
@@ -877,11 +896,17 @@ export default function Header({
                     <IconSettings className="w-[16px] h-[16px]" />
                     Settings
                   </Link>
-                  <Link to="#" className="py-2 px-4 flex items-center gap-3">
+                  <Link
+                    to="/account-billing"
+                    className="py-2 px-4 flex items-center gap-3"
+                  >
                     <IconCreditCard className="w-[16px] h-[16px]" />
                     Billing
                   </Link>
-                  <Link to="#" className="py-2 px-4 flex items-center gap-3">
+                  <Link
+                    to="/page-team-board"
+                    className="py-2 px-4 flex items-center gap-3"
+                  >
                     <IconUsersGroup className="w-[16px] h-[16px]" />
                     Manage Team
                   </Link>

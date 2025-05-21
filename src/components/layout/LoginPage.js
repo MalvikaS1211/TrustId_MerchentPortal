@@ -135,7 +135,9 @@ export default function LoginPage() {
       const response = await createSession();
       console.log(response, "response", response?.session);
 
-      if (response) {
+      if (response?.status === 200) {
+        sessionStorage.setItem("SessionId", response?.session);
+        console.log(response?.session, "Sessionid:::");
         setSessionId(response?.session);
       }
     } catch (error) {
@@ -151,13 +153,16 @@ export default function LoginPage() {
         if (!showTooltip) return;
 
         const response = await checkSession(sessionId);
+
         console.log(response, "checkSession");
         if (response?.status === 200 && response?.token) {
           console.log("Session Verified!", response);
+          console.log(response?.userInfo, "Userinfo");
           sessionStorage.setItem("Token", response.token);
+          sessionStorage.setItem("UserId", response?.userInfo?.userId);
+
           toast.success("Login successful");
           navigate("/dashboard");
-
           clearInterval(interval);
         }
       } catch (error) {

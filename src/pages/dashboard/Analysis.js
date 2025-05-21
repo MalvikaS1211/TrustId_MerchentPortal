@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ReactApexChart from "react-apexcharts";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import WelcomeHeader from "../../components/common/WelcomeHeader";
+import { checkSession, myProfile } from "../../components/Helper/ApiFunction";
 
 export default function Analysis() {
   const breadcrumbItem = [
@@ -127,6 +128,22 @@ export default function Analysis() {
       },
     },
   };
+  const [userData, setUserData] = useState({});
+  const handleData = async () => {
+    // const sessionId = sessionStorage.getItem("SessionId");
+    // const res = await checkSession(sessionId);
+    // setUserData(res?.userInfo);
+    // console.log(res?.userInfo, "handleData");
+    const userId = sessionStorage.getItem("UserId");
+    const token = sessionStorage.getItem("Token");
+
+    const res = await myProfile(userId, token);
+    console.log(res, "handleData");
+    setUserData(res?.data);
+  };
+  useEffect(() => {
+    handleData();
+  }, []);
 
   return (
     <div className="md:px-6 sm:px-3 pt-4">
@@ -228,11 +245,11 @@ export default function Analysis() {
           </div>
           <div className="xxl:col-span-3 lg:col-span-4 col-span-12 card flex flex-col items-center justify-center  text-center md:p-6 p-4 bg-gradient-to-br card-bg rounded-xl border border-dashed border-border-color">
             <h4 className="text-[24px]/[28px] font-medium mb-2">
-              Welcome Back, Chris!!
+              Welcome Back, {userData?.name}!!
             </h4>
             <p className="mb-8">
               <strong>Need help?</strong> Check out the documentation of Luno
-              Admin. It includes tons of <strong>Widgets</strong>,{" "}
+              Admin. It includes tons of <strong>Widgets</strong>,
               <strong>Components</strong>, and <strong>Elements</strong> with
               easy-to-follow documentation.
             </p>
@@ -272,7 +289,7 @@ export default function Analysis() {
                 0.0386245 BTC
               </p>
               <p>
-                Available BTC{" "}
+                Available BTC
                 <Link
                   to="#"
                   className="text-primary transition-all hover:text-secondary"

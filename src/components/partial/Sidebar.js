@@ -141,6 +141,7 @@ export default function Sidebar({
     sessionStorage.removeItem("Token");
     sessionStorage.removeItem("UserId");
     sessionStorage.removeItem("Login");
+    sessionStorage.removeItem("SessionId");
   };
   return (
     <>
