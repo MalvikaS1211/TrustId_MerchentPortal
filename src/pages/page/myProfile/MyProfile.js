@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import WelcomeHeader from "../../../components/common/WelcomeHeader";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
@@ -18,6 +18,7 @@ import Project from "./Project";
 import Campaign from "./Campaign";
 import Activity from "./Activity";
 import { QRCodeCanvas } from "qrcode.react";
+import { myProfile } from "../../../components/Helper/ApiFunction";
 
 export default function MyProfile() {
   const [editProfileSidebar, setEditProfileSidebar] = useState(false);
@@ -45,6 +46,25 @@ export default function MyProfile() {
       name: "My Contact",
     },
   ];
+
+  const [userData, setUserData] = useState({});
+  const handleData = async () => {
+    // const sessionId = sessionStorage.getItem("SessionId");
+    // if (sessionId) {
+    //   const res = await checkSession(sessionId);
+    //   setUserData(res?.userInfo);
+    //   console.log(res?.userInfo, "handleData");
+    // }
+    const userId = sessionStorage.getItem("UserId");
+    const token = sessionStorage.getItem("Token");
+
+    const res = await myProfile(userId, token);
+    console.log(res, "handleData");
+    setUserData(res?.data);
+  };
+  useEffect(() => {
+    handleData();
+  }, []);
   const sessionId = sessionStorage.getItem("SessionId");
   return (
     <div className="md:px-6 sm:px-3 pt-4">
@@ -64,7 +84,7 @@ export default function MyProfile() {
                 />
                 <div className="md:text-start text-center">
                   <p className="mb-1 text-[24px]/[30px] font-light flex gap-2 items-center md:justify-start justify-center">
-                    Allie Grater
+                    {userData?.name}
                     <button
                       onClick={toggleEditProfile}
                       className={`text-primary transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${
