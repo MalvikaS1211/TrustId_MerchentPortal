@@ -274,7 +274,11 @@ export default function Header({
       document.removeEventListener("click", handleClickOutside);
     };
   }, [searchBar]);
-
+  const handleLogin = () => {
+    sessionStorage.removeItem("Token");
+    sessionStorage.removeItem("UserId");
+    sessionStorage.removeItem("Login");
+  };
   const colorItem = [
     {
       name: "indigo",
@@ -859,7 +863,10 @@ export default function Header({
                   </div>
                 </div>
                 <div className="p-1 m-1 custom-scrollbar overflow-auto max-h-[calc(80svh-163px)]">
-                  <Link to="#" className="py-2 px-4 flex items-center gap-3">
+                  <Link
+                    to="/page-my-profile"
+                    className="py-2 px-4 flex items-center gap-3"
+                  >
                     <IconUser className="w-[16px] h-[16px]" />
                     My Profile
                   </Link>
@@ -887,6 +894,7 @@ export default function Header({
                 <Link
                   to="auth-signin"
                   className="bg-secondary uppercase text-[14px]/[20px] text-white py-5 px-10 text-center w-full inline-block"
+                  onClick={handleLogin}
                 >
                   Sign Out
                 </Link>

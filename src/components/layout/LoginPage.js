@@ -59,14 +59,14 @@ export default function LoginPage() {
     setshowOTP(!showOTP);
   };
   const [sessionId, setSessionId] = useState("");
-  useEffect(() => {
-    const islogin = sessionStorage.getItem("Login");
-    console.log(islogin == "true", "islogddsin");
-    if (islogin == "true") {
-      console.log("naviogate");
-      navigate("/dashboard");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const islogin = sessionStorage.getItem("Login");
+  //   console.log(islogin == "true", "islogddsin");
+  //   if (islogin == "true") {
+  //     console.log("naviogate");
+  //     navigate("/dashboard");
+  //   }
+  // }, []);
 
   const handleOTP = async () => {
     if (!phone || phone.trim().length !== 10 || !/^\d{10}$/.test(phone)) {
@@ -97,15 +97,15 @@ export default function LoginPage() {
       console.log(res, "handleLogin");
 
       if (res?.status == 200) {
-        localStorage.setItem("Token", res?.token);
-        localStorage.setItem("UserId", res?.data?.userId);
-        localStorage.setItem("businessAdd", res?.data?.businessAdd);
+        sessionStorage.setItem("Token", res?.token);
+        sessionStorage.setItem("UserId", res?.data?.userId);
         sessionStorage.setItem("Login", true);
+        // sessionStorage.setItem("businessAdd", res?.data?.businessAdd);
 
         console.log("UserId", res?.data?.userId);
         toast.success(res.message);
         setshowOTPSection(false);
-        console.log(res?.data?.businessAdd, "businessAdd");
+        // console.log(res?.data?.businessAdd, "businessAdd");
 
         // if (res?.data?.businessAdd === true) {
         //   navigate("/");
@@ -136,7 +136,6 @@ export default function LoginPage() {
       console.log(response, "response", response?.session);
 
       if (response) {
-        toast.success("response");
         setSessionId(response?.session);
       }
     } catch (error) {
@@ -155,7 +154,7 @@ export default function LoginPage() {
         console.log(response, "checkSession");
         if (response?.status === 200 && response?.token) {
           console.log("Session Verified!", response);
-          localStorage.setItem("Token", response.token);
+          sessionStorage.setItem("Token", response.token);
           toast.success("Login successful");
           navigate("/dashboard");
 

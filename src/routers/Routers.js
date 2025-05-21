@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import Analysis from "../pages/dashboard/Analysis";
 import MyWallet from "../pages/dashboard/MyWallet";
@@ -50,11 +57,14 @@ import ChangeLog from "../pages/documentation/ChangeLog";
 import Widget from "../pages/Widget";
 import LoginPage from "../components/layout/LoginPage";
 import BusinessRegistration from "../components/BusinessRegistration";
+import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 
 export default function Routers() {
   const RouterContent = () => {
     const pageUrl = useLocation().pathname;
 
+    const navigate = useNavigate();
     useEffect(() => {
       const pageClass = pageUrl.substring(1).replace(/\//g, "-");
       document.body.classList.add(pageClass ? pageClass : "dashboard");
@@ -63,63 +73,78 @@ export default function Routers() {
       };
     }, [pageUrl]);
 
+    // useEffect(() => {
+    //   const Token = sessionStorage.getItem("Token");
+    //   console.log(Token, "Token");
+    //   if (!Token) {
+    //     navigate("/auth-signin");
+    //   }
+    //   //  else {
+    //   //   navigate("/dashboard");
+    //   // }
+    // }, [navigate]);
+
     return (
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Analysis />} />
-
-          <Route path="/index-wallet" element={<MyWallet />} />
-          <Route path="/index-iot" element={<SmartIot />} />
-          <Route path="/app-calendar" element={<Calendar />} />
-          <Route path="/app-calendar-tui" element={<TuiCalendar />} />
-          <Route path="/app-email" element={<Email />} />
-          <Route path="/app-email-detail" element={<EmailDetail />} />
-          <Route path="/app-email-compose" element={<EmailCompose />} />
-          <Route path="/app-chat" element={<Chat />} />
-          <Route path="/app-campaign" element={<Campaign />} />
-          <Route path="/app-social" element={<Social />} />
-          <Route path="/app-file-manager" element={<FileManager />} />
-          <Route path="/app-todo" element={<Todo />} />
-          <Route path="/app-contact" element={<Contact />} />
-          <Route path="/app-task" element={<Task />} />
-          <Route path="/app-project" element={<ProjectList />} />
-          <Route path="/app-project-detail" element={<ProjectDetail />} />
-          <Route path="/page-my-profile" element={<MyProfile />} />
-          <Route path="/page-bookmark" element={<Bookmark />} />
-          <Route path="/page-timeline" element={<Timeline />} />
-          <Route path="/page-image-gallery" element={<ImageGallery />} />
-          <Route path="/page-pricing" element={<Pricing />} />
-          <Route path="/page-team-board" element={<TeamBorad />} />
-          <Route path="/page-support-ticket" element={<SupportTicket />} />
-          <Route path="/page-faq" element={<Faq />} />
-          <Route path="/page-search" element={<SearchPage />} />
-          <Route path="/page-footer" element={<Footers />} />
-          <Route path="/account-setting" element={<Setting />} />
-          <Route path="/account-invoice" element={<Invoice />} />
-          <Route path="/account-billing" element={<Billing />} />
-          <Route path="/account-create-invoice" element={<CreateInvoice />} />
-          <Route path="/modals" element={<Modals />} />
-          <Route path="/doc-overview" element={<Overview />} />
-          <Route path="/doc-setup" element={<DevSetup />} />
-          <Route path="/doc-structure" element={<FileStructure />} />
-          <Route path="/doc-references" element={<References />} />
-          <Route path="/doc-helperclass" element={<HelperClass />} />
-          <Route path="/doc-changelog" element={<ChangeLog />} />
-          <Route path="/widget" element={<Widget />} />
-          <Route path="/add-business" element={<BusinessRegistration />} />
+        {/* Public Routes */}
+        <Route element={<PublicRoute />}>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/auth-signin" element={<LoginPage />} />
+          <Route path="/auth-signup" element={<Signup />} />
+          <Route path="/auth-forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth-two-step" element={<TwoStep />} />
+          <Route path="/auth-lockscreen" element={<Lockscreen />} />
+          <Route path="/auth-maintenance" element={<Maintenance />} />
         </Route>
-        {/* <Route element={<AuthLayout />}> */}
-        {/* <Route path="/auth-signin" element={<Signin />} /> */}
-        <Route path="/" element={<LoginPage />} />
 
-        <Route path="/auth-signin" element={<LoginPage />} />
-        <Route path="/auth-signup" element={<Signup />} />
-        <Route path="/auth-forgot-password" element={<ForgotPassword />} />
-        <Route path="/auth-two-step" element={<TwoStep />} />
-        <Route path="/auth-lockscreen" element={<Lockscreen />} />
-        <Route path="/auth-maintenance" element={<Maintenance />} />
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Analysis />} />
+            <Route path="/index-wallet" element={<MyWallet />} />
+            <Route path="/index-iot" element={<SmartIot />} />
+            <Route path="/app-calendar" element={<Calendar />} />
+            <Route path="/app-calendar-tui" element={<TuiCalendar />} />
+            <Route path="/app-email" element={<Email />} />
+            <Route path="/app-email-detail" element={<EmailDetail />} />
+            <Route path="/app-email-compose" element={<EmailCompose />} />
+            <Route path="/app-chat" element={<Chat />} />
+            <Route path="/app-campaign" element={<Campaign />} />
+            <Route path="/app-social" element={<Social />} />
+            <Route path="/app-file-manager" element={<FileManager />} />
+            <Route path="/app-todo" element={<Todo />} />
+            <Route path="/app-contact" element={<Contact />} />
+            <Route path="/app-task" element={<Task />} />
+            <Route path="/app-project" element={<ProjectList />} />
+            <Route path="/app-project-detail" element={<ProjectDetail />} />
+            <Route path="/page-my-profile" element={<MyProfile />} />
+            <Route path="/page-bookmark" element={<Bookmark />} />
+            <Route path="/page-timeline" element={<Timeline />} />
+            <Route path="/page-image-gallery" element={<ImageGallery />} />
+            <Route path="/page-pricing" element={<Pricing />} />
+            <Route path="/page-team-board" element={<TeamBorad />} />
+            <Route path="/page-support-ticket" element={<SupportTicket />} />
+            <Route path="/page-faq" element={<Faq />} />
+            <Route path="/page-search" element={<SearchPage />} />
+            <Route path="/page-footer" element={<Footers />} />
+            <Route path="/account-setting" element={<Setting />} />
+            <Route path="/account-invoice" element={<Invoice />} />
+            <Route path="/account-billing" element={<Billing />} />
+            <Route path="/account-create-invoice" element={<CreateInvoice />} />
+            <Route path="/modals" element={<Modals />} />
+            <Route path="/doc-overview" element={<Overview />} />
+            <Route path="/doc-setup" element={<DevSetup />} />
+            <Route path="/doc-structure" element={<FileStructure />} />
+            <Route path="/doc-references" element={<References />} />
+            <Route path="/doc-helperclass" element={<HelperClass />} />
+            <Route path="/doc-changelog" element={<ChangeLog />} />
+            <Route path="/widget" element={<Widget />} />
+            <Route path="/add-business" element={<BusinessRegistration />} />
+          </Route>
+        </Route>
+
+        {/* Catch-all */}
         <Route path="*" element={<PageNotFound />} />
-        {/* </Route> */}
       </Routes>
     );
   };

@@ -80,7 +80,8 @@ export async function addBusiness(
   businessName,
   addresh,
   owner,
-  number
+  number,
+  token
 ) {
   try {
     console.log(
@@ -92,14 +93,22 @@ export async function addBusiness(
       number,
       "In addBusiness api call"
     );
-    const response = await axios.post(`${URLApi}/merchantAdd-Business`, {
-      userId,
-      category,
-      businessName,
-      addresh,
-      owner,
-      number,
-    });
+    const response = await axios.post(
+      `${URLApi}/merchantAdd-Business`,
+      {
+        userId,
+        category,
+        businessName,
+        addresh,
+        owner,
+        number,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log(response.data, "response.data in addBusiness");
     return response.data;
   } catch (error) {

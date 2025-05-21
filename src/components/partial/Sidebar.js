@@ -129,13 +129,19 @@ export default function Sidebar({
     });
   }, [pageUrl, data]);
 
-  useEffect(() => {
-    const islogin = sessionStorage.getItem("Login");
-    console.log(islogin, "islogin");
-    if (islogin == "false" || !islogin) {
-      navigate("/auth-signin");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const islogin = sessionStorage.getItem("Login");
+  //   console.log(islogin, "islogin");
+  //   if (islogin == "false" || !islogin) {
+  //     navigate("/auth-signin");
+  //   }
+  // }, []);
+
+  const handleLogin = () => {
+    sessionStorage.removeItem("Token");
+    sessionStorage.removeItem("UserId");
+    sessionStorage.removeItem("Login");
+  };
   return (
     <>
       <div className="sidebar-header px-3 mb-6 flex items-center justify-between gap-2">
@@ -351,7 +357,7 @@ export default function Sidebar({
           to="/auth-signin"
           title="Log Out"
           className="transition-all duration-300 hover:text-secondary"
-          onClick={() => sessionStorage.setItem("Login", false)}
+          onClick={handleLogin}
         >
           <IconPower className="stroke-[1.5] w-[20px] h-[20px]" />
         </Link>

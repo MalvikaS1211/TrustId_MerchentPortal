@@ -10,14 +10,17 @@ export default function BusinessRegistration() {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSubmit = async () => {
-    const userId = localStorage.getItem("UserId");
+    const userId = sessionStorage.getItem("UserId");
+    const Token = sessionStorage.getItem("Token");
+
     const res = await addBusiness(
       userId,
       category,
       businessName,
       address,
       owner,
-      phoneNumber
+      phoneNumber,
+      Token
     );
     setBusinessName("");
     setAddress("");
