@@ -165,7 +165,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  $3,251
+                  3,251
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
@@ -188,7 +188,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  $18,925
+                  18,925
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
