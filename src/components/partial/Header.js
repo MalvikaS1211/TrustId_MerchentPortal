@@ -870,7 +870,10 @@ export default function Header({
                     <IconUser className="w-[16px] h-[16px]" />
                     My Profile
                   </Link>
-                  <Link to="#" className="py-2 px-4 flex items-center gap-3">
+                  <Link
+                    to="/account-setting"
+                    className="py-2 px-4 flex items-center gap-3"
+                  >
                     <IconSettings className="w-[16px] h-[16px]" />
                     Settings
                   </Link>

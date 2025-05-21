@@ -149,7 +149,7 @@ export default function Sidebar({
           <span className="sm-txt">T</span>
           <span>rustId Merchent Portal</span>
         </h4>
-        <div className="sidebar-dropdown relative flex">
+        {/* <div className="sidebar-dropdown relative flex">
           <button
             ref={buttonRef}
             onClick={toggleAdminMenu}
@@ -186,7 +186,7 @@ export default function Sidebar({
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
       {/* <div className='create-new-project px-3 py-4 flex gap-5'>
                 <select className="select-project form-select cursor-pointer rounded-full bg-card-color py-[6px] ps-15 pe-30 text-[14px]/[20px] w-full appearance-none border border-border-color focus:outline-0 focus:border-primary">
