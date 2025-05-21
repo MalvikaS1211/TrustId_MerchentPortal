@@ -31,6 +31,7 @@ import {
   profile_av,
 } from "../../../assets/images";
 import { myProfile } from "../../../components/Helper/ApiFunction";
+import { useSelector } from "react-redux";
 
 export default function Overview() {
   const latestPhotos = [
@@ -62,6 +63,8 @@ export default function Overview() {
       image: gallery9,
     },
   ];
+
+  const user = useSelector((state) => state.user.userInfo);
   const [userData, setUserData] = useState({});
   const handleData = async () => {
     // const sessionId = sessionStorage.getItem("SessionId");
@@ -97,7 +100,7 @@ export default function Overview() {
                 <span className="w-[90px] text-font-color-100">
                   Full Name :
                 </span>
-                {userData?.name}
+                {user?.data?.name}
               </li>
               <li className="flex gap-x-2 flex-wrap">
                 <span className="w-[90px] text-font-color-100">E-mail :</span>
@@ -105,7 +108,7 @@ export default function Overview() {
               </li>
               <li className="flex gap-x-2 flex-wrap">
                 <span className="w-[90px] text-font-color-100">Phone :</span>
-                {userData?.mobileNumber}
+                {user?.data?.mobileNumber}
               </li>
               <li className="flex gap-x-2 flex-wrap">
                 <span className="w-[90px] text-font-color-100">Location :</span>

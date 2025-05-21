@@ -38,6 +38,9 @@ import {
   IconChevronsDown,
 } from "@tabler/icons-react";
 import NewProject from "../../pages/app/project/NewProject";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "../../Redux/reducer";
+import { myProfile } from "../Helper/ApiFunction";
 
 export default function Sidebar({
   setMobileNav,
@@ -51,6 +54,8 @@ export default function Sidebar({
   const [adminMenu, setAdminMenu] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userInfo);
   const toggleAdminMenu = () => {
     setAdminMenu(!adminMenu);
   };
@@ -129,13 +134,20 @@ export default function Sidebar({
     });
   }, [pageUrl, data]);
 
-  // useEffect(() => {
-  //   const islogin = sessionStorage.getItem("Login");
-  //   console.log(islogin, "islogin");
-  //   if (islogin == "false" || !islogin) {
-  //     navigate("/auth-signin");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const userId = sessionStorage.getItem("UserId");
+      const token = sessionStorage.getItem("token");
+
+      const data = await myProfile(userId, token);
+
+      if (data) {
+        dispatch(setUserInfo(data));
+      }
+    };
+
+    fetchProfile();
+  }, [dispatch]);
 
   const handleLogin = () => {
     sessionStorage.removeItem("Token");

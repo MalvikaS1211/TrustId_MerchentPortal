@@ -8,9 +8,12 @@ import {
   IconShare,
 } from "@tabler/icons-react";
 import { checkSession, myProfile } from "../Helper/ApiFunction";
+import { useSelector } from "react-redux";
 
 export default function WelcomeHeader({ report, income }) {
   const [userData, setUserData] = useState({});
+  const user = useSelector((state) => state.user.userInfo);
+
   const handleData = async () => {
     // const sessionId = sessionStorage.getItem("SessionId");
     // if (sessionId) {
@@ -33,7 +36,7 @@ export default function WelcomeHeader({ report, income }) {
     <div className="flex md:items-center md:justify-between md:flex-row flex-col gap-15 md:mb-12 mb-6">
       <div>
         <p className="text-[20px]/[24px] font-medium mb-1">
-          Welcome back, {userData?.name}!
+          Welcome back, {user?.data?.name}!
         </p>
         <p className="text-[14px]/[20px] text-font-color-100">
           You have 12 new messages and 7 new notifications.

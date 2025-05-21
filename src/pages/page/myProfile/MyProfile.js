@@ -19,6 +19,7 @@ import Campaign from "./Campaign";
 import Activity from "./Activity";
 import { QRCodeCanvas } from "qrcode.react";
 import { myProfile } from "../../../components/Helper/ApiFunction";
+import { useSelector } from "react-redux";
 
 export default function MyProfile() {
   const [editProfileSidebar, setEditProfileSidebar] = useState(false);
@@ -47,6 +48,7 @@ export default function MyProfile() {
     },
   ];
 
+  const user = useSelector((state) => state.user.userInfo);
   const [userData, setUserData] = useState({});
   const handleData = async () => {
     // const sessionId = sessionStorage.getItem("SessionId");
@@ -84,7 +86,7 @@ export default function MyProfile() {
                 />
                 <div className="md:text-start text-center">
                   <p className="mb-1 text-[24px]/[30px] font-light flex gap-2 items-center md:justify-start justify-center">
-                    {userData?.name}
+                    {user?.data?.name}
                     <button
                       onClick={toggleEditProfile}
                       className={`text-primary transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${
