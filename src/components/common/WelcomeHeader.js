@@ -8,20 +8,18 @@ import {
     IconShare,
 } from '@tabler/icons-react'
 
-export default function WelcomeHeader({ report, income, profileData }) {
+export default function WelcomeHeader({ report, income }) {
     return (
         <div className='flex md:items-center md:justify-between md:flex-row flex-col gap-15 md:mb-12 mb-6'>
             <div>
                 <p className='text-[20px]/[24px] font-medium mb-1'>
-                    {/* Welcome back, Allie! */}
-                    Welcome back, {profileData?.name ? profileData.name + "!" : 'Allie!'}
-
+                    Welcome back, Allie!
                 </p>
                 <p className='text-[14px]/[20px] text-font-color-100'>
-                    {/* You have 12 new messages and 7 new notifications. */}
+                    You have 12 new messages and 7 new notifications.
                 </p>
             </div>
-            {/* {report ? <div className='form-control flex md:justify-end flex-1'>
+            {report ? <div className='form-control flex md:justify-end flex-1'>
                 <input type='text' id='dateRange' name='dateRange' className='form-input ssm:text-[14px]/[1] text-[12px]/[1] !py-2 !rounded-e-none w-full max-w-[300px]' defaultValue="04/12/2023 - 04/01/2024" />
                 <button title='Send Report' className='py-2 px-3 bg-grey text-white transition-all hover:opacity-80'>
                     <IconMailFilled className='w-[16px] h-[16px]' />
@@ -82,7 +80,7 @@ export default function WelcomeHeader({ report, income, profileData }) {
                         </div>
                     </div>
                     : ''
-            } */}
+            }
         </div>
     )
 }
