@@ -35,9 +35,13 @@ export default function BusinessRegistration() {
     }
   };
   const handleCategory = async () => {
-    const res = await getCategory();
-    // console.log(res.data, "res category");
-    setCategories(res.data);
+    try {
+      const res = await getCategory();
+      // console.log(res.data, "res category");
+      setCategories(res.data);
+    } catch (error) {
+      console.log("error in category", error);
+    }
   };
   useEffect(() => {
     handleCategory();
