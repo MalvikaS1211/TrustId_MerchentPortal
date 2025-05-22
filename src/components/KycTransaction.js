@@ -246,7 +246,7 @@ export default function KYCTransaction() {
         </div>
       </div>
       {/* Heading */}
-      <h5 className="text-[20px] leading-[26px] font-medium mb-2">
+      <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
         KYC Transaction
         <span className="inline-block font-bold ms-1">({totalData})</span>
       </h5>
