@@ -14,7 +14,12 @@ import {
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import WelcomeHeader from "../../components/common/WelcomeHeader";
-import { checkSession, myProfile } from "../../components/Helper/ApiFunction";
+import {
+  checkSession,
+  myProfile,
+  visitorData,
+} from "../../components/Helper/ApiFunction";
+import { useSelector } from "react-redux";
 
 export default function Analysis() {
   const breadcrumbItem = [
@@ -128,22 +133,18 @@ export default function Analysis() {
       },
     },
   };
-  const [userData, setUserData] = useState({});
-  const handleData = async () => {
-    // const sessionId = sessionStorage.getItem("SessionId");
-    // const res = await checkSession(sessionId);
-    // setUserData(res?.userInfo);
-    // console.log(res?.userInfo, "handleData");
-    const userId = sessionStorage.getItem("UserId");
-    const token = sessionStorage.getItem("Token");
 
-    const res = await myProfile(userId, token);
-    console.log(res, "handleData");
-    setUserData(res?.data);
+  const user = useSelector((state) => state.user.userInfo);
+  const [visitor, setVisitor] = useState({});
+  const visitorDataFn = async () => {
+    const BusinessId = user?.data?.businessId;
+    const res = await visitorData(BusinessId);
+    console.log("res visitor", res);
+    setVisitor(res?.data);
   };
   useEffect(() => {
-    handleData();
-  }, []);
+    visitorDataFn();
+  }, [user?.data?.businessId]);
 
   return (
     <div className="md:px-6 sm:px-3 pt-4">
@@ -159,7 +160,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  51
+                  {visitor?.newUser}
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
@@ -182,7 +183,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  3,251
+                  {visitor?.loopVisitor}
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
@@ -245,7 +246,7 @@ export default function Analysis() {
           </div>
           <div className="xxl:col-span-3 lg:col-span-4 col-span-12 card flex flex-col items-center justify-center  text-center md:p-6 p-4 bg-gradient-to-br card-bg rounded-xl border border-dashed border-border-color">
             <h4 className="text-[24px]/[28px] font-medium mb-2">
-              Welcome Back, {userData?.name}!!
+              Welcome Back, {user?.data?.name}!!
             </h4>
             <p className="mb-8">
               <strong>Need help?</strong> Check out the documentation of Luno

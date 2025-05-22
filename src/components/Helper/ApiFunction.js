@@ -150,7 +150,7 @@ export async function businessQR(userId) {
   }
 }
 
-export async function KycTranscations(businessId, page = 1, limit = 50, token) {
+export async function KycTranscations(businessId, page = 1, limit = 50) {
   try {
     const response = await axios.get(`${URLApi}/token-transfers-userdata`, {
       params: {
@@ -158,15 +158,31 @@ export async function KycTranscations(businessId, page = 1, limit = 50, token) {
         page,
         limit,
       },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     });
 
     console.log(response.data, "in KycTranscations");
     return response.data;
   } catch (error) {
     console.log("Error in KycTranscations:", error);
+    return null;
+  }
+}
+
+export async function visitorData(businessId) {
+  try {
+    const response = await axios.get(`${URLApi}/VistorCount-dashborad`, {
+      params: {
+        businessId,
+      },
+    });
+
+    console.log(response.data, "in visitorData");
+    return response.data;
+  } catch (error) {
+    console.log("Error in visitorData:", error);
     return null;
   }
 }
