@@ -64,219 +64,219 @@ export const menuList = [
     url: "/account-setting",
   },
 
-  //   {
-  //     icon: IconHome,
-  //     link: "My Dashboard",
-  //     children: [
-  //       {
-  //         link: "Analysis",
-  //         url: "/",
-  //       },
-  //       //   {
-  //       //     link: "My Wallet",
-  //       //     url: "/index-wallet",
-  //       //   },
-  //       //   {
-  //       //     link: "Smart IOT",
-  //       //     url: "/index-iot",
-  //       //   },
-  //     ],
-  //   },
-  //   {
-  //     icon: IconApps,
-  //     link: "Applications",
-  //     children: [
-  //         {
-  //           link: "Calendar",
-  //           url: "/app-calendar",
-  //         },
-  //       {
-  //           link: "tui Calendar",
-  //           url: "/app-calendar-tui",
-  //       },
-  //         {
-  //           link: "Email App",
-  //           url: "/app-email",
-  //         },
-  //         {
-  //           link: "Chat App",
-  //           url: "/app-chat",
-  //         },
-  //         {
-  //           link: "Campaigns",
-  //           url: "/app-campaign",
-  //         },
-  //       {
-  //         link: "Social App",
-  //         url: "/app-social",
-  //       },
-  //       {
-  //         link: "File Manager",
-  //         url: "/app-file-manager",
-  //       },
-  //       {
-  //         link: "Todo App",
-  //         url: "/app-todo",
-  //       },
-  //       {
-  //         link: "Contact",
-  //         url: "/app-contact",
-  //       },
-  //       {
-  //         link: "Task",
-  //         url: "/app-task",
-  //       },
-  //       {
-  //         link: "Project List",
-  //         url: "/app-project",
-  //       },
-  //     ],
-  //   },
-  // {
-  //   icon: IconNotebook,
-  //   link: "Applications",
-  //   children: [
-  //     //   {
-  //     //     link: "My Profile",
-  //     //     url: "/page-my-profile",
-  //     //   },
-  //     //   {
-  //     //     link: "Bookmarks",
-  //     //     url: "/page-bookmark",
-  //     //   },
-  //     //   {
-  //     //     link: "Timeline",
-  //     //     url: "/page-timeline",
-  //     //   },
-  //     //   {
-  //     //     link: "Image Gallery",
-  //     //     url: "/page-image-gallery",
-  //     //   },
-  //     //   {
-  //     //     link: "Pricing",
-  //     //     url: "/page-pricing",
-  //     //   },
+  {
+    icon: IconHome,
+    link: "My Dashboard",
+    children: [
+      {
+        link: "Analysis",
+        url: "/",
+      },
+      {
+        link: "My Wallet",
+        url: "/index-wallet",
+      },
+      {
+        link: "Smart IOT",
+        url: "/index-iot",
+      },
+    ],
+  },
+  {
+    icon: IconApps,
+    link: "Applications",
+    children: [
+      {
+        link: "Calendar",
+        url: "/app-calendar",
+      },
+      {
+        link: "tui Calendar",
+        url: "/app-calendar-tui",
+      },
+      {
+        link: "Email App",
+        url: "/app-email",
+      },
+      {
+        link: "Chat App",
+        url: "/app-chat",
+      },
+      {
+        link: "Campaigns",
+        url: "/app-campaign",
+      },
+      {
+        link: "Social App",
+        url: "/app-social",
+      },
+      {
+        link: "File Manager",
+        url: "/app-file-manager",
+      },
+      {
+        link: "Todo App",
+        url: "/app-todo",
+      },
+      {
+        link: "Contact",
+        url: "/app-contact",
+      },
+      {
+        link: "Task",
+        url: "/app-task",
+      },
+      {
+        link: "Project List",
+        url: "/app-project",
+      },
+    ],
+  },
+  {
+    icon: IconNotebook,
+    link: "Applications",
+    children: [
+      {
+        link: "My Profile",
+        url: "/page-my-profile",
+      },
+      {
+        link: "Bookmarks",
+        url: "/page-bookmark",
+      },
+      {
+        link: "Timeline",
+        url: "/page-timeline",
+      },
+      {
+        link: "Image Gallery",
+        url: "/page-image-gallery",
+      },
+      {
+        link: "Pricing",
+        url: "/page-pricing",
+      },
 
-  //     {
-  //       link: "Team Management",
-  //       url: "/page-team-board",
-  //     },
-  //     {
-  //       link: "Support",
-  //       url: "/page-support-ticket",
-  //     },
-  //     //   {
-  //     //     link: "FAQs",
-  //     //     url: "/page-faq",
-  //     //   },
-  //     //   {
-  //     //     link: "Search Page",
-  //     //     url: "/page-search",
-  //     //   },
-  //     //   {
-  //     //     link: "Footers",
-  //     //     url: "/page-footer",
-  //     //   },
-  //   ],
-  // },
-  // {
-  //   icon: IconId,
-  //   link: "Account",
-  //   children: [
-  //     {
-  //       link: "Setting",
-  //       url: "/account-setting",
-  //     },
-  //     //   {
-  //     //     link: "Invoice List",
-  //     //     url: "/account-invoice",
-  //     //   },
-  //     //   {
-  //     //     link: "Create Invoice",
-  //     //     url: "/account-create-invoice",
-  //     //   },
-  //     {
-  //       link: "Billing",
-  //       url: "/account-billing",
-  //     },
-  //   ],
-  // },
-  // {
-  //   icon: IconShieldLock,
-  //   link: "Authentication",
-  //   children: [
-  //     //   {
-  //     //     link: "404",
-  //     //     url: "/auth-404",
-  //     //   },
-  //     {
-  //       link: "Sign In",
-  //       url: "/auth-signin",
-  //     },
-  //     //   {
-  //     //     link: "Sign Up",
-  //     //     url: "/auth-signup",
-  //     //   },
-  //     //   {
-  //     //     link: "Forgot Password",
-  //     //     url: "/auth-forgot-password",
-  //     //   },
-  //     //   {
-  //     //     link: "2-Step Authentication",
-  //     //     url: "/auth-two-step",
-  //     //   },
-  //     //   {
-  //     //     link: "Lockscreen",
-  //     //     url: "/auth-lockscreen",
-  //     //   },
-  //     //   {
-  //     //     link: "Maintenance",
-  //     //     url: "/auth-maintenance",
-  //     //   },
-  //   ],
-  // },
-  //   {
-  //     icon: IconSitemap,
-  //     link: "Menu Level",
-  //     children: [
-  //       {
-  //         link: "Level 1",
-  //         children: [
-  //           {
-  //             link: "Level 2",
-  //             url: "#",
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         link: "Level 1",
-  //         url: "#",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     devider: "RESOURCES",
-  //   },
-  //   {
-  //     icon: IconSquares,
-  //     link: "Modals Popups",
-  //     url: "/modals",
-  //   },
-  //   {
-  //     icon: IconLayout2,
-  //     link: "Widget's",
-  //     url: "/widget",
-  //   },
-  //   {
-  //     icon: IconChecklist,
-  //     link: "Documentation",
-  //     url: "/doc-overview",
-  //   },
-  //   {
-  //     icon: IconTimelineEventPlus,
-  //     link: "Changelog",
-  //     url: "/doc-changelog",
-  //   },
+      {
+        link: "Team Management",
+        url: "/page-team-board",
+      },
+      {
+        link: "Support",
+        url: "/page-support-ticket",
+      },
+      {
+        link: "FAQs",
+        url: "/page-faq",
+      },
+      {
+        link: "Search Page",
+        url: "/page-search",
+      },
+      {
+        link: "Footers",
+        url: "/page-footer",
+      },
+    ],
+  },
+  {
+    icon: IconId,
+    link: "Account",
+    children: [
+      {
+        link: "Setting",
+        url: "/account-setting",
+      },
+      {
+        link: "Invoice List",
+        url: "/account-invoice",
+      },
+      {
+        link: "Create Invoice",
+        url: "/account-create-invoice",
+      },
+      {
+        link: "Billing",
+        url: "/account-billing",
+      },
+    ],
+  },
+  {
+    icon: IconShieldLock,
+    link: "Authentication",
+    children: [
+      {
+        link: "404",
+        url: "/auth-404",
+      },
+      {
+        link: "Sign In",
+        url: "/auth-signin",
+      },
+      {
+        link: "Sign Up",
+        url: "/auth-signup",
+      },
+      {
+        link: "Forgot Password",
+        url: "/auth-forgot-password",
+      },
+      {
+        link: "2-Step Authentication",
+        url: "/auth-two-step",
+      },
+      {
+        link: "Lockscreen",
+        url: "/auth-lockscreen",
+      },
+      {
+        link: "Maintenance",
+        url: "/auth-maintenance",
+      },
+    ],
+  },
+  {
+    icon: IconSitemap,
+    link: "Menu Level",
+    children: [
+      {
+        link: "Level 1",
+        children: [
+          {
+            link: "Level 2",
+            url: "#",
+          },
+        ],
+      },
+      {
+        link: "Level 1",
+        url: "#",
+      },
+    ],
+  },
+  {
+    devider: "RESOURCES",
+  },
+  {
+    icon: IconSquares,
+    link: "Modals Popups",
+    url: "/modals",
+  },
+  {
+    icon: IconLayout2,
+    link: "Widget's",
+    url: "/widget",
+  },
+  {
+    icon: IconChecklist,
+    link: "Documentation",
+    url: "/doc-overview",
+  },
+  {
+    icon: IconTimelineEventPlus,
+    link: "Changelog",
+    url: "/doc-changelog",
+  },
 ];
 
 export const documentationItem = [
