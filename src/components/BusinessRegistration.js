@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { addBusiness, getCategory } from "./Helper/ApiFunction";
+import toast from "react-hot-toast";
 export default function BusinessRegistration() {
   const [businessName, setBusinessName] = useState("");
   const [categories, setCategories] = useState([]);
@@ -10,23 +11,28 @@ export default function BusinessRegistration() {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSubmit = async () => {
-    const userId = sessionStorage.getItem("UserId");
-    const Token = sessionStorage.getItem("Token");
+    try {
+      const userId = sessionStorage.getItem("UserId");
+      const Token = sessionStorage.getItem("Token");
 
-    const res = await addBusiness(
-      userId,
-      category,
-      businessName,
-      address,
-      owner,
-      phoneNumber,
-      Token
-    );
-    setBusinessName("");
-    setAddress("");
-    setOwner("");
-    setPhoneNumber("");
-    setCategory("");
+      const res = await addBusiness(
+        userId,
+        category,
+        businessName,
+        address,
+        owner,
+        phoneNumber,
+        Token
+      );
+      toast.success("Business Added Successfully");
+      setBusinessName("");
+      setAddress("");
+      setOwner("");
+      setPhoneNumber("");
+      setCategory("");
+    } catch (error) {
+      console.log("Error in submit", error);
+    }
   };
   const handleCategory = async () => {
     const res = await getCategory();

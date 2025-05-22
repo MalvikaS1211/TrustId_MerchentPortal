@@ -18,11 +18,17 @@ import Project from "./Project";
 import Campaign from "./Campaign";
 import Activity from "./Activity";
 import { QRCodeCanvas } from "qrcode.react";
-import { myProfile } from "../../../components/Helper/ApiFunction";
+import { businessQR, myProfile } from "../../../components/Helper/ApiFunction";
 import { useSelector } from "react-redux";
 
 export default function MyProfile() {
   const [editProfileSidebar, setEditProfileSidebar] = useState(false);
+  const user = useSelector((state) => state.user.userInfo);
+  const AddedBusiness = sessionStorage.getItem("BusinessAdd");
+  const sessionId = sessionStorage.getItem("SessionId");
+  const userid = sessionStorage.getItem("UserId");
+  const [businessQRCode, setBusinessQRCode] = useState("");
+
   const toggleEditProfile = () => {
     setEditProfileSidebar(!editProfileSidebar);
   };
@@ -48,26 +54,20 @@ export default function MyProfile() {
     },
   ];
 
-  const user = useSelector((state) => state.user.userInfo);
-  const [userData, setUserData] = useState({});
-  const handleData = async () => {
-    // const sessionId = sessionStorage.getItem("SessionId");
-    // if (sessionId) {
-    //   const res = await checkSession(sessionId);
-    //   setUserData(res?.userInfo);
-    //   console.log(res?.userInfo, "handleData");
-    // }
-    const userId = sessionStorage.getItem("UserId");
-    const token = sessionStorage.getItem("Token");
+  // const BusinessQRCodeFn = async () => {
+  //   try {
+  //     const res = await businessQR(userid);
+  //     setBusinessQRCode(res?.businessQrCode?.businessId);
+  //     console.log(res?.businessQrCode?.businessId, "businessQr");
+  //   } catch (error) {
+  //     console.log("error in businessQr", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   BusinessQRCodeFn();
+  //   console.log(user?.data?.businessId, "businessId");
+  // }, [userid]);
 
-    const res = await myProfile(userId, token);
-    console.log(res, "handleData");
-    setUserData(res?.data);
-  };
-  useEffect(() => {
-    handleData();
-  }, []);
-  const sessionId = sessionStorage.getItem("SessionId");
   return (
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
@@ -133,11 +133,13 @@ export default function MyProfile() {
                     </div>
                   </div>
                 </div>
-                {/* <div className="flex md:items-center items-center md:gap-12 gap-4 md:flex-row flex-col">
-                  <div className="sm:w-[160px] sm:h-[160px] sm:min-w-[160px] w-[100px] h-[100px] min-w-[100px] object-cover rounded-xl">
-                    {sessionId && <QRCodeCanvas value={sessionId} />}
+                {AddedBusiness && (
+                  <div className="business-qr-container">
+                    <div className="sm:w-[160px] sm:h-[160px] sm:min-w-[160px] w-[100px] h-[100px] min-w-[100px] object-cover rounded-xl business-qr-sub-container">
+                      <QRCodeCanvas value={user?.data?.businessId} />
+                    </div>
                   </div>
-                </div> */}
+                )}
               </div>
             </div>
             <TabList className="flex flex-wrap md:px-6 px-2 pt-2 relative md:justify-start justify-center">

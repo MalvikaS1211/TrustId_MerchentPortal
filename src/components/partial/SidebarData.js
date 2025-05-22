@@ -29,7 +29,7 @@ export const menuList = [
   {
     icon: IconCreditCardPay,
     link: "KYC Transaction",
-    url: "/",
+    url: "/kyc-transaction",
   },
   {
     icon: IconDevices,

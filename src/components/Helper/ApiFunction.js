@@ -133,3 +133,40 @@ export async function myProfile(userId, token) {
     return null;
   }
 }
+
+export async function businessQR(userId) {
+  try {
+    const response = await axios.get(`${URLApi}/busness-QrCode`, {
+      params: {
+        userId,
+      },
+    });
+
+    console.log(response.data, "in businessQR");
+    return response.data;
+  } catch (error) {
+    console.log("Error in businessQR:", error);
+    return null;
+  }
+}
+
+export async function KycTranscations(businessId, page = 1, limit = 50, token) {
+  try {
+    const response = await axios.get(`${URLApi}/token-transfers-userdata`, {
+      params: {
+        businessId,
+        page,
+        limit,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response.data, "in KycTranscations");
+    return response.data;
+  } catch (error) {
+    console.log("Error in KycTranscations:", error);
+    return null;
+  }
+}

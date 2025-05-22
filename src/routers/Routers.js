@@ -59,6 +59,7 @@ import LoginPage from "../components/layout/LoginPage";
 import BusinessRegistration from "../components/BusinessRegistration";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import KYCTransaction from "../components/KycTransaction";
 
 export default function Routers() {
   const RouterContent = () => {
@@ -140,6 +141,7 @@ export default function Routers() {
             <Route path="/doc-changelog" element={<ChangeLog />} />
             <Route path="/widget" element={<Widget />} />
             <Route path="/add-business" element={<BusinessRegistration />} />
+            <Route path="/kyc-transaction" element={<KYCTransaction />} />
           </Route>
         </Route>
 

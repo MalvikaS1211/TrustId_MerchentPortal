@@ -133,14 +133,16 @@ export default function Sidebar({
       }
     });
   }, [pageUrl, data]);
-
+  const [myProfileData, setMyprofileData] = useState({});
   useEffect(() => {
     const fetchProfile = async () => {
       const userId = sessionStorage.getItem("UserId");
       const token = sessionStorage.getItem("token");
 
       const data = await myProfile(userId, token);
+      sessionStorage.setItem("BusinessAdd", data?.data?.businessAdd);
 
+      console.log(data, "my::::::");
       if (data) {
         dispatch(setUserInfo(data));
       }

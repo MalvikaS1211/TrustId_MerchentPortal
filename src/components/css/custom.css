@@ -58,3 +58,17 @@
 select option:hover {
   background-color: #d9bda5 !important;
 }
+
+/* my profile */
+.business-qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d9bda5;
+  border-radius: 10px;
+}
+.business-qr-sub-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
