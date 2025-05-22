@@ -34,7 +34,7 @@ export default function KYCTransaction() {
   return (
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
-        <WelcomeHeader income />
+        {/* <WelcomeHeader income /> */}
 
         <div className="relative rounded-xl border border-dashed border-border-color p-4">
           <span className="bg-body-color text-font-color-100 px-5 font-semibold absolute top-[-14px]">
