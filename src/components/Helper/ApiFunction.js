@@ -186,3 +186,34 @@ export async function visitorData(businessId) {
     return null;
   }
 }
+
+export async function addEmployee(userId, businessId, mobile_Number) {
+  try {
+    const response = await axios.post(`${URLApi}/add-employee`, {
+      userId,
+      businessId,
+      mobile_Number,
+    });
+    console.log(userId, businessId, mobile_Number, ":::Employee");
+    return response.data;
+  } catch (error) {
+    console.log(" Error in addEmployee:", error);
+    return null;
+  }
+}
+
+export async function getEmployeeData(businessId) {
+  try {
+    const response = await axios.get(`${URLApi}/employees-by-businessId`, {
+      params: {
+        businessId,
+      },
+    });
+
+    console.log(response.data, "in getEmployeeData");
+    return response.data;
+  } catch (error) {
+    console.log("Error in getEmployeeData:", error);
+    return null;
+  }
+}

@@ -241,11 +241,12 @@ export default function KYCTransaction() {
     {
       name: "Visitor Type",
       selector: (row) =>
-        row.visitCount === 1
+        row.firstTime == true
           ? "New Visitor"
-          : row.visitCount >= 2
+          : row.firstTime == false
           ? "Loop Visitor"
           : "N/A",
+
       width: "150px",
     },
     {
@@ -338,10 +339,10 @@ export default function KYCTransaction() {
           {/* map modal */}
           {open && selectedCoordinates && (
             <div className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg p-4 max-w-2xl w-full relative shadow-lg">
+              <div className="bg-white rounded-lg p-4 w-[70%] h-[70%] overflow-hidden relative shadow-lg">
                 <button
                   onClick={() => setOpen(false)}
-                  className="absolute top-2 right-2 text-black font-bold text-lg"
+                  className="absolute top-2 right-2 text-black font-bold text-lg z-10"
                 >
                   ✕
                 </button>
@@ -349,12 +350,12 @@ export default function KYCTransaction() {
                 <iframe
                   src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
                   width="100%"
-                  height="400"
+                  height="100%"
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="rounded-lg"
-                ></iframe>
+                />
               </div>
             </div>
           )}

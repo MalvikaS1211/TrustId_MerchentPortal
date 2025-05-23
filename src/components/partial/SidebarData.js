@@ -40,7 +40,8 @@ export const menuList = [
   {
     icon: IconBrandTeams,
     link: "Team Management",
-    url: "/page-team-board",
+    // url: "/page-team-board",
+    url: "/team-management",
   },
 
   {

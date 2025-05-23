@@ -72,3 +72,10 @@ select option:hover {
   justify-content: center;
   align-items: center;
 }
+
+.plus-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
