@@ -126,25 +126,26 @@ import HeaderCards from "./HeaderCards";
 import { useSelector } from "react-redux";
 import { KycTranscations } from "./Helper/ApiFunction";
 import MapModal from "./MapModal";
+import Breadcrumb from "./common/Breadcrumb";
 export default function KYCTransaction() {
   const user = useSelector((state) => state.user.userInfo);
   const [KYCTransactions, setKYCTransactions] = useState([]);
   const [totalData, setTotalData] = useState([]);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
+  const token = sessionStorage.getItem("Token");
   const handleData = async () => {
     try {
       const BusinessId = user?.data?.businessId;
-      //   if (!BusinessId) {
-      //     console.warn("Business ID is missing");
-      //     return;
-      //   }
+      if (!BusinessId) {
+        console.warn("Business ID is missing");
+        return;
+      }
 
       const page = 1;
       const limit = 50;
-      const res = await KycTranscations(user?.data?.businessId, page, limit);
+      const res = await KycTranscations(BusinessId, page, limit, token);
 
       if (res?.data) {
-        // optional: transform API fields if needed
         setKYCTransactions(res.data);
         setTotalData(res?.pagination?.totalRecords);
       } else {
@@ -200,6 +201,12 @@ export default function KYCTransaction() {
       name: "Address",
       selector: (row) => row.userInfo.fullAddress || "N/A",
       width: "250px",
+      style: {
+        justifyContent: "flex-start",
+        whiteSpace: "normal",
+        wordWrap: "break-word",
+      },
+      wrap: true,
     },
     {
       name: "In Time",
@@ -224,12 +231,11 @@ export default function KYCTransaction() {
       name: "Out Time",
       selector: (row) => row.outTime,
       width: "180px",
-      cell: (row) =>
-        row.outTime ? moment(row.outTime).format("hh:mm A") : "N/A",
+      cell: (row) => (row.outTime ? moment(row.outTime).format("hh:mm A") : ""),
     },
     {
       name: "Device Contract",
-      selector: (row) => row.device || "N/A",
+      selector: (row) => row.device || "",
       width: "160px",
     },
     {
@@ -245,28 +251,31 @@ export default function KYCTransaction() {
     {
       name: "Coordinator",
       selector: (row) =>
-        `${row?.location?.latitude ?? ""}, ${row?.location?.longitude ?? ""}`,
+        `${row?.location?.latitude ?? "N/A"}, ${
+          row?.location?.longitude ?? "N/A"
+        }`,
       width: "158px",
-      cell: (row) => (
-        <div className="flex items-center gap-2">
-          <button
+      cell: (row) => {
+        const lat = row?.location?.latitude;
+        const lng = row?.location?.longitude;
+        return (
+          <div
+            className=" cursor-pointer text-sm"
             onClick={() => {
-              setSelectedCoordinates({
-                lat: row?.location?.latitude,
-                lng: row?.location?.longitude,
-              });
+              setSelectedCoordinates({ lat, lng });
               setOpen(true);
             }}
-            className="bg-blue-600 text-white px-2 py-1 rounded text-sm"
           >
-            Lat: {row?.location?.latitude ?? "N/A"}, Lng:
-            {row?.location?.longitude ?? "N/A"}
-          </button>
-        </div>
-      ),
-      style: {
-        justifyContent: "flex-start", // Aligns cell content to the left
+            Lat: {lat ?? "N/A"}, Lng: {lng ?? "N/A"}
+          </div>
+        );
       },
+      style: {
+        justifyContent: "flex-start",
+        whiteSpace: "normal",
+        wordWrap: "break-word",
+      },
+      wrap: true,
     },
   ];
 
@@ -294,55 +303,65 @@ export default function KYCTransaction() {
   const mapSrc = location.lat
     ? `https://www.google.com/maps?q=${location.lat},${location.lng}&z=15&output=embed`
     : null;
+
+  const breadcrumbItem = [
+    {
+      name: "KYC Transaction",
+    },
+  ];
   return (
     <>
-      <div className="mb-4 ">
-        {/* HeaderCards below the heading */}
-        <div className="mb-4">
-          <HeaderCards />
-        </div>
-      </div>
-      {/* Heading */}
-      <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
-        KYC Transaction
-        <span className="inline-block font-bold ms-1">({totalData})</span>
-      </h5>
-      {/* <button
+      <div className="md:px-6 sm:px-3 pt-4">
+        <div className="container-fluid">
+          <div className="mb-4 ">
+            <Breadcrumb breadcrumbItem={breadcrumbItem} />
+            <div className="mb-4">
+              <HeaderCards />
+            </div>
+          </div>
+
+          <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
+            KYC Transaction
+            <span className="inline-block font-bold ms-1">({totalData})</span>
+          </h5>
+          {/* <button
         onClick={() => setOpen(true)}
         className="bg-blue-600  px-4 py-2 rounded"
       >
         Show My Location
       </button> */}
-      {/* Data Table */}
-      <div className="react-data-table">
-        <ReactDataTable columns={columnsFilter} data={KYCTransactions} />
-      </div>
 
-      {/* map modal */}
-      {open && selectedCoordinates && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-4 max-w-2xl w-full relative shadow-lg">
-            <button
-              onClick={() => setOpen(false)}
-              className="absolute top-2 right-2 text-black font-bold text-lg"
-            >
-              ✕
-            </button>
-
-            <iframe
-              src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
-              width="100%"
-              height="400"
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-lg"
-            ></iframe>
+          <div className="react-data-table">
+            <ReactDataTable columns={columnsFilter} data={KYCTransactions} />
           </div>
-        </div>
-      )}
 
-      {/* end of map modal */}
+          {/* map modal */}
+          {open && selectedCoordinates && (
+            <div className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-4 max-w-2xl w-full relative shadow-lg">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="absolute top-2 right-2 text-black font-bold text-lg"
+                >
+                  ✕
+                </button>
+
+                <iframe
+                  src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
+                  width="100%"
+                  height="400"
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded-lg"
+                ></iframe>
+              </div>
+            </div>
+          )}
+
+          {/* end of map modal */}
+        </div>
+      </div>
     </>
   );
 }

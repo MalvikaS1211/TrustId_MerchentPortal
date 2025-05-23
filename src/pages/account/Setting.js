@@ -18,9 +18,9 @@ export default function Setting() {
   };
 
   const breadcrumbItem = [
-    {
-      name: "Account",
-    },
+    // {
+    //   name: "Account",
+    // },
     {
       name: "Setting",
     },
@@ -30,7 +30,7 @@ export default function Setting() {
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
         <Breadcrumb breadcrumbItem={breadcrumbItem} />
-        <WelcomeHeader income />
+        {/* <WelcomeHeader income /> */}
         <div className="grid lg:grid-cols-[1fr_2.5fr] grid-cols-1 gap-6 items-start">
           <ul className="card bg-card-color md:sticky md:top-100 border border-dashed border-border-color rounded-md">
             <li className="border-b border-dashed border-border-color last:border-none">

@@ -46,11 +46,11 @@ export default function MyProfile() {
   };
 
   const breadcrumbItem = [
+    // {
+    //   name: "App",
+    // },
     {
-      name: "App",
-    },
-    {
-      name: "My Contact",
+      name: "My Profile",
     },
   ];
 
@@ -72,17 +72,23 @@ export default function MyProfile() {
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
         <Breadcrumb breadcrumbItem={breadcrumbItem} />
-        <WelcomeHeader income />
+        {/* <WelcomeHeader income /> */}
         <Tabs>
           <div className="card bg-card-color rounded-xl border border-dashed border-border-color">
             <div className="md:p-6 p-4 border-b border-border-color">
               <div className="flex md:items-start items-center md:gap-12 gap-4 md:flex-row flex-col">
                 <img
-                  src={profile_av}
+                  src={
+                    user?.data?.profileImage
+                      ? user.data.profileImage.startsWith("data:image")
+                        ? user.data.profileImage
+                        : `data:image/jpeg;base64,${user.data.profileImage}`
+                      : "/default-avatar.png"
+                  }
                   alt="user profile"
-                  width="160"
-                  height="160"
-                  className="sm:w-[160px] sm:h-[160px] sm:min-w-[160px] w-[100px] h-[100px] min-w-[100px] object-cover rounded-xl"
+                  width="200"
+                  height="200"
+                  className="sm:w-[160px] sm:h-[190px] sm:min-w-[160px] w-[100px]  min-w-[100px] object-cover rounded-xl"
                 />
                 <div className="md:text-start text-center">
                   <p className="mb-1 text-[24px]/[30px] font-light flex gap-2 items-center md:justify-start justify-center">
@@ -128,7 +134,7 @@ export default function MyProfile() {
                     <div className="px-4 py-1 border border-dashed border-border-color rounded-xl">
                       <small className="text-font-color-100">City</small>
                       <div className="md:text-[20px]/[30px] text-[16px]/[22px]">
-                        New york
+                        {user?.data?.address?.postOffice}
                       </div>
                     </div>
                   </div>

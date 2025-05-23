@@ -13,10 +13,14 @@ export default function HeaderCards() {
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
   const visitorDataFn = async () => {
-    const BusinessId = user?.data?.businessId;
-    const res = await visitorData(BusinessId);
-    console.log("res visitor", res);
-    setVisitor(res?.data);
+    try {
+      const BusinessId = user?.data?.businessId;
+      const res = await visitorData(BusinessId);
+      console.log("res visitor", res);
+      setVisitor(res?.data);
+    } catch (error) {
+      console.log("Error in visitorData", error);
+    }
   };
   useEffect(() => {
     visitorDataFn();

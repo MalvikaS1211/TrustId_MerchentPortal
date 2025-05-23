@@ -150,7 +150,7 @@ export async function businessQR(userId) {
   }
 }
 
-export async function KycTranscations(businessId, page = 1, limit = 50) {
+export async function KycTranscations(businessId, page = 1, limit = 50, token) {
   try {
     const response = await axios.get(`${URLApi}/token-transfers-userdata`, {
       params: {
@@ -158,9 +158,9 @@ export async function KycTranscations(businessId, page = 1, limit = 50) {
         page,
         limit,
       },
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     console.log(response.data, "in KycTranscations");
