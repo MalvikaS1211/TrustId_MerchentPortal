@@ -12,10 +12,11 @@ import { useSelector } from "react-redux";
 export default function HeaderCards() {
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
+  const token = sessionStorage.getItem("Token");
   const visitorDataFn = async () => {
     try {
       const BusinessId = user?.data?.businessId;
-      const res = await visitorData(BusinessId);
+      const res = await visitorData(BusinessId, token);
       console.log("res visitor", res);
       setVisitor(res?.data);
     } catch (error) {
@@ -84,7 +85,7 @@ export default function HeaderCards() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  18,925
+                  {visitor?.totalEmployees}
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">

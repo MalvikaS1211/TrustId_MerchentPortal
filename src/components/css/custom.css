@@ -45,7 +45,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 80vh;
+  background-color: #fff;
 }
 
 .dropdownArrow {
@@ -78,4 +79,57 @@ select option:hover {
   justify-content: center;
   align-items: center;
   height: 60vh;
+}
+
+@media (min-width: 550px) and (max-width: 639px) {
+  .business-container {
+    width: 80% !important;
+  }
+}
+@media (max-width: 639px) {
+  .business-container {
+    min-height: 100vh !important;
+  }
+}
+
+@media (min-width: 639px) and (max-width: 1100px) {
+  .business-container {
+    width: 50% !important;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1350px) {
+  .business-container {
+    width: 50% !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .business-qr-container {
+    padding: 30px;
+  }
+}
+
+body .rdt_Pagination select {
+  background-color: #fff !important;
+}
+
+.category-item:hover {
+  background-color: #f6eee3 !important;
+}
+
+[data-theme="dark"] .text-secondary {
+  color: #d8bd9f;
+}
+[data-theme="dark"] .hover\:text-secondary:hover {
+  --tw-text-opacity: 1;
+  color: #d8bd9f;
+}
+
+[data-theme="dark"] .text-secondary {
+  color: #d8bd9f;
+}
+
+[data-theme="dark"] .business-container {
+  background-color: #2d3238;
+  color: #2d3238;
 }

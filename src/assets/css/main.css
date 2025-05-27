@@ -299,16 +299,17 @@ small {
 }
 
 .btn.btn-primary {
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
+  background-color: transparent;
   border: 1px solid var(--primary);
-  color: var(--white);
+  color: black;
 }
 
 .btn.btn-secondary {
   /* background-color: var(--grey); */
-  background: linear-gradient(145deg, #4c3575, #e05170);
-  border: 1px solid var(--grey);
-  color: var(--white);
+  background: var(--button-bg);
+  /* border: 1px solid var(--grey);
+  color: var(--white); */
 }
 
 .btn.btn-danger {

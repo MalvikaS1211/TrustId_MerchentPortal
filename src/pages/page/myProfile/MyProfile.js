@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 export default function MyProfile() {
   const [editProfileSidebar, setEditProfileSidebar] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
+  const businessId = user?.data?.businessId;
   const AddedBusiness = sessionStorage.getItem("BusinessAdd");
   const sessionId = sessionStorage.getItem("SessionId");
   const userid = sessionStorage.getItem("UserId");
@@ -142,7 +143,7 @@ export default function MyProfile() {
                 {AddedBusiness && (
                   <div className="business-qr-container">
                     <div className="sm:w-[160px] sm:h-[160px] sm:min-w-[160px] w-[100px] h-[100px] min-w-[100px] object-cover rounded-xl business-qr-sub-container">
-                      <QRCodeCanvas value={user?.data?.businessId} />
+                      <QRCodeCanvas value={businessId} />
                     </div>
                   </div>
                 )}

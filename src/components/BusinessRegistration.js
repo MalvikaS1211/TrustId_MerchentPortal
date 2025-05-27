@@ -9,11 +9,10 @@ export default function BusinessRegistration() {
   const [address, setAddress] = useState("");
   const [owner, setOwner] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-
+  const token = sessionStorage.getItem("Token");
   const handleSubmit = async () => {
     try {
       const userId = sessionStorage.getItem("UserId");
-      const Token = sessionStorage.getItem("Token");
 
       const res = await addBusiness(
         userId,
@@ -22,21 +21,33 @@ export default function BusinessRegistration() {
         address,
         owner,
         phoneNumber,
-        Token
+        token
       );
-      toast.success("Business Added Successfully");
-      setBusinessName("");
-      setAddress("");
-      setOwner("");
-      setPhoneNumber("");
-      setCategory("");
+
+      if (res?.status === 200) {
+        toast.success("Business Added Successfully");
+        console.log("message in add business", res?.message);
+        setBusinessName("");
+        setAddress("");
+        setOwner("");
+        setPhoneNumber("");
+        setCategory("");
+      } else {
+        toast.error(res?.message || "Something went wrong.");
+      }
     } catch (error) {
-      console.log("Error in submit", error);
+      const message =
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong. Please try again.";
+      toast.error(message);
+      console.error("Error in handleSubmit:", error);
     }
   };
+
   const handleCategory = async () => {
     try {
-      const res = await getCategory();
+      const res = await getCategory(token);
       // console.log(res.data, "res category");
       setCategories(res.data);
     } catch (error) {
@@ -48,7 +59,7 @@ export default function BusinessRegistration() {
   }, []);
 
   return (
-    <div className="lg:w-[30%] md:w-[30%] w-full mx-auto  bg-white rounded-lg business-container">
+    <div className="w-[100%] sm:w-[50%] md:w-[50%] lg:w-[30%] mx-auto   rounded-lg business-container min-h-[100vh] lg:min-h-[80vh] p-[10px] sm:p-0 ">
       <form className="space-y-4  content-card first-screen-content w-full p-[30px]">
         <h2 className="text-2xl font-bold mb-[32px] ">Add Business</h2>
         <div>
@@ -79,7 +90,11 @@ export default function BusinessRegistration() {
               Select a business category
             </option>
             {categories.map((item) => (
-              <option key={item._id} value={item.name}>
+              <option
+                key={item._id}
+                value={item.name}
+                className="category-item"
+              >
                 {item.name}
               </option>
             ))}

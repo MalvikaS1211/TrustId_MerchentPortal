@@ -3,9 +3,11 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import WelcomeHeader from "../../components/common/WelcomeHeader";
 import { IconBrandTwitterFilled, IconPencil } from "@tabler/icons-react";
 import { profile_av } from "../../assets/images";
+import { useSelector } from "react-redux";
 
 export default function Setting() {
   const [editUser, setEditUser] = useState(profile_av);
+  const user = useSelector((state) => state.user.userInfo);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -89,7 +91,7 @@ export default function Setting() {
                       </button>
                     </div>
                   </div>
-                  <div className="grid sm:grid-cols-[1fr_3fr] grid-cols-1 gap-2">
+                  {/* <div className="grid sm:grid-cols-[1fr_3fr] grid-cols-1 gap-2">
                     <label>Full Name *</label>
                     <div className="grid sm:grid-cols-2 grid-cols-1 sm:gap-4 gap-2">
                       <div className="form-control">
@@ -97,7 +99,7 @@ export default function Setting() {
                           type="text"
                           className="form-input"
                           placeholder="Chris"
-                          defaultValue="Chris"
+                          defaultValue={user.data?.name}
                         />
                       </div>
                       <div className="form-control">
@@ -108,6 +110,19 @@ export default function Setting() {
                           defaultValue="Morise"
                         />
                       </div>
+                    </div>
+                    
+                  </div> */}
+
+                  <div className="grid sm:grid-cols-[1fr_3fr] grid-cols-1 gap-2">
+                    <label>Full Name *</label>
+                    <div className="form-control">
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder={user.data?.name}
+                        defaultValue={user.data?.name}
+                      />
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-[1fr_3fr] grid-cols-1 gap-2">
@@ -127,8 +142,8 @@ export default function Setting() {
                       <input
                         type="text"
                         className="form-input"
-                        placeholder="+01 (741) 852 123"
-                        defaultValue="+01 (741) 852 123"
+                        placeholder={user?.data?.mobileNumber}
+                        defaultValue={user?.data?.mobileNumber}
                       />
                     </div>
                   </div>

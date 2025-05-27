@@ -4,6 +4,7 @@ import { ChromePicker } from "react-color";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import CompanyLogo from "../common/CompanyLogo";
 import Logo from "../../assets/images/TrustIdLogo.png";
+import { toggleDarkMode } from "../../Redux/darkLightThemeReducer";
 import {
   IconArrowsMaximize,
   IconWorld,
@@ -52,6 +53,7 @@ import {
   sidebarImg2,
 } from "../../assets/images";
 import { checkSession, myProfile } from "../Helper/ApiFunction";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Header({
   toggleMobileNav,
@@ -63,6 +65,8 @@ export default function Header({
 }) {
   // mini sidebar
   const [miniSidebar, setMiniSidebar] = useState(false);
+  const dispatch = useDispatch();
+  const darkMode1 = useSelector((state) => state.theme.darkMode);
   const toggleMiniSidebar = () => {
     setMiniSidebar((prev) => !prev);
   };
@@ -131,22 +135,31 @@ export default function Header({
   };
 
   // light dark mode
-  const [darkMode, setDarkMode] = useState(false);
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    document.documentElement.setAttribute(
-      "data-theme",
-      newDarkMode ? "dark" : "light"
-    );
+  // const [darkMode, setDarkMode] = useState(false);
+  // const toggleDarkMode = () => {
+  //   const newDarkMode = !darkMode;
+  //   setDarkMode(newDarkMode);
+  //   document.documentElement.setAttribute(
+  //     "data-theme",
+  //     newDarkMode ? "dark" : "light"
+  //   );
+  // };
+  // useEffect(() => {
+  //   document.documentElement.setAttribute(
+  //     "data-theme",
+  //     darkMode ? "dark" : "light"
+  //   );
+  // }, [darkMode]);
+
+  const handleToggleDarkMode = () => {
+    dispatch(toggleDarkMode());
   };
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
-      darkMode ? "dark" : "light"
+      darkMode1 ? "dark" : "light"
     );
-  }, [darkMode]);
-
+  }, [darkMode1]);
   // rtl mode
   const [rtlMode, setRtlMode] = useState(false);
   const toggleRtlMode = () => {
@@ -859,7 +872,8 @@ export default function Header({
               <IconMessage className="stroke-[1.5] w-[20px] h-[20px]" />
             </button>
             <button
-              onClick={toggleDarkMode}
+              // onClick={toggleDarkMode}
+              onClick={handleToggleDarkMode}
               className="md:py-2 md:px-3 p-2 hover:bg-primary-10 transition-all duration-300"
             >
               <IconMoonStars className="stroke-[1.5] xl:w-[24px] xl:h-[24px] w-[20px] h-[20px]" />

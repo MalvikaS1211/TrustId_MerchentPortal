@@ -64,13 +64,17 @@ export async function registerFace(userId, descriptor) {
   }
 }
 
-export async function getCategory() {
+export async function getCategory(token) {
   try {
-    const response = await axios.get(`${URLApi}/fetch-category`);
+    const response = await axios.get(`${URLApi}/fetch-category`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response.data;
   } catch (error) {
-    console.log("Error getCategory :", error);
+    console.log("Error getCategory:", error);
   }
 }
 
@@ -113,6 +117,7 @@ export async function addBusiness(
     return response.data;
   } catch (error) {
     console.log("Error addBusiness :", error);
+    throw error;
   }
 }
 export async function myProfile(userId, token) {
@@ -150,7 +155,7 @@ export async function businessQR(userId) {
   }
 }
 
-export async function KycTranscations(businessId, page = 1, limit = 50, token) {
+export async function KycTranscations(businessId, page, limit, token) {
   try {
     const response = await axios.get(`${URLApi}/token-transfers-userdata`, {
       params: {
@@ -171,11 +176,15 @@ export async function KycTranscations(businessId, page = 1, limit = 50, token) {
   }
 }
 
-export async function visitorData(businessId) {
+export async function visitorData(businessId, token) {
   try {
     const response = await axios.get(`${URLApi}/VistorCount-dashborad`, {
       params: {
         businessId,
+      },
+
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -187,28 +196,46 @@ export async function visitorData(businessId) {
   }
 }
 
-export async function addEmployee(userId, businessId, mobile_Number) {
+export async function addEmployee(userId, businessId, mobile_Number, token) {
   try {
-    const response = await axios.post(`${URLApi}/add-employee`, {
-      userId,
-      businessId,
-      mobile_Number,
-    });
+    const response = await axios.post(
+      `${URLApi}/add-employee`,
+      {
+        userId,
+        businessId,
+        mobile_Number,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log(userId, businessId, mobile_Number, ":::Employee");
     return response.data;
   } catch (error) {
-    console.log(" Error in addEmployee:", error);
-    return null;
+    console.log("Error in addEmployee:", error);
+    throw error;
   }
 }
 
-export async function getEmployeeData(businessId) {
+export async function getEmployeeData(businessId, token, page, limit) {
   try {
-    const response = await axios.get(`${URLApi}/employees-by-businessId`, {
-      params: {
-        businessId,
+    const response = await axios.get(
+      `${URLApi}/employees-by-businessId`,
+      {
+        params: {
+          businessId,
+          page,
+          limit,
+        },
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     console.log(response.data, "in getEmployeeData");
     return response.data;

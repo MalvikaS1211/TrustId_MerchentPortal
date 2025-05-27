@@ -1,51 +1,3 @@
-// import React from "react";
-// import Breadcrumb from "./common/Breadcrumb";
-
-// export default function TeamManagement() {
-//     // const []
-//   const breadcrumbItem = [
-//     {
-//       name: "Team Management",
-//     },
-//   ];
-//   return (
-//     <>
-//       <div className="md:px-6 sm:px-3 pt-4">
-//         <div className="container-fluid">
-//           <Breadcrumb breadcrumbItem={breadcrumbItem} />
-//           <div className="lg:w-[30%] md:w-[30%] w-full mx-auto  bg-white rounded-lg business-container min-h-[70vh]">
-//             <form className="space-y-4  content-card first-screen-content w-full p-[30px]">
-//               <h2 className="text-2xl font-bold mb-[32px] ">Add Employee</h2>
-//               <div>
-//                 <label className="block text-sm font-medium mb-1">
-//                   Mobile Number
-//                 </label>
-//                 <input
-//                   type="text"
-//                   name="businessName"
-//                   //   value={businessName}
-//                   //   onChange={(e) => setBusinessName(e.target.value)}
-//                   className="bn-textField-input w-full"
-//                   placeholder="Enter your business name"
-//                   required
-//                 />
-//               </div>
-
-//               <button
-//                 type="button"
-//                 // onClick={handleSubmit}
-//                 className="bn-button bn-button__primary data-size-large w-full mt-[30px]"
-//               >
-//                 Submit
-//               </button>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
@@ -75,6 +27,7 @@ import { addEmployee, getEmployeeData } from "./Helper/ApiFunction";
 import moment from "moment";
 import ReactDataTable, { Alignment } from "react-data-table-component";
 import toast from "react-hot-toast";
+import { MdOutlineClose } from "react-icons/md";
 export default function TeamManagement() {
   const breadcrumbItem = [
     // {
@@ -89,30 +42,36 @@ export default function TeamManagement() {
   const [showMobileForm, setShowMobileForm] = useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
   const user = useSelector((state) => state.user.userInfo);
-  const [KYCTransactions, setKYCTransactions] = useState([]);
+  const [totalEmployee, setTotalEmployee] = useState(0);
   const [employeeData, setEmployeeData] = useState([]);
+  const [isFetch, setIsFetch] = useState(false);
+  const token = sessionStorage.getItem("Token");
+  const businessId = user?.data?.businessId;
+  const userId = user?.data?.userId;
+  const [totalData, setTotalData] = useState(0);
   const addEmp = async () => {
-    const businessId = user?.data?.businessId;
-    const userId = user?.data?.userId;
-
-    // if (!userId || !businessId || !mobileNumber) {
-    //   toast.error("Missing required information.");
-    //   return;
-    // }
-
     try {
-      const res = await addEmployee(userId, businessId, mobileNumber);
+      if (!businessId) {
+        return;
+      }
+      const res = await addEmployee(userId, businessId, mobileNumber, token);
 
       if (res?.status === true) {
         console.log("handle AddEmployee", res);
         toast.success("Employee added successfully!");
+
         setMobileNumber("");
+        setIsFetch((prev) => !prev);
       } else {
         toast.error(res?.message || "Failed to add employee.");
       }
     } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong. Please try again.";
+      toast.error(message);
       console.error("Error in addEmp:", error);
-      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -120,10 +79,11 @@ export default function TeamManagement() {
     try {
       const BusinessId = user?.data?.businessId;
       console.log(BusinessId, "BusinessId");
-      const res = await getEmployeeData(BusinessId);
+      const res = await getEmployeeData(BusinessId, token);
       console.log("EmployeeData", res);
       if (res?.data) {
         setEmployeeData(res.data);
+        setTotalEmployee(res?.pagination?.total);
       } else {
         setEmployeeData([]);
       }
@@ -136,7 +96,7 @@ export default function TeamManagement() {
   useEffect(() => {
     handleData();
     console.log(employeeData, "employeeData");
-  }, [user]);
+  }, [user, isFetch]);
 
   const columnsFilter = [
     {
@@ -145,16 +105,37 @@ export default function TeamManagement() {
       width: "60px",
     },
 
+    // {
+    //   name: "Name",
+    //   selector: (row) => row.userDetails.name || "N/A",
+    //   width: "250px",
+    //   style: {
+    //     justifyContent: "flex-start",
+    //     whiteSpace: "normal",
+    //     wordWrap: "break-word",
+    //   },
+    //   wrap: true,
+    // },
     {
       name: "Name",
-      selector: (row) => row.userDetails.name || "N/A",
-      width: "250px",
-      style: {
-        justifyContent: "flex-start",
-        whiteSpace: "normal",
-        wordWrap: "break-word",
-      },
-      wrap: true,
+      selector: (row) => row.userInfo?.name,
+      width: "200px",
+      cell: (row) => (
+        <div className="flex items-center gap-2">
+          <img
+            src={
+              row.userDetails?.profileImage?.startsWith("data:image")
+                ? row.userDetails.profileImage
+                : row.userDetails?.profileImage
+                ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
+                : "/avatar2.png"
+            }
+            alt="profile"
+            className="w-[26px] h-[26px] rounded-md object-cover"
+          />
+          <span>{row.userDetails?.name || "N/A"}</span>
+        </div>
+      ),
     },
     // {
     //   name: "Business Id",
@@ -197,7 +178,7 @@ export default function TeamManagement() {
   return (
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
-        <Breadcrumb breadcrumbItem={breadcrumbItem} />{" "}
+        <Breadcrumb breadcrumbItem={breadcrumbItem} />
         {/* <WelcomeHeader income /> */}
         <div className="grid xxl:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
           <div className="card bg-card-color rounded-xl md:p-6 p-4 flex md:gap-4 gap-2 items-center border border-dashed border-border-color">
@@ -205,8 +186,10 @@ export default function TeamManagement() {
               <IconArchiveFilled />
             </div>
             <div>
-              <p className="text-font-color-100">Total Projects</p>
-              <h5 className="text-[20px]/[24px] font-medium">24</h5>
+              <p className="text-font-color-100">Total Employees</p>
+              <h5 className="text-[20px]/[24px] font-medium">
+                {totalEmployee}
+              </h5>
             </div>
           </div>
           <div className="card bg-card-color rounded-xl md:p-6 p-4 flex md:gap-4 gap-2 items-center border border-dashed border-border-color">
@@ -245,33 +228,32 @@ export default function TeamManagement() {
             </div>
           </div>
         </div>
-        {employeeData.length >= 0 && (
-          <div className="flex justify-end ">
-            <img
-              src={plus}
-              alt="Plus icon"
-              width={40}
-              className="pointer"
-              onClick={() => setOpen(true)}
-            ></img>
-          </div>
-        )}
-        <div className="react-data-table">
-          <ReactDataTable columns={columnsFilter} data={employeeData} />
+        <div
+          className={
+            employeeData.length === 0 ? "plus-container" : "flex justify-end"
+          }
+        >
+          <img
+            src={plus}
+            alt="Plus icon"
+            width={employeeData.length === 0 ? 60 : 40}
+            style={{ cursor: "pointer", padding: "10px 0px" }}
+            onClick={() => setOpen(true)}
+          />
         </div>
-        {employeeData.length == 0 && (
-          <div className="plus-container">
-            <img
-              src={plus}
-              alt="Plus icon"
-              width={60}
-              className="pointer"
-              onClick={() => setOpen(true)}
-            ></img>
-          </div>
-        )}
+        {/* <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
+          Team Management
+          <span className="inline-block font-bold ms-1">({totalEmployee})</span>
+        </h5> */}
+        <div className="react-data-table">
+          <ReactDataTable
+            columns={columnsFilter}
+            data={employeeData}
+            noDataComponent={<></>}
+          />
+        </div>
         {open && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative">
               <button
                 onClick={() => {
@@ -281,7 +263,7 @@ export default function TeamManagement() {
                 }}
                 className="absolute top-2 right-3 text-gray-500 text-xl font-bold"
               >
-                ✕
+                <MdOutlineClose />
               </button>
 
               {/* Main Menu */}
@@ -331,7 +313,11 @@ export default function TeamManagement() {
                     <button
                       type="button"
                       className="bn-button bn-button__primary w-full mt-4"
-                      onClick={addEmp}
+                      onClick={() => {
+                        addEmp();
+                        setOpen(false);
+                        setShowMobileForm(false);
+                      }}
                     >
                       Submit
                     </button>
@@ -348,7 +334,7 @@ export default function TeamManagement() {
                   <div className="flex justify-center">
                     <div className="business-qr-container">
                       <div className="sm:w-[160px] sm:h-[160px] sm:min-w-[160px] w-[100px] h-[100px] min-w-[100px] object-cover rounded-xl business-qr-sub-container">
-                        <QRCodeCanvas value={user?.data?.businessId || "N/A"} />
+                        <QRCodeCanvas value={businessId || "N/A"} />
                       </div>
                     </div>
                   </div>

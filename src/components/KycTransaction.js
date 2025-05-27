@@ -130,24 +130,22 @@ import Breadcrumb from "./common/Breadcrumb";
 export default function KYCTransaction() {
   const user = useSelector((state) => state.user.userInfo);
   const [KYCTransactions, setKYCTransactions] = useState([]);
-  const [totalData, setTotalData] = useState([]);
+  const [totalData, setTotalData] = useState(0);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
   const token = sessionStorage.getItem("Token");
-  const handleData = async () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(10); // default rows per page
+
+  const handleData = async (page = 1, limit) => {
     try {
       const BusinessId = user?.data?.businessId;
-      if (!BusinessId) {
-        console.warn("Business ID is missing");
-        return;
-      }
+      if (!BusinessId) return;
 
-      const page = 1;
-      const limit = 50;
       const res = await KycTranscations(BusinessId, page, limit, token);
-
       if (res?.data) {
         setKYCTransactions(res.data);
         setTotalData(res?.pagination?.totalRecords);
+        setCurrentPage(page);
       } else {
         setKYCTransactions([]);
       }
@@ -156,15 +154,22 @@ export default function KYCTransaction() {
       setKYCTransactions([]);
     }
   };
+  const handlePageChange = (page) => {
+    handleData(page, limit);
+  };
 
+  const handleRowsPerPageChange = (newLimit, page) => {
+    setLimit(newLimit);
+    handleData(page, newLimit);
+  };
   useEffect(() => {
-    handleData();
+    handleData(currentPage, limit);
     console.log(KYCTransactions, "KYCTransactions");
   }, [user]);
   const columnsFilter = [
     {
       name: "Sr",
-      selector: (row, index) => index + 1,
+      selector: (row, index) => (currentPage - 1) * limit + index + 1,
       width: "60px",
     },
     {
@@ -238,17 +243,21 @@ export default function KYCTransaction() {
       selector: (row) => row.device || "",
       width: "160px",
     },
+
     {
       name: "Visitor Type",
-      selector: (row) =>
-        row.firstTime == true
-          ? "New Visitor"
-          : row.firstTime == false
-          ? "Loop Visitor"
-          : "N/A",
+      selector: (row) => {
+        if (row.employee === false) {
+          if (row.firstTime === true) return "New Visitor";
+          if (row.firstTime === false) return "Loop Visitor";
+        }
+        if (row.employee === true) return "Employee";
 
+        return "N/A";
+      },
       width: "150px",
     },
+
     {
       name: "Coordinator",
       selector: (row) =>
@@ -310,6 +319,7 @@ export default function KYCTransaction() {
       name: "KYC Transaction",
     },
   ];
+
   return (
     <>
       <div className="md:px-6 sm:px-3 pt-4">
@@ -325,16 +335,18 @@ export default function KYCTransaction() {
             KYC Transaction
             <span className="inline-block font-bold ms-1">({totalData})</span>
           </h5>
-          {/* <button
-        onClick={() => setOpen(true)}
-        className="bg-blue-600  px-4 py-2 rounded"
-      >
-        Show My Location
-      </button> */}
 
-          <div className="react-data-table">
-            <ReactDataTable columns={columnsFilter} data={KYCTransactions} />
-          </div>
+          <ReactDataTable
+            columns={columnsFilter}
+            data={KYCTransactions}
+            pagination
+            paginationServer
+            paginationTotalRows={totalData}
+            paginationPerPage={limit}
+            paginationDefaultPage={currentPage}
+            onChangePage={handlePageChange}
+            onChangeRowsPerPage={handleRowsPerPageChange}
+          />
 
           {/* map modal */}
           {open && selectedCoordinates && (
