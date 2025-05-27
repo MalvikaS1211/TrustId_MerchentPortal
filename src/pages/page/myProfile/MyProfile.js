@@ -25,7 +25,7 @@ export default function MyProfile() {
   const [editProfileSidebar, setEditProfileSidebar] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
   const businessId = user?.data?.businessId;
-  const AddedBusiness = sessionStorage.getItem("BusinessAdd");
+  const AddedBusiness = user?.data?.businessAdd;
   const sessionId = sessionStorage.getItem("SessionId");
   const userid = sessionStorage.getItem("UserId");
   const [businessQRCode, setBusinessQRCode] = useState("");

@@ -1,3 +1,12 @@
+:root {
+  --primary-color: #f6eee3;
+  --color-line: #d9bda5;
+  --spacing-unit: 8px;
+  --button-bg: #d9bda5;
+  --primary-text-dark: #d9bda5;
+  --background-dark: #2d3238;
+  --dark-brown: #734116;
+}
 .qr-container {
   width: fit-content;
 }
@@ -32,11 +41,11 @@
 }
 
 .text-brown {
-  color: #734116 !important;
+  color: var(--dark-brown) !important;
 }
 .before\:text-brown::before {
   content: var(--tw-content);
-  background-color: #734116;
+  background-color: var(--dark-brown);
 }
 
 /* business registration */
@@ -81,6 +90,10 @@ select option:hover {
   height: 60vh;
 }
 
+.modal-container {
+  background-color: #fff;
+}
+
 @media (min-width: 550px) and (max-width: 639px) {
   .business-container {
     width: 80% !important;
@@ -118,18 +131,42 @@ body .rdt_Pagination select {
 }
 
 [data-theme="dark"] .text-secondary {
-  color: #d8bd9f;
+  color: var(--primary-text-dark);
 }
 [data-theme="dark"] .hover\:text-secondary:hover {
   --tw-text-opacity: 1;
-  color: #d8bd9f;
+  color: var(--primary-text-dark);
 }
 
 [data-theme="dark"] .text-secondary {
-  color: #d8bd9f;
+  color: var(--primary-text-dark);
 }
 
 [data-theme="dark"] .business-container {
-  background-color: #2d3238;
-  color: #2d3238;
+  background-color: var(--background-dark);
+  color: var(--background-dark);
+}
+
+[data-theme="dark"] .card-bg {
+  color: var(--background-dark);
+}
+.modal-container {
+  background-color: #fff;
+}
+[data-theme="dark"] .modal-container {
+  background-color: var(--background-dark);
+}
+.stroke-primary {
+  stroke: var(--dark-brown);
+}
+
+[data-theme="dark"] .stroke-primary {
+  stroke: var(--primary-text-dark);
+}
+
+[data-theme="dark"] body .rdt_Pagination select {
+  background-color: var(--background-dark) !important;
+}
+[data-theme="dark"] .text-brown {
+  color: var(--primary-text-dark) !important;
 }

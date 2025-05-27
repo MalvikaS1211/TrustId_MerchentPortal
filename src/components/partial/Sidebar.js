@@ -137,10 +137,10 @@ export default function Sidebar({
   useEffect(() => {
     const fetchProfile = async () => {
       const userId = sessionStorage.getItem("UserId");
-      const token = sessionStorage.getItem("token");
+      const token = sessionStorage.getItem("Token");
 
       const data = await myProfile(userId, token);
-      sessionStorage.setItem("BusinessAdd", data?.data?.businessAdd);
+      // sessionStorage.setItem("BusinessAdd", data?.data?.businessAdd);
 
       console.log(data, "my::::::");
       if (data) {

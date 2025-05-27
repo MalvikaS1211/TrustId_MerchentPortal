@@ -14,7 +14,7 @@ export default function Footer({ className }) {
       <div className="container-fluid flex items-center justify-between gap-15 md:flex-row flex-col md:text-[16px]/[24px] text-[14px]/[20px]">
         <p className="text-font-color-100 text-center">
           © {CurrentYear}{" "}
-          <Link to="/" className="text-primary">
+          <Link to="/" className="text-brown">
             Trust ID
           </Link>
           , All Rights Reserved.

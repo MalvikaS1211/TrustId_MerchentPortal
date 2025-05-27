@@ -159,12 +159,32 @@ export default function TeamManagement() {
     //   },
     //   wrap: true,
     // },
+    // {
+    //   name: "Date of Joining",
+    //   selector: (row) =>
+    //     row.joiningDate
+    //       ? moment(row.joiningDate).format("DD-MM-YYYY HH:MM A")
+    //       : "N/A",
+    //   width: "250px",
+    //   style: {
+    //     justifyContent: "flex-start",
+    //     whiteSpace: "normal",
+    //     wordWrap: "break-word",
+    //   },
+    //   wrap: true,
+    // },
     {
-      name: "Date of Joining",
-      selector: (row) =>
-        row.joiningDate
-          ? moment(row.joiningDate).format("DD-MM-YYYY HH:MM A")
+      name: "Phone",
+      selector: (row) => row.userDetails.mobileNumber,
+      width: "140px",
+      cell: (row) =>
+        row.userDetails.mobileNumber
+          ? row.userDetails.mobileNumber.replace(/.(?=.{4})/g, "*")
           : "N/A",
+    },
+    {
+      name: "Address",
+      selector: (row) => row.userDetails.fullAddress || "N/A",
       width: "250px",
       style: {
         justifyContent: "flex-start",
@@ -197,7 +217,7 @@ export default function TeamManagement() {
               <IconLayout2Filled />
             </div>
             <div>
-              <p className="text-font-color-100">Completed Projects</p>
+              <p className="text-font-color-100">Total Visitors</p>
               <h5 className="text-[20px]/[24px] font-medium">22</h5>
             </div>
           </div>
@@ -206,7 +226,7 @@ export default function TeamManagement() {
               <IconFileFilled />
             </div>
             <div>
-              <p className="text-font-color-100">Pending Projects</p>
+              <p className="text-font-color-100">Total Monthly Visitors</p>
               <h5 className="text-[20px]/[24px] font-medium">06</h5>
             </div>
           </div>
@@ -254,7 +274,7 @@ export default function TeamManagement() {
         </div>
         {open && (
           <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative">
+            <div className=" rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative modal-container">
               <button
                 onClick={() => {
                   setOpen(false);
