@@ -66,7 +66,7 @@
 }
 
 select option:hover {
-  background-color: #d9bda5 !important;
+  background-color: var(--primary-text-dark) !important;
 }
 
 /* my profile */
@@ -74,7 +74,7 @@ select option:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #d9bda5;
+  background: var(--primary-text-dark);
   border-radius: 10px;
 }
 .business-qr-sub-container {
@@ -92,6 +92,17 @@ select option:hover {
 
 .modal-container {
   background-color: #fff;
+  border-radius: 18px;
+}
+.stroke-primary {
+  stroke: var(--dark-brown);
+}
+
+.content-card select option:hover {
+  background-color: #734116 !important;
+}
+.content-card select {
+  color: #adadac;
 }
 
 @media (min-width: 550px) and (max-width: 639px) {
@@ -120,6 +131,11 @@ select option:hover {
   .business-qr-container {
     padding: 30px;
   }
+  .modal-container {
+    padding: 25px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
 }
 
 body .rdt_Pagination select {
@@ -129,44 +145,95 @@ body .rdt_Pagination select {
 .category-item:hover {
   background-color: #f6eee3 !important;
 }
+[data-theme="dark"] {
+  .text-secondary {
+    color: var(--primary-text-dark);
+  }
+  .hover\:text-secondary:hover {
+    --tw-text-opacity: 1;
+    color: var(--primary-text-dark);
+  }
+  .text-secondary {
+    color: var(--primary-text-dark);
+  }
+  .business-container {
+    background-color: var(--background-dark);
+    color: var(--background-dark);
+  }
+  .card-bg {
+    color: var(--background-dark);
+  }
+  .modal-container {
+    background-color: var(--background-dark);
+  }
+  .stroke-primary {
+    stroke: var(--primary-text-dark);
+  }
+  body .rdt_Pagination select {
+    background-color: var(--background-dark) !important;
+  }
+  .text-brown {
+    color: var(--primary-text-dark) !important;
+  }
+  .btn-secondary,
+  .content-card select option {
+    color: black;
+  }
+  .btn-primary {
+    color: #fff;
+    border: 1px solid var(--primary-text-dark);
+  }
+  .content-card {
+    background-color: #24282e;
+    color: #fff;
+  }
+  .content-card input,
+  .content-card select,
+  .content-card textarea {
+    background-color: transparent;
+  }
+  .content-card select {
+    border: 1px solid var(--primary-text-dark) !important;
+  }
+  .content-card select:active {
+    border: 1px solid var(--primary-text-dark) !important;
+  }
+  .bn-button {
+    color: black;
+  }
+  .bg-secondary {
+    background-color: var(--primary-text-dark);
+    color: black;
+  }
+  body .rdt_Table,
+  body .rdt_TableHeadRow,
+  body .rdt_TableRow,
+  body .rdt_ExpanderRow {
+    background-color: transparent;
+    color: #fff;
+  }
+  .ejfNUe {
+    background-color: transparent;
+    color: #fff;
+  }
 
-[data-theme="dark"] .text-secondary {
-  color: var(--primary-text-dark);
-}
-[data-theme="dark"] .hover\:text-secondary:hover {
-  --tw-text-opacity: 1;
-  color: var(--primary-text-dark);
-}
+  .content-card select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #24282e;
+    color: #fff;
+  }
 
-[data-theme="dark"] .text-secondary {
-  color: var(--primary-text-dark);
-}
-
-[data-theme="dark"] .business-container {
-  background-color: var(--background-dark);
-  color: var(--background-dark);
-}
-
-[data-theme="dark"] .card-bg {
-  color: var(--background-dark);
-}
-.modal-container {
-  background-color: #fff;
-}
-[data-theme="dark"] .modal-container {
-  background-color: var(--background-dark);
-}
-.stroke-primary {
-  stroke: var(--dark-brown);
-}
-
-[data-theme="dark"] .stroke-primary {
-  stroke: var(--primary-text-dark);
-}
-
-[data-theme="dark"] body .rdt_Pagination select {
-  background-color: var(--background-dark) !important;
-}
-[data-theme="dark"] .text-brown {
-  color: var(--primary-text-dark) !important;
+  .content-card select option {
+    background-color: #24282e;
+    color: #fff;
+  }
+  .content-card select option:hover {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    color: #24282e;
+  }
 }

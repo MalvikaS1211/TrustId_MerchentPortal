@@ -133,7 +133,7 @@ export default function Sidebar({
       }
     });
   }, [pageUrl, data]);
-  const [myProfileData, setMyprofileData] = useState({});
+
   useEffect(() => {
     const fetchProfile = async () => {
       const userId = sessionStorage.getItem("UserId");
@@ -151,7 +151,7 @@ export default function Sidebar({
     fetchProfile();
   }, [dispatch]);
 
-  const handleLogin = () => {
+  const handleLogout = () => {
     sessionStorage.removeItem("Token");
     sessionStorage.removeItem("UserId");
     sessionStorage.removeItem("Login");
@@ -372,7 +372,7 @@ export default function Sidebar({
           to="/auth-signin"
           title="Log Out"
           className="transition-all duration-300 hover:text-secondary"
-          onClick={handleLogin}
+          onClick={handleLogout}
         >
           <IconPower className="stroke-[1.5] w-[20px] h-[20px]" />
         </Link>

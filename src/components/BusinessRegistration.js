@@ -11,9 +11,17 @@ export default function BusinessRegistration() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const token = sessionStorage.getItem("Token");
   const handleSubmit = async () => {
-    try {
-      const userId = sessionStorage.getItem("UserId");
+    const userId = sessionStorage.getItem("UserId");
 
+    const clearForm = () => {
+      setBusinessName("");
+      setAddress("");
+      setOwner("");
+      setPhoneNumber("");
+      setCategory("");
+    };
+
+    try {
       const res = await addBusiness(
         userId,
         category,
@@ -27,28 +35,24 @@ export default function BusinessRegistration() {
       if (res?.status === 200) {
         toast.success("Business Added Successfully");
         console.log("message in add business", res?.message);
-        setBusinessName("");
-        setAddress("");
-        setOwner("");
-        setPhoneNumber("");
-        setCategory("");
       } else {
         toast.error(res?.message || "Something went wrong.");
       }
     } catch (error) {
       const message =
         error?.response?.data?.message ||
-        error.message ||
+        error?.message ||
         "Something went wrong. Please try again.";
       toast.error(message);
       console.error("Error in handleSubmit:", error);
+    } finally {
+      clearForm();
     }
   };
 
   const handleCategory = async () => {
     try {
       const res = await getCategory(token);
-      // console.log(res.data, "res category");
       setCategories(res.data);
     } catch (error) {
       console.log("error in category", error);
@@ -60,10 +64,10 @@ export default function BusinessRegistration() {
 
   return (
     <div className="w-[100%] sm:w-[50%] md:w-[50%] lg:w-[30%] mx-auto   rounded-lg business-container min-h-[100vh] lg:min-h-[80vh] p-[10px] sm:p-0 ">
-      <form className="space-y-4  content-card first-screen-content w-full p-[30px]">
+      <form className="space-y-4  content-card first-screen-content w-full p-[30px]  shadow-2xl p-6">
         <h2 className="text-2xl font-bold mb-[32px] ">Add Business</h2>
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-3">
             Business Name
           </label>
           <input
@@ -78,7 +82,7 @@ export default function BusinessRegistration() {
         </div>
 
         <div className="relative w-full">
-          <label className="block text-sm font-medium mb-1">Category</label>
+          <label className="block text-sm font-medium mb-3">Category</label>
           <select
             name="category"
             value={category}
@@ -100,13 +104,13 @@ export default function BusinessRegistration() {
             ))}
           </select>
 
-          <div className="pointer-events-none absolute right-3 top-9 text-gray-400">
+          <div className="pointer-events-none absolute right-3 top-[47px] text-gray-400">
             <IoIosArrowDown />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Address</label>
+          <label className="block text-sm font-medium mb-3">Address</label>
           <textarea
             type="textarea"
             name="address"
@@ -119,7 +123,7 @@ export default function BusinessRegistration() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Owner</label>
+          <label className="block text-sm font-medium mb-3">Owner</label>
           <input
             type="text"
             name="owner"
@@ -132,7 +136,7 @@ export default function BusinessRegistration() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Phone Number</label>
+          <label className="block text-sm font-medium mb-3">Phone Number</label>
           <input
             type="tel"
             name="phoneNumber"

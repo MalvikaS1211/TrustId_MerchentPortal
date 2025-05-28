@@ -23,7 +23,11 @@ import plus from "../assets/images/plus.png";
 import Breadcrumb from "./common/Breadcrumb";
 import { QRCodeCanvas } from "qrcode.react";
 import { useSelector } from "react-redux";
-import { addEmployee, getEmployeeData } from "./Helper/ApiFunction";
+import {
+  addEmployee,
+  getBusinessVisitors,
+  getEmployeeData,
+} from "./Helper/ApiFunction";
 import moment from "moment";
 import ReactDataTable, { Alignment } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -48,10 +52,14 @@ export default function TeamManagement() {
   const token = sessionStorage.getItem("Token");
   const businessId = user?.data?.businessId;
   const userId = user?.data?.userId;
-  const [totalData, setTotalData] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [visitors, setVisitors] = useState(0);
   const addEmp = async () => {
     try {
       if (!businessId) {
+        toast.error("Business ID is required");
+        setMobileNumber("");
         return;
       }
       const res = await addEmployee(userId, businessId, mobileNumber, token);
@@ -59,8 +67,6 @@ export default function TeamManagement() {
       if (res?.status === true) {
         console.log("handle AddEmployee", res);
         toast.success("Employee added successfully!");
-
-        setMobileNumber("");
         setIsFetch((prev) => !prev);
       } else {
         toast.error(res?.message || "Failed to add employee.");
@@ -68,40 +74,49 @@ export default function TeamManagement() {
     } catch (error) {
       const message =
         error?.response?.data?.message ||
-        error.message ||
+        error?.message ||
         "Something went wrong. Please try again.";
-      toast.error(message);
       console.error("Error in addEmp:", error);
+      toast.error(message);
+    } finally {
+      setMobileNumber("");
     }
   };
 
-  const handleData = async () => {
+  const handleData = async (currentPage, limit) => {
     try {
       const BusinessId = user?.data?.businessId;
-      console.log(BusinessId, "BusinessId");
-      const res = await getEmployeeData(BusinessId, token);
-      console.log("EmployeeData", res);
+      const res = await getEmployeeData(BusinessId, token, currentPage, limit);
       if (res?.data) {
         setEmployeeData(res.data);
-        setTotalEmployee(res?.pagination?.total);
+        setTotalEmployee(res?.pagination?.total); // Make sure your API returns total
       } else {
         setEmployeeData([]);
       }
     } catch (error) {
-      console.error("Error fetching KYC data:", error);
+      console.error("Error fetching employee data:", error);
       setEmployeeData([]);
     }
   };
-
+  const Visitors = async () => {
+    try {
+      const res = await getBusinessVisitors(businessId);
+      setVisitors(res);
+      console.log(res, "visitors");
+    } catch (error) {
+      console.log("error in visitors", error);
+    }
+  };
   useEffect(() => {
-    handleData();
+    Visitors();
+    handleData(currentPage, limit);
     console.log(employeeData, "employeeData");
-  }, [user, isFetch]);
+  }, [user, isFetch, currentPage, limit]);
 
   const columnsFilter = [
     {
       name: "Sr",
-      selector: (row, index) => index + 1,
+      selector: (row, index) => (currentPage - 1) * limit + index + 1,
       width: "60px",
     },
 
@@ -218,7 +233,9 @@ export default function TeamManagement() {
             </div>
             <div>
               <p className="text-font-color-100">Total Visitors</p>
-              <h5 className="text-[20px]/[24px] font-medium">22</h5>
+              <h5 className="text-[20px]/[24px] font-medium">
+                {visitors?.data?.total_visitors}
+              </h5>
             </div>
           </div>
           <div className="card bg-card-color rounded-xl md:p-6 p-4 flex md:gap-4 gap-2 items-center border border-dashed border-border-color">
@@ -227,7 +244,9 @@ export default function TeamManagement() {
             </div>
             <div>
               <p className="text-font-color-100">Total Monthly Visitors</p>
-              <h5 className="text-[20px]/[24px] font-medium">06</h5>
+              <h5 className="text-[20px]/[24px] font-medium">
+                {visitors?.data?.monthly_visitors}
+              </h5>
             </div>
           </div>
           <div className="card bg-card-color rounded-xl md:p-6 p-4 border border-dashed border-border-color">
@@ -270,11 +289,31 @@ export default function TeamManagement() {
             columns={columnsFilter}
             data={employeeData}
             noDataComponent={<></>}
+            pagination
+            paginationServer
+            paginationTotalRows={totalEmployee}
+            paginationPerPage={limit}
+            onChangePage={(page) => setCurrentPage(page)}
+            onChangeRowsPerPage={(newPerPage, page) => {
+              setLimit(newPerPage);
+              setCurrentPage(page);
+            }}
           />
         </div>
         {open && (
-          <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50">
-            <div className=" rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative modal-container">
+          <div
+            className="fixed inset-0 backdrop-blur-sm bg-[#00000030]/40 flex items-center justify-center z-50 p-4"
+            onClick={(e) => {
+              if (e.target.classList.contains("modal-overlay")) {
+                setOpen(false);
+                setShowMobileForm(false);
+                setShowScanQR(false);
+              }
+            }}
+          >
+            <div className="modal-overlay absolute inset-0" />
+
+            <div className="rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative modal-container z-10 ">
               <button
                 onClick={() => {
                   setOpen(false);

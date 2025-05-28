@@ -162,12 +162,12 @@
 }
 
 .custom-scrollbar {
-  scrollbar-color: var(--card-color) var(--card-color);
+  scrollbar-color: var(--color-line) var(--card-color);
   scrollbar-width: thin;
 }
 
 .custom-scrollbar:hover {
-  scrollbar-color: #734116 var(--card-color);
+  scrollbar-color: var(--color-line) var(--card-color);
 }
 
 .container-fluid {

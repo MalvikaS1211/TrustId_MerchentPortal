@@ -11,26 +11,7 @@ import { checkSession, myProfile } from "../Helper/ApiFunction";
 import { useSelector } from "react-redux";
 
 export default function WelcomeHeader({ report, income }) {
-  const [userData, setUserData] = useState({});
   const user = useSelector((state) => state.user.userInfo);
-
-  const handleData = async () => {
-    // const sessionId = sessionStorage.getItem("SessionId");
-    // if (sessionId) {
-    //   const res = await checkSession(sessionId);
-    //   setUserData(res?.userInfo);
-    //   console.log(res?.userInfo, "handleData");
-    // }
-    const userId = sessionStorage.getItem("UserId");
-    const token = sessionStorage.getItem("Token");
-
-    const res = await myProfile(userId, token);
-    console.log(res, "handleData");
-    setUserData(res?.data);
-  };
-  useEffect(() => {
-    handleData();
-  }, []);
 
   return (
     <div className="flex md:items-center md:justify-between md:flex-row flex-col gap-15 md:mb-12 mb-6">

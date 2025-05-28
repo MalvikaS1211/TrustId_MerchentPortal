@@ -244,3 +244,19 @@ export async function getEmployeeData(businessId, token, page, limit) {
     return null;
   }
 }
+
+export async function getBusinessVisitors(businessId) {
+  try {
+    const response = await axios.get(`${URLApi}/business-visitor-management`, {
+      params: {
+        businessId,
+      },
+    });
+
+    console.log(response.data, "in getEmployeeData");
+    return response.data;
+  } catch (error) {
+    console.log("Error in getEmployeeData:", error);
+    return null;
+  }
+}

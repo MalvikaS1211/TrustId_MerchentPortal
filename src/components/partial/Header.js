@@ -67,6 +67,7 @@ export default function Header({
   const [miniSidebar, setMiniSidebar] = useState(false);
   const dispatch = useDispatch();
   const darkMode1 = useSelector((state) => state.theme.darkMode);
+  const user = useSelector((state) => state.user.userInfo);
   const toggleMiniSidebar = () => {
     setMiniSidebar((prev) => !prev);
   };
@@ -288,29 +289,13 @@ export default function Header({
       document.removeEventListener("click", handleClickOutside);
     };
   }, [searchBar]);
-  const handleLogin = () => {
+  const handleLogout = () => {
     sessionStorage.removeItem("Token");
     sessionStorage.removeItem("UserId");
     sessionStorage.removeItem("Login");
     sessionStorage.removeItem("SessionId");
   };
 
-  const [userData, setUserData] = useState({});
-  const handleData = async () => {
-    // const sessionId = sessionStorage.getItem("SessionId");
-    // const res = await checkSession(sessionId);
-    // setUserData(res?.userInfo);
-    // console.log(res?.userInfo, "handleData");
-    const userId = sessionStorage.getItem("UserId");
-    const token = sessionStorage.getItem("Token");
-
-    const res = await myProfile(userId, token);
-    console.log(res, "handleData");
-    setUserData(res?.data);
-  };
-  useEffect(() => {
-    handleData();
-  }, []);
   const colorItem = [
     {
       name: "indigo",
@@ -430,7 +415,7 @@ export default function Header({
           <div className="flex items-center gap-3 sm:pe-4 pe-2">
             <button
               onClick={toggleMiniSidebar}
-              className="xl:flex hidden items-center justify-center w-[36px] h-[36px] min-w-[36px] text-primary bg-primary-10 rounded-full"
+              className="xl:flex hidden items-center justify-center w-[36px] h-[36px] min-w-[36px] text-brown bg-primary-10 rounded-full"
             >
               <IconArrowBigLeftFilled
                 className={`transition-all ${
@@ -890,7 +875,7 @@ export default function Header({
               </button>
               <div className="bg-card-color text-font-color rounded-xl overflow-hidden md:w-[240px] w-[calc(100%-30px)] shadow-shadow-lg md:absolute fixed md:end-0 end-15 md:top-full top-[55px] origin-top-right rtl:origin-top-left z-[1] opacity-0 invisible scale-0 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:scale-100">
                 <div className="p-4 border-b border-border-color">
-                  <div className="font-semibold">{userData?.name}</div>
+                  <div className="font-semibold">{user?.data?.name}</div>
                   <div className="text-font-color-100">
                     alliegrater@luno.com
                   </div>
@@ -936,7 +921,7 @@ export default function Header({
                 <Link
                   to="auth-signin"
                   className="bg-secondary uppercase text-[14px]/[20px] text-white py-5 px-10 text-center w-full inline-block"
-                  onClick={handleLogin}
+                  onClick={handleLogout}
                 >
                   Sign Out
                 </Link>
