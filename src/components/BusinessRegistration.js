@@ -64,7 +64,7 @@ export default function BusinessRegistration() {
 
   return (
     <div className="w-[100%] sm:w-[50%] md:w-[50%] lg:w-[30%] mx-auto   rounded-lg business-container min-h-[100vh] lg:min-h-[80vh] p-[10px] sm:p-0 ">
-      <form className="space-y-4  content-card first-screen-content w-full p-[30px]  shadow-2xl p-6">
+      <form className="space-y-4  content-card first-screen-content w-full p-[30px]   p-6">
         <h2 className="text-2xl font-bold mb-[32px] ">Add Business</h2>
         <div>
           <label className="block text-sm font-medium mb-3">

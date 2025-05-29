@@ -34,7 +34,9 @@
   width: 425px;
   min-height: 580px;
   background-color: var(--primary-color);
+  /* background-color: #fff; */
   border: 1px solid var(--color-line);
+  /* border: 1px solid #24282e40; */
 }
 
 .bn-formItem {
@@ -109,6 +111,7 @@
 .bn-textField-input {
   padding: 10px;
   border: 1px solid var(--color-line);
+  /* border: 1px solid #24282e40; */
   border-radius: 10px;
 }
 .bn-textField__line {
