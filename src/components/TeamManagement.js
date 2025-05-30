@@ -85,8 +85,7 @@ export default function TeamManagement() {
 
   const handleData = async (currentPage, limit) => {
     try {
-      const BusinessId = user?.data?.businessId;
-      const res = await getEmployeeData(BusinessId, token, currentPage, limit);
+      const res = await getEmployeeData(businessId, token, currentPage, limit);
       if (res?.data) {
         setEmployeeData(res.data);
         setTotalEmployee(res?.pagination?.total); // Make sure your API returns total
@@ -100,15 +99,25 @@ export default function TeamManagement() {
   };
   const Visitors = async () => {
     try {
+      // if (!businessId) {
+      //   toast.error("Business ID is required");
+      //   setMobileNumber("");
+      //   return;
+      // }
       const res = await getBusinessVisitors(businessId);
-      setVisitors(res);
-      console.log(res, "visitors");
+      if (res?.success === true) {
+        setVisitors(res);
+        console.log(res, "visitors");
+      }
     } catch (error) {
       console.log("error in visitors", error);
     }
   };
   useEffect(() => {
     Visitors();
+  }, [businessId]);
+
+  useEffect(() => {
     handleData(currentPage, limit);
     console.log(employeeData, "employeeData");
   }, [user, isFetch, currentPage, limit]);
