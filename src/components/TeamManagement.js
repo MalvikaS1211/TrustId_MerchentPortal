@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
@@ -58,6 +58,27 @@ export default function TeamManagement() {
   const [visitors, setVisitors] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [debounceTimer, setDebounceTimer] = useState(null);
+
+
+  const debounceSearch = useCallback((value) => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    const timer = setTimeout(() => {
+      setCurrentPage(1);
+      handleData(1, limit, value);
+    }, 500);
+
+    setDebounceTimer(timer);
+
+
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [debounceTimer, limit]);
 
   const addEmp = async () => {
     try {
@@ -109,10 +130,15 @@ export default function TeamManagement() {
   };
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const value = e.target.value;
+    setSearchQuery(value);
+    debounceSearch(value);
   };
 
   const executeSearch = () => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
     setCurrentPage(1);
     handleData(1, limit, searchQuery);
   };
@@ -146,7 +172,16 @@ export default function TeamManagement() {
 
   useEffect(() => {
     handleData(currentPage, limit, searchQuery);
-  }, [user, isFetch, currentPage, limit, searchQuery]);
+  }, [user, isFetch, currentPage, limit]);
+
+  useEffect(() => {
+    // Cleanup debounce timer on component unmount
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [debounceTimer]);
 
   const columnsFilter = [
     {
