@@ -59,27 +59,27 @@ export default function TeamManagement() {
   const [visitors, setVisitors] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [debounceTimer, setDebounceTimer] = useState(null);
+  // const [debounceTimer, setDebounceTimer] = useState(null);
 
 
-  const debounceSearch = useCallback((value) => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    const timer = setTimeout(() => {
-      setCurrentPage(1);
-      handleData(1, limit, value);
-    }, 500);
+  // const debounceSearch = useCallback((value) => {
+  //   if (debounceTimer) {
+  //     clearTimeout(debounceTimer);
+  //   }
+  //   const timer = setTimeout(() => {
+  //     setCurrentPage(1);
+  //     handleData(1, limit, value);
+  //   }, 500);
 
-    setDebounceTimer(timer);
+  //   setDebounceTimer(timer);
 
 
-    return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
-      }
-    };
-  }, [debounceTimer, limit]);
+  //   return () => {
+  //     if (debounceTimer) {
+  //       clearTimeout(debounceTimer);
+  //     }
+  //   };
+  // }, [debounceTimer, limit]);
 
   const addEmp = async () => {
     try {
