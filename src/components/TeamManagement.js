@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
@@ -32,6 +32,7 @@ import moment from "moment";
 import ReactDataTable, { Alignment } from "react-data-table-component";
 import toast from "react-hot-toast";
 import { MdOutlineClose } from "react-icons/md";
+import { debounce } from "lodash";
 
 export default function TeamManagement() {
   const breadcrumbItem = [
@@ -87,42 +88,69 @@ export default function TeamManagement() {
     }
   };
 
-  const handleData = async (page, limit, query = "") => {
-    try {
-      setIsSearching(true);
-      const res = await getEmployeeData(businessId, token, page, limit, query);
-
-      if (res?.status !== false) {
-        setEmployeeData(res.data || []);
-        setTotalEmployee(res?.pagination?.total || 0);
-      } else {
-        setEmployeeData([]);
-        setTotalEmployee(0);
-      }
-    } catch (error) {
-      console.error("Error fetching employee data:", error);
-      setEmployeeData([]);
-      setTotalEmployee(0);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
   const executeSearch = () => {
     setCurrentPage(1);
     handleData(1, limit, searchQuery);
   };
 
+  const handleData = useCallback(
+    async (page, limit, query = "") => {
+      try {
+        setIsSearching(true);
+        const res = await getEmployeeData(
+          businessId,
+          token,
+          page,
+          limit,
+          query
+        );
+
+        if (res?.status !== false) {
+          setEmployeeData(res.data || []);
+          setTotalEmployee(res?.pagination?.total || 0);
+        } else {
+          setEmployeeData([]);
+          setTotalEmployee(0);
+        }
+      } catch (error) {
+        console.error("Error fetching employee data:", error);
+        setEmployeeData([]);
+        setTotalEmployee(0);
+      } finally {
+        setIsSearching(false);
+      }
+    },
+    [businessId, token]
+  );
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((query) => {
+        setCurrentPage(1);
+        handleData(1, limit, query);
+      }, 700),
+    [handleData, limit]
+  );
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    debouncedSearch(value);
+  };
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      executeSearch();
+      debouncedSearch.cancel();
+      setCurrentPage(1);
+      handleData(1, limit, searchQuery);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
   const Visitors = async () => {
     try {
       // if (!businessId) {
@@ -146,7 +174,7 @@ export default function TeamManagement() {
 
   useEffect(() => {
     handleData(currentPage, limit, searchQuery);
-  }, [user, isFetch, currentPage, limit, searchQuery]);
+  }, [user, isFetch, currentPage, limit]);
 
   const columnsFilter = [
     {
