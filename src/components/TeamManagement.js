@@ -244,7 +244,12 @@ export default function TeamManagement() {
       wrap: true,
     },
   ];
-
+  const CustomLoader = () => (
+    <div className="my-custom-loader">
+      <span className="spinner" />
+      <p>Loading employees...</p>
+    </div>
+  );
   return (
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
@@ -307,7 +312,7 @@ export default function TeamManagement() {
             </div>
           </div>
         </div>
-        {/* <div
+        <div
           className={
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
           }
@@ -319,8 +324,8 @@ export default function TeamManagement() {
             <span className="text-sm font-medium">Add Employee</span>
             <img src={plus} alt="Plus icon" className="w-7 h-7" />
           </button>
-        </div> */}
-        <div
+        </div>
+        {/* <div
           className={
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
           }
@@ -332,7 +337,7 @@ export default function TeamManagement() {
             style={{ cursor: "pointer", padding: "10px 0px" }}
             onClick={() => setOpen(true)}
           />
-        </div>
+        </div> */}
         {/* <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
           Team Management
           <span className="inline-block font-bold ms-1">({totalEmployee})</span>
@@ -346,6 +351,7 @@ export default function TeamManagement() {
                 {isSearching ? "Searching..." : "No employees found"}
               </div>
             }
+            progressComponent={<CustomLoader />}
             progressPending={isSearching}
             pagination
             paginationServer
