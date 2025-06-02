@@ -245,26 +245,29 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
 //     return null;
 //   }
 // }
-export async function getEmployeeData(businessId, token, page = 1, limit = 10, searchQuery = "") {
+export async function getEmployeeData(
+  businessId,
+  token,
+  page = 1,
+  limit = 10,
+  searchQuery = ""
+) {
   try {
     const params = {
       businessId: businessId,
       page: page,
-      limit: limit
+      limit: limit,
     };
     if (searchQuery && searchQuery.trim() !== "") {
       params.searchQuery = searchQuery.trim();
     }
 
-    const response = await axios.get(
-      `${URLApi}/employees-by-businessId`,
-      {
-        params: params,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${URLApi}/employees-by-businessId`, {
+      params: params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     console.log(response.data, "in getEmployeeData");
     return response.data;
@@ -278,8 +281,8 @@ export async function getEmployeeData(businessId, token, page = 1, limit = 10, s
         total: 0,
         page: 1,
         limit: 10,
-        totalPages: 0
-      }
+        totalPages: 0,
+      },
     };
   }
 }

@@ -118,7 +118,7 @@ export default function TeamManagement() {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       executeSearch();
     }
   };
@@ -312,6 +312,19 @@ export default function TeamManagement() {
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
           }
         >
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center mt-3 gap-2 border border-dashed border-border-color text-font-color-100 px-4 py-2 rounded-xl transition cursor-pointer"
+          >
+            <span className="text-sm font-medium">Add Employee</span>
+            <img src={plus} alt="Plus icon" className="w-7 h-7" />
+          </button>
+        </div> */}
+        <div
+          className={
+            employeeData.length === 0 ? "plus-container" : "flex justify-end"
+          }
+        >
           <img
             src={plus}
             alt="Plus icon"
@@ -320,7 +333,7 @@ export default function TeamManagement() {
             onClick={() => setOpen(true)}
           />
 
-        </div> */}
+        </div>
         <div className={employeeData.length === 0 ? "plus-container" : "flex justify-end"}>
           <button
             onClick={() => setOpen(true)}
