@@ -146,7 +146,7 @@ export default function TeamManagement() {
 
   useEffect(() => {
     handleData(currentPage, limit, searchQuery);
-  }, [user, isFetch, currentPage, limit]);
+  }, [user, isFetch, currentPage, limit, searchQuery]);
 
   const columnsFilter = [
     {
@@ -155,17 +155,6 @@ export default function TeamManagement() {
       width: "60px",
     },
 
-    // {
-    //   name: "Name",
-    //   selector: (row) => row.userDetails.name || "N/A",
-    //   width: "250px",
-    //   style: {
-    //     justifyContent: "flex-start",
-    //     whiteSpace: "normal",
-    //     wordWrap: "break-word",
-    //   },
-    //   wrap: true,
-    // },
     {
       name: "Name",
       selector: (row) => row.userInfo?.name,
@@ -187,42 +176,7 @@ export default function TeamManagement() {
         </div>
       ),
     },
-    // {
-    //   name: "Business Id",
-    //   selector: (row) => row.businessId || "N/A",
-    //   width: "250px",
-    //   style: {
-    //     justifyContent: "flex-start",
-    //     whiteSpace: "normal",
-    //     wordWrap: "break-word",
-    //   },
-    //   wrap: true,
-    // },
-    // {
-    //   name: "Business Id",
-    //   selector: (row) => row.businessName || "N/A",
-    //   width: "250px",
-    //   style: {
-    //     justifyContent: "flex-start",
-    //     whiteSpace: "normal",
-    //     wordWrap: "break-word",
-    //   },
-    //   wrap: true,
-    // },
-    // {
-    //   name: "Date of Joining",
-    //   selector: (row) =>
-    //     row.joiningDate
-    //       ? moment(row.joiningDate).format("DD-MM-YYYY HH:MM A")
-    //       : "N/A",
-    //   width: "250px",
-    //   style: {
-    //     justifyContent: "flex-start",
-    //     whiteSpace: "normal",
-    //     wordWrap: "break-word",
-    //   },
-    //   wrap: true,
-    // },
+
     {
       name: "Phone",
       selector: (row) => row.userDetails.mobileNumber,
@@ -312,7 +266,7 @@ export default function TeamManagement() {
             </div>
           </div>
         </div>
-        <div
+        {/* <div
           className={
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
           }
@@ -324,8 +278,8 @@ export default function TeamManagement() {
             <span className="text-sm font-medium">Add Employee</span>
             <img src={plus} alt="Plus icon" className="w-7 h-7" />
           </button>
-        </div>
-        {/* <div
+        </div> */}
+        <div
           className={
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
           }
@@ -337,7 +291,7 @@ export default function TeamManagement() {
             style={{ cursor: "pointer", padding: "10px 0px" }}
             onClick={() => setOpen(true)}
           />
-        </div> */}
+        </div>
         {/* <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
           Team Management
           <span className="inline-block font-bold ms-1">({totalEmployee})</span>
