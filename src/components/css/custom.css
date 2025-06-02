@@ -38,6 +38,7 @@
 
 .btn-bg {
   background-color: var(--color-line);
+  color: black;
 }
 
 .text-brown {
@@ -54,7 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  /* min-height: 80vh; */
   background-color: #fff;
 }
 
@@ -147,6 +148,36 @@ body .rdt_Pagination select {
 .category-item:hover {
   background-color: #f6eee3 !important;
 }
+.heading-addBusiness {
+  color: #d9bda5;
+}
+
+.content-card-business {
+  padding: 20px;
+  border-radius: 24px;
+  width: 500px;
+  min-height: 580px;
+  /* background-color: var(--primary-color); */
+  background-color: #fff;
+  /* border: 1px solid var(--color-line); */
+  border: 1px solid #24282e40;
+}
+.bn-textField-input-business {
+  padding: 10px;
+  /* border: 1px solid var(--color-line); */
+  border: 1px solid #24282e40;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 468px) {
+  .content-card {
+    /* padding: 0px; */
+
+    width: 100%;
+    min-height: auto;
+    border: 1px solid var(--color-line);
+  }
+}
 [data-theme="dark"] {
   .text-secondary {
     color: var(--primary-text-dark);
@@ -237,5 +268,47 @@ body .rdt_Pagination select {
     appearance: none;
     background-color: #fff;
     color: #24282e;
+  }
+
+  .content-card-business select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #24282e;
+    color: #fff;
+  }
+
+  .content-card-business select option {
+    background-color: #24282e;
+    color: #fff;
+  }
+  .content-card-business select option:hover {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    color: #24282e;
+  }
+
+  .content-card-business select option {
+    color: black;
+  }
+
+  .content-card-business {
+    background-color: #24282e;
+    color: #fff;
+    border: 1px solid #4c4c4c;
+  }
+  .content-card-business input,
+  .content-card-business select,
+  .content-card-business textarea {
+    background-color: transparent;
+    border: 1px solid #4c4c4c;
+  }
+  .content-card-business select {
+    border: 1px solid var(--primary-text-dark) !important;
+  }
+  .content-card-business select:active {
+    border: 1px solid var(--primary-text-dark) !important;
   }
 }

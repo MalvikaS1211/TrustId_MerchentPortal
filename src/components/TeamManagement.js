@@ -32,6 +32,7 @@ import moment from "moment";
 import ReactDataTable, { Alignment } from "react-data-table-component";
 import toast from "react-hot-toast";
 import { MdOutlineClose } from "react-icons/md";
+
 export default function TeamManagement() {
   const breadcrumbItem = [
     // {
@@ -55,6 +56,9 @@ export default function TeamManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [visitors, setVisitors] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   const addEmp = async () => {
     try {
       if (!businessId) {
@@ -83,20 +87,42 @@ export default function TeamManagement() {
     }
   };
 
-  const handleData = async (currentPage, limit) => {
+  const handleData = async (page, limit, query = "") => {
     try {
-      const res = await getEmployeeData(businessId, token, currentPage, limit);
-      if (res?.data) {
-        setEmployeeData(res.data);
-        setTotalEmployee(res?.pagination?.total); // Make sure your API returns total
+      setIsSearching(true);
+      const res = await getEmployeeData(businessId, token, page, limit, query);
+
+      if (res?.status !== false) {
+        setEmployeeData(res.data || []);
+        setTotalEmployee(res?.pagination?.total || 0);
       } else {
         setEmployeeData([]);
+        setTotalEmployee(0);
       }
     } catch (error) {
       console.error("Error fetching employee data:", error);
       setEmployeeData([]);
+      setTotalEmployee(0);
+    } finally {
+      setIsSearching(false);
     }
   };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const executeSearch = () => {
+    setCurrentPage(1);
+    handleData(1, limit, searchQuery);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      executeSearch();
+    }
+  };
+
   const Visitors = async () => {
     try {
       // if (!businessId) {
@@ -113,13 +139,13 @@ export default function TeamManagement() {
       console.log("error in visitors", error);
     }
   };
+
   useEffect(() => {
     Visitors();
   }, [businessId]);
 
   useEffect(() => {
-    handleData(currentPage, limit);
-    console.log(employeeData, "employeeData");
+    handleData(currentPage, limit, searchQuery);
   }, [user, isFetch, currentPage, limit]);
 
   const columnsFilter = [
@@ -232,7 +258,7 @@ export default function TeamManagement() {
             <div>
               <p className="text-font-color-100">Total Employees</p>
               <h5 className="text-[20px]/[24px] font-medium">
-                {totalEmployee}
+                {visitors?.data?.total_employees}
               </h5>
             </div>
           </div>
@@ -265,17 +291,35 @@ export default function TeamManagement() {
                 type="text"
                 id="team_board_search"
                 className="form-input !rounded-e-none !py-[6px]"
-                placeholder="Search..."
+                placeholder="Search by name or mobile..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onKeyPress={handleKeyPress}
               />
               <button
                 className="btn border border-border-color !rounded-s-none"
                 type="button"
+                onClick={executeSearch}
+                disabled={isSearching}
               >
                 <IconSearch className="w-[20px] h-[20px]" />
               </button>
             </div>
           </div>
         </div>
+        {/* <div
+          className={
+            employeeData.length === 0 ? "plus-container" : "flex justify-end"
+          }
+        >
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center mt-3 gap-2 border border-dashed border-border-color text-font-color-100 px-4 py-2 rounded-xl transition cursor-pointer"
+          >
+            <span className="text-sm font-medium">Add Employee</span>
+            <img src={plus} alt="Plus icon" className="w-7 h-7" />
+          </button>
+        </div> */}
         <div
           className={
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
@@ -297,15 +341,24 @@ export default function TeamManagement() {
           <ReactDataTable
             columns={columnsFilter}
             data={employeeData}
-            noDataComponent={<></>}
+            noDataComponent={
+              <div className="py-4 text-center">
+                {isSearching ? "Searching..." : "No employees found"}
+              </div>
+            }
+            progressPending={isSearching}
             pagination
             paginationServer
             paginationTotalRows={totalEmployee}
             paginationPerPage={limit}
-            onChangePage={(page) => setCurrentPage(page)}
+            onChangePage={(page) => {
+              setCurrentPage(page);
+              handleData(page, limit, searchQuery);
+            }}
             onChangeRowsPerPage={(newPerPage, page) => {
               setLimit(newPerPage);
               setCurrentPage(page);
+              handleData(page, newPerPage, searchQuery);
             }}
           />
         </div>

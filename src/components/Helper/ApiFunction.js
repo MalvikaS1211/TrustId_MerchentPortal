@@ -219,32 +219,73 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
   }
 }
 
-export async function getEmployeeData(businessId, token, page, limit) {
+// export async function getEmployeeData(businessId, token, page, limit, searchQuery) {
+//   try {
+//     const response = await axios.get(
+//       `${URLApi}/employees-by-businessId`,
+//       {
+//         params: {
+//           businessId,
+//           page,
+//           limit,
+//           searchQuery
+//         },
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+
+//     console.log(response.data, "in getEmployeeData");
+//     return response.data;
+//   } catch (error) {
+//     console.log("Error in getEmployeeData:", error);
+//     return null;
+//   }
+// }
+export async function getEmployeeData(
+  businessId,
+  token,
+  page = 1,
+  limit = 10,
+  searchQuery = ""
+) {
   try {
-    const response = await axios.get(
-      `${URLApi}/employees-by-businessId`,
-      {
-        params: {
-          businessId,
-          page,
-          limit,
-        },
+    const params = {
+      businessId: businessId,
+      page: page,
+      limit: limit,
+    };
+    if (searchQuery && searchQuery.trim() !== "") {
+      params.searchQuery = searchQuery.trim();
+    }
+
+    const response = await axios.get(`${URLApi}/employees-by-businessId`, {
+      params: params,
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    });
 
     console.log(response.data, "in getEmployeeData");
     return response.data;
   } catch (error) {
     console.log("Error in getEmployeeData:", error);
-    return null;
+    return {
+      status: false,
+      message: error.response?.data?.message || error.message,
+      data: [],
+      pagination: {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 0,
+      },
+    };
   }
 }
-
 export async function getBusinessVisitors(businessId) {
   try {
     const response = await axios.get(`${URLApi}/business-visitor-management`, {

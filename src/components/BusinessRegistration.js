@@ -63,99 +63,105 @@ export default function BusinessRegistration() {
   }, []);
 
   return (
-    <div className="w-[100%] sm:w-[50%] md:w-[50%] lg:w-[30%] mx-auto   rounded-lg business-container min-h-[100vh] lg:min-h-[80vh] p-[10px] sm:p-0 ">
-      <form className="space-y-4  content-card first-screen-content w-full p-[30px]   p-6">
-        <h2 className="text-2xl font-bold mb-[32px] ">Add Business</h2>
-        <div>
-          <label className="block text-sm font-medium mb-3">
-            Business Name
-          </label>
-          <input
-            type="text"
-            name="businessName"
-            value={businessName}
-            onChange={(e) => setBusinessName(e.target.value)}
-            className="bn-textField-input w-full"
-            placeholder="Enter your business name"
-            required
-          />
-        </div>
-
-        <div className="relative w-full">
-          <label className="block text-sm font-medium mb-3">Category</label>
-          <select
-            name="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="appearance-none bn-textField-input w-full pr-10"
-            required
-          >
-            <option value="" className="text-gray-400">
-              Select a business category
-            </option>
-            {categories.map((item) => (
-              <option
-                key={item._id}
-                value={item.name}
-                className="category-item"
-              >
-                {item.name}
-              </option>
-            ))}
-          </select>
-
-          <div className="pointer-events-none absolute right-3 top-[47px] text-gray-400">
-            <IoIosArrowDown />
+    <div className="container-fluid">
+      <div className="w-[100%] sm:w-[50%] md:w-[50%] lg:w-[30%] mx-auto   rounded-lg business-container min-h-[100vh] lg:min-h-[80vh] p-[10px] sm:p-0 ">
+        <form className="space-y-4  content-card-business first-screen-content w-full p-[30px]   p-6">
+          <h2 className="text-2xl font-bold mb-[32px] heading-addBusiness">
+            Add Business
+          </h2>
+          <div>
+            <label className="block text-sm font-medium mb-3">
+              Business Name
+            </label>
+            <input
+              type="text"
+              name="businessName"
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              className="bn-textField-input-business w-full"
+              placeholder="Enter your business name"
+              required
+            />
           </div>
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-3">Address</label>
-          <textarea
-            type="textarea"
-            name="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="bn-textField-input w-full"
-            placeholder="Enter your business address"
-            required
-          />
-        </div>
+          <div className="relative w-full">
+            <label className="block text-sm font-medium mb-3">Category</label>
+            <select
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="appearance-none bn-textField-input-business w-full pr-10"
+              required
+            >
+              <option value="" className="text-gray-400">
+                Select a business category
+              </option>
+              {categories.map((item) => (
+                <option
+                  key={item._id}
+                  value={item.name}
+                  className="category-item"
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
 
-        <div>
-          <label className="block text-sm font-medium mb-3">Owner</label>
-          <input
-            type="text"
-            name="owner"
-            value={owner}
-            onChange={(e) => setOwner(e.target.value)}
-            className="bn-textField-input w-full"
-            placeholder="Enter your business owner"
-            required
-          />
-        </div>
+            <div className="pointer-events-none absolute right-3 top-[47px] text-gray-400">
+              <IoIosArrowDown />
+            </div>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-3">Phone Number</label>
-          <input
-            type="tel"
-            name="phoneNumber"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="bn-textField-input w-full"
-            placeholder="Enter your business phone number"
-            required
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium mb-3">Address</label>
+            <textarea
+              type="textarea"
+              name="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="bn-textField-input-business w-full"
+              placeholder="Enter your business address"
+              required
+            />
+          </div>
 
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="bn-button bn-button__primary data-size-large w-full mt-[30px]"
-        >
-          Submit
-        </button>
-      </form>
+          <div>
+            <label className="block text-sm font-medium mb-3">Owner</label>
+            <input
+              type="text"
+              name="owner"
+              value={owner}
+              onChange={(e) => setOwner(e.target.value)}
+              className="bn-textField-input-business w-full"
+              placeholder="Enter your business owner"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-3">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="bn-textField-input-business w-full"
+              placeholder="Enter your business phone number"
+              required
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="bn-button bn-button__primary data-size-large w-full mt-[30px]"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
