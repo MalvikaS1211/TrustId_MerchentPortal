@@ -307,7 +307,7 @@ export default function TeamManagement() {
             </div>
           </div>
         </div>
-        <div
+        {/* <div
           className={
             employeeData.length === 0 ? "plus-container" : "flex justify-end"
           }
@@ -319,6 +319,20 @@ export default function TeamManagement() {
             style={{ cursor: "pointer", padding: "10px 0px" }}
             onClick={() => setOpen(true)}
           />
+
+        </div> */}
+        <div className={employeeData.length === 0 ? "plus-container" : "flex justify-end"}>
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center mt-3 gap-2 border border-dashed border-border-color text-font-color-100 px-4 py-2 rounded-xl transition cursor-pointer"
+          >
+            <span className="text-sm font-medium">Add Employee</span>
+            <img
+              src={plus}
+              alt="Plus icon"
+              className="w-7 h-7"
+            />
+          </button>
         </div>
         {/* <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
           Team Management
