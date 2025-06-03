@@ -61,6 +61,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 import KYCTransaction from "../components/KycTransaction";
 import TeamManagement from "../components/TeamManagement";
+import RegisterDevices from "../components/RegisterDevices";
 
 export default function Routers() {
   const RouterContent = () => {
@@ -144,6 +145,7 @@ export default function Routers() {
             <Route path="/add-business" element={<BusinessRegistration />} />
             <Route path="/kyc-transaction" element={<KYCTransaction />} />
             <Route path="/team-management" element={<TeamManagement />} />
+            <Route path="/register-devices" element={<RegisterDevices />} />
           </Route>
         </Route>
 

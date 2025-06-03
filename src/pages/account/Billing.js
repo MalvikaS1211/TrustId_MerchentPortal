@@ -27,17 +27,17 @@ export default function Billing() {
           </div>
           <div className="md:p-6 p-4">
             <h2 className="md:text-[32px]/[38px] text-[24px]/[30px] mb-2">
-              Current subscription: Pro Business (Annual){" "}
+              Current subscription: Pro Business (Annual)
             </h2>
             <p className="mb-4">
-              Your subscription has 3 (included){" "}
+              Your subscription has 3 (included)
               <code className="text-brown font-base">team members</code>. Your
-              next payment of <strong>$990</strong> (yearly) occurs on{" "}
-              <strong>April 20, 2023</strong>.{" "}
+              next payment of <strong>$990</strong> (yearly) occurs on
+              <strong>April 20, 2023</strong>.
             </p>
             <span className="text-font-color-100">
-              Thanks for choosing{" "}
-              <strong className="text-brown">ThemeMakker</strong> Admin.
+              Thanks for choosing
+              <strong className="text-brown">TrustID</strong> Admin.
             </span>
           </div>
           <div className="md:p-6 p-4 flex flex-wrap gap-4 border-t border-dashed border-border-color">

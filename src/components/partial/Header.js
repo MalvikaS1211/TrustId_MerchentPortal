@@ -903,7 +903,7 @@ export default function Header({
                     Billing
                   </Link>
                   <Link
-                    to="/page-team-board"
+                    to="/team-management"
                     className="py-2 px-4 flex items-center gap-3"
                   >
                     <IconUsersGroup className="w-[16px] h-[16px]" />
