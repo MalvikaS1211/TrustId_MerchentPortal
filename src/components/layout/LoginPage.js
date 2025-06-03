@@ -37,6 +37,19 @@ export default function LoginPage() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const handleExtension = async () => {
+    try {
+      const res = await trustid.getKYCData();
+      console.log(res, "response");
+    } catch (error) {
+      const Error =
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong!";
+      toast.error(Error);
+      console.error("Error fetching KYC data:", error);
+    }
+  };
   // Close tooltip on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -365,11 +378,12 @@ export default function LoginPage() {
                 style={{ width: "100%" }}
                 type="button"
                 data-e2e="btn-accounts-form-submit"
-                onClick={() => {
-                  trustid.getKYCData().then((res) => {
-                    console.log(res, "response ");
-                  });
-                }}
+                // onClick={() => {
+                //   trustid.getKYCData().then((res) => {
+                //     console.log(res, "response ");
+                //   });
+                // }}
+                onClick={handleExtension}
               >
                 Connect with Trust Id
               </button>
