@@ -126,7 +126,7 @@ select option:hover {
 @media (min-width: 900px) and (max-width: 1350px) {
   .business-container {
     width: 50% !important;
-    min-height: 100vh;
+    /* min-height: 100vh; */
   }
 }
 
@@ -168,7 +168,9 @@ body .rdt_Pagination select {
   border: 1px solid #24282e40;
   border-radius: 10px;
 }
-
+.content-card-business select {
+  color: #4c4c4c9e;
+}
 @media only screen and (max-width: 468px) {
   .content-card {
     /* padding: 0px; */
@@ -178,7 +180,30 @@ body .rdt_Pagination select {
     border: 1px solid var(--color-line);
   }
 }
+.map-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.42);
+  max-width: 70vw;
+}
+
+@media (min-width: 1024px) {
+  .map-container {
+    width: 70vw;
+  }
+}
+
 [data-theme="dark"] {
+  /* .map-container {
+    background-color: #24282e;
+  } */
   .my-custom-loader {
     display: flex;
     flex-direction: column;
@@ -186,6 +211,9 @@ body .rdt_Pagination select {
     padding: 20px;
     background-color: #2d3238;
     width: 100%;
+  }
+  .my-custom-loader p {
+    color: #fff;
   }
   .text-secondary {
     color: var(--primary-text-dark);
@@ -316,8 +344,20 @@ body .rdt_Pagination select {
   .content-card-business select {
     border: 1px solid var(--primary-text-dark) !important;
   }
+  .content-card-business select option {
+    background-color: #24282e;
+    color: #fff;
+  }
+
   .content-card-business select:active {
     border: 1px solid var(--primary-text-dark) !important;
+  }
+  .form-control .form-input:focus,
+  .form-control .form-textarea:focus {
+    outline: none;
+    border: 1px solid #4c4c4c;
+    color: #fff;
+    box-shadow: var(--shadow-normal);
   }
 }
 .my-custom-loader {

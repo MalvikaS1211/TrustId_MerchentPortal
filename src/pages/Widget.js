@@ -516,7 +516,7 @@ export default function Widget() {
               <h6 className="font-semibold mb-4">Skills Information</h6>
               <p className="text-font-color-100 mb-4">
                 Augue mauris dignissim arcu, ut venenatis metus ante eu orci.
-                Donec non maximus neque, ut finibus ex.{" "}
+                Donec non maximus neque, ut finibus ex.
                 <Link
                   to="#"
                   className="text-primary transition-all hover:text-secondary"
@@ -877,17 +877,17 @@ export default function Widget() {
               </div>
               <div className="md:p-6 p-4">
                 <h2 className="md:text-[32px]/[38px] text-[24px]/[30px] mb-2">
-                  Current subscription: Pro Business (Annual){" "}
+                  Current subscription: Pro Business (Annual)
                 </h2>
                 <p className="mb-4">
-                  Your subscription has 3 (included){" "}
+                  Your subscription has 3 (included)
                   <code className="text-primary font-base">team members</code>.
-                  Your next payment of <strong>$990</strong> (yearly) occurs on{" "}
-                  <strong>April 20, 2023</strong>.{" "}
+                  Your next payment of <strong>$990</strong> (yearly) occurs on
+                  <strong>April 20, 2023</strong>.
                 </p>
                 <span className="text-font-color-100">
-                  Thanks for choosing{" "}
-                  <strong className="text-primary">ThemeMakker</strong> Admin.
+                  Thanks for choosing
+                  <strong className="text-primary">Trust Id</strong> Admin.
                 </span>
               </div>
               <div className="md:p-6 p-4 flex flex-wrap gap-4 border-t border-dashed border-border-color">
@@ -927,11 +927,11 @@ export default function Widget() {
                       </h5>
                       <ul className="flex flex-wrap gap-x-6 gap-y-1 my-4">
                         <li className="flex items-center gap-2">
-                          <IconMapPin className="w-[18px] h-[18px] min-w-[18px]" />{" "}
+                          <IconMapPin className="w-[18px] h-[18px] min-w-[18px]" />
                           New York, USA
                         </li>
                         <li className="flex items-center gap-2">
-                          <IconClockHour9 className="w-[18px] h-[18px] min-w-[18px]" />{" "}
+                          <IconClockHour9 className="w-[18px] h-[18px] min-w-[18px]" />
                           Full Time
                         </li>
                       </ul>
@@ -949,11 +949,11 @@ export default function Widget() {
                       </h5>
                       <ul className="flex flex-wrap gap-x-6 gap-y-1 my-4">
                         <li className="flex items-center gap-2">
-                          <IconMapPin className="w-[18px] h-[18px] min-w-[18px]" />{" "}
+                          <IconMapPin className="w-[18px] h-[18px] min-w-[18px]" />
                           New York, USA
                         </li>
                         <li className="flex items-center gap-2">
-                          <IconClockHour9 className="w-[18px] h-[18px] min-w-[18px]" />{" "}
+                          <IconClockHour9 className="w-[18px] h-[18px] min-w-[18px]" />
                           Full Time
                         </li>
                       </ul>
@@ -971,11 +971,11 @@ export default function Widget() {
                       </h5>
                       <ul className="flex flex-wrap gap-x-6 gap-y-1 my-4">
                         <li className="flex items-center gap-2">
-                          <IconMapPin className="w-[18px] h-[18px] min-w-[18px]" />{" "}
+                          <IconMapPin className="w-[18px] h-[18px] min-w-[18px]" />
                           New York, USA
                         </li>
                         <li className="flex items-center gap-2">
-                          <IconClockHour9 className="w-[18px] h-[18px] min-w-[18px]" />{" "}
+                          <IconClockHour9 className="w-[18px] h-[18px] min-w-[18px]" />
                           Full Time
                         </li>
                       </ul>

@@ -35,6 +35,7 @@ export const menuList = [
     icon: IconDevices,
     link: "Registered Devices",
     url: "/",
+    // url: "/register-devices",
   },
 
   {

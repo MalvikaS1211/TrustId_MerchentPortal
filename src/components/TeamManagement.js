@@ -333,6 +333,7 @@ export default function TeamManagement() {
                 {isSearching ? "Searching..." : "No employees found"}
               </div>
             }
+            // noDataComponent={<></>}
             progressComponent={<CustomLoader />}
             progressPending={isSearching}
             pagination
