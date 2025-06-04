@@ -18,6 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import FaceRecognition from "./FaceRecognition";
+import TrustId from "../../trustid/trustidsdk";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showOTP, setshowOTP] = useState(false);
@@ -25,7 +26,7 @@ export default function LoginPage() {
   const [inputMobile, setInputMobile] = useState();
   const [OTP, setOTP] = useState();
   const [sendOTPBtn, setSendOTPBtn] = useState("Send OTP");
-
+  const trustid = new TrustId();
   const [showPassword, setShowPassword] = useState(false);
   const [timer, setTimer] = useState(0);
   const wrapperRef = useRef(null);
@@ -36,6 +37,19 @@ export default function LoginPage() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const handleExtension = async () => {
+    try {
+      const res = await trustid.getKYCData();
+      console.log(res, "response");
+    } catch (error) {
+      const Error =
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong!";
+      toast.error(Error);
+      console.error("Error fetching KYC data:", error);
+    }
+  };
   // Close tooltip on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -364,6 +378,12 @@ export default function LoginPage() {
                 style={{ width: "100%" }}
                 type="button"
                 data-e2e="btn-accounts-form-submit"
+                // onClick={() => {
+                //   trustid.getKYCData().then((res) => {
+                //     console.log(res, "response ");
+                //   });
+                // }}
+                onClick={handleExtension}
               >
                 Connect with Trust Id
               </button>
