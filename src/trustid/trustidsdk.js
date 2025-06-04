@@ -1,7 +1,7 @@
 import { EVENT_TYPES } from "./servicesTypes";
 
 class TrustId {
-  constructor(target = "oahcpgjniinhmeaejcbdhkponbdhodcn") {
+  constructor(target = "trustid@hnpakgifhianijcabdkhflifcinndeai") {
     this.target = target;
   }
 
@@ -49,6 +49,26 @@ class TrustId {
     });
   };
 
+  getAccessToken = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        console.log("called getAccessToken");
+        window.postMessage(
+          {
+            type: EVENT_TYPES.ACCESS_LOGIN_TOKEN,
+            target: this.target,
+          },
+          "*"
+        );
+
+        this.getResponse([EVENT_TYPES.LOGIN_TOKEN]).then(resolve).catch(reject);
+      } catch (e) {
+        console.error(e, "error in getAccessToken");
+        reject(e);
+      }
+    });
+  };
+
   getResponse = (expectedTypes) => {
     return new Promise((resolve, reject) => {
       const handler = (event) => {
@@ -62,7 +82,7 @@ class TrustId {
 
       setTimeout(() => {
         window.removeEventListener("message", handler);
-        reject(new Error("Timeout waiting for response from TrustId"));
+        // reject(new Error("Timeout waiting for response from TrustId"));
       }, 10000);
     });
   };

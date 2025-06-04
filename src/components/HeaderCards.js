@@ -17,7 +17,7 @@ export default function HeaderCards() {
     try {
       const BusinessId = user?.data?.businessId;
       const res = await visitorData(BusinessId, token);
-      console.log("res visitor", res);
+      // console.log("res visitor", res);
       setVisitor(res?.data);
     } catch (error) {
       console.log("Error in visitorData", error);

@@ -41,6 +41,7 @@ import NewProject from "../../pages/app/project/NewProject";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../Redux/reducer";
 import { myProfile } from "../Helper/ApiFunction";
+import { resetTheme, toggleDarkMode } from "../../Redux/darkLightThemeReducer";
 
 export default function Sidebar({
   setMobileNav,
@@ -156,6 +157,8 @@ export default function Sidebar({
     sessionStorage.removeItem("UserId");
     sessionStorage.removeItem("Login");
     sessionStorage.removeItem("SessionId");
+    // dispatch(resetTheme());
+    dispatch(toggleDarkMode(1));
   };
   return (
     <>

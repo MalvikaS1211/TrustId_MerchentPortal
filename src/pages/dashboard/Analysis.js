@@ -139,7 +139,7 @@ export default function Analysis() {
   const visitorDataFn = async () => {
     const BusinessId = user?.data?.businessId;
     const res = await visitorData(BusinessId, token);
-    console.log("res visitor", res);
+    // console.log("res visitor", res);
     setVisitor(res?.data);
   };
   useEffect(() => {

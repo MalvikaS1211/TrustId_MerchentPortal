@@ -359,6 +359,7 @@ export default function TeamManagement() {
                 setOpen(false);
                 setShowMobileForm(false);
                 setShowScanQR(false);
+                setMobileNumber("");
               }
             }}
           >
@@ -370,6 +371,7 @@ export default function TeamManagement() {
                   setOpen(false);
                   setShowMobileForm(false);
                   setShowScanQR(false);
+                  setMobileNumber("");
                 }}
                 className="absolute top-2 right-3 text-gray-500 text-xl font-bold"
               >
@@ -407,17 +409,25 @@ export default function TeamManagement() {
                   </h2>
                   <form className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">
+                      <label className="block text-sm font-medium mb-1 ">
                         Mobile Number
                       </label>
                       <input
-                        type="text"
+                        type="tel"
                         name="mobileNumber"
-                        className="bn-textField-input w-full"
+                        className="bn-textField-input-business w-full"
                         value={mobileNumber}
-                        onChange={(e) => setMobileNumber(e.target.value)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          // Allow only digits and max 10 characters
+                          if (/^\d{0,10}$/.test(value)) {
+                            setMobileNumber(value);
+                          }
+                        }}
                         placeholder="Enter your mobile number"
                         required
+                        inputMode="numeric"
+                        maxLength={10}
                       />
                     </div>
                     <button

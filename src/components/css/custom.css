@@ -244,19 +244,19 @@ body .rdt_Pagination select {
   .text-brown {
     color: var(--primary-text-dark) !important;
   }
-  .btn-secondary,
+  /* .btn-secondary,
   .content-card select option {
     color: black;
-  }
+  } */
   .btn-primary {
     color: #fff;
     border: 1px solid var(--primary-text-dark);
   }
-  .content-card {
+  /* .content-card {
     background-color: #24282e;
     color: #fff;
-  }
-  .content-card input,
+  } */
+  /* .content-card input,
   .content-card select,
   .content-card textarea {
     background-color: transparent;
@@ -266,7 +266,7 @@ body .rdt_Pagination select {
   }
   .content-card select:active {
     border: 1px solid var(--primary-text-dark) !important;
-  }
+  } */
   .bn-button {
     color: black;
   }
@@ -286,7 +286,7 @@ body .rdt_Pagination select {
     color: #fff;
   }
 
-  .content-card select {
+  /* .content-card select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -304,7 +304,7 @@ body .rdt_Pagination select {
     appearance: none;
     background-color: #fff;
     color: #24282e;
-  }
+  } */
 
   .content-card-business select {
     -webkit-appearance: none;
@@ -358,6 +358,20 @@ body .rdt_Pagination select {
     border: 1px solid #4c4c4c;
     color: #fff;
     box-shadow: var(--shadow-normal);
+  }
+  .bn-textField-input-business {
+    background-color: transparent;
+    border: 1px solid #4c4c4c;
+  }
+  .login-header,
+  .phone-label,
+  .send-otp-btn,
+  .or-section {
+    color: #363535;
+    border: none;
+  }
+  .country-code-div {
+    color: #363535;
   }
 }
 .my-custom-loader {
