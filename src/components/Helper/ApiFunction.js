@@ -301,3 +301,26 @@ export async function getBusinessVisitors(businessId) {
     return null;
   }
 }
+
+
+
+
+export async function visitorDataMonth(businessId, token) {
+  try {
+    const response = await axios.get(`${URLApi}/vistor-dashborad-month`, {
+      params: {
+        businessId,
+      },
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response.data, "in visitorData");
+    return response.data;
+  } catch (error) {
+    console.log("Error in visitorData:", error);
+    return null;
+  }
+}

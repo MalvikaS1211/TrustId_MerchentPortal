@@ -18,6 +18,7 @@ import {
   checkSession,
   myProfile,
   visitorData,
+  visitorDataMonth,
 } from "../../components/Helper/ApiFunction";
 import { useSelector } from "react-redux";
 
@@ -28,76 +29,76 @@ export default function Analysis() {
     },
   ];
 
-  const chartData1 = {
-    series: [
-      {
-        name: "Income",
-        data: [20, 10, 50, 30, 40, 30, 50, 60, 5, 20, 30, 20],
-      },
-      {
-        name: "Expense",
-        data: [40, 20, 30, 50, 20, 20, 20, 5, 15, 40, 40, 50],
-      },
-      {
-        name: "Revenue",
-        data: [40, 50, 10, 20, 20, 50, 10, 20, 60, 5, 20, 30],
-      },
-    ],
-    options: {
-      dataLabels: {
-        enabled: false,
-      },
-      colors: [
-        "var(--chart-color1)",
-        "var(--chart-color2)",
-        "var(--chart-color3)",
-      ],
-      chart: {
-        stacked: true,
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        x: {
-          show: false,
-        },
-      },
-      grid: {
-        borderColor: "var(--border-color)",
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-        tooltip: {
-          enabled: false,
-        },
-        axisBorder: {
-          color: "var(--border-color)",
-        },
-        axisTicks: {
-          color: "var(--border-color)",
-        },
-      },
-      yaxis: {
-        min: 0,
-        max: 100,
-        tickAmount: 10,
-      },
-    },
-  };
+  // const chartData1 = {
+  //   series: [
+  //     {
+  //       name: "NewVisitor",
+  //       data: [20, 10, 50, 30, 40, 30, 50, 60, 5, 20, 30, 20],
+  //     },
+  //     {
+  //       name: "LoopVisitor",
+  //       data: [40, 20, 30, 50, 20, 20, 20, 5, 15, 40, 40, 50],
+  //     },
+  //     {
+  //       name: "Employee",
+  //       data: [40, 50, 10, 20, 20, 50, 10, 20, 60, 5, 20, 30],
+  //     },
+  //   ],
+  //   options: {
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     colors: [
+  //       "var(--chart-color1)",
+  //       "var(--chart-color2)",
+  //       "var(--chart-color3)",
+  //     ],
+  //     chart: {
+  //       stacked: true,
+  //       toolbar: {
+  //         show: false,
+  //       },
+  //     },
+  //     tooltip: {
+  //       x: {
+  //         show: false,
+  //       },
+  //     },
+  //     grid: {
+  //       borderColor: "var(--border-color)",
+  //     },
+  //     xaxis: {
+  //       categories: [
+  //         "Jan",
+  //         "Feb",
+  //         "Mar",
+  //         "Apr",
+  //         "May",
+  //         "Jun",
+  //         "Jul",
+  //         "Aug",
+  //         "Sep",
+  //         "Oct",
+  //         "Nov",
+  //         "Dec",
+  //       ],
+  //       tooltip: {
+  //         enabled: false,
+  //       },
+  //       axisBorder: {
+  //         color: "var(--border-color)",
+  //       },
+  //       axisTicks: {
+  //         color: "var(--border-color)",
+  //       },
+  //     },
+  //     yaxis: {
+  //       min: 0,
+  //       max: 100,
+  //       tickAmount: 10,
+  //     },
+  //   },
+  // };
 
   const chartData2 = {
     series: [55, 35, 10],
@@ -136,14 +137,79 @@ export default function Analysis() {
   const token = sessionStorage.getItem("Token");
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
+  const [chartData1, setChartData1] = useState(null);
   const visitorDataFn = async () => {
     const BusinessId = user?.data?.businessId;
     const res = await visitorData(BusinessId, token);
     // console.log("res visitor", res);
     setVisitor(res?.data);
   };
+
+
+const visitorDatamonthly = async () => {
+  const BusinessId = user?.data?.businessId;
+  const res = await visitorDataMonth(BusinessId, token);
+  console.log("res visitormonth", res);
+
+  if (res?.status === 200 && Array.isArray(res?.data)) {
+    const monthlyData = res.data;
+     console.log("monthlyData", monthlyData);
+    const monthsFull = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const labels = [];
+    const newVisitorData = [];
+    const loopVisitorData = [];
+    const employeeData = [];
+
+    for (const month of monthsFull) {
+      const entry = monthlyData.find((item) => item.month === month);
+      console.log("entry", entry?.loopUsers);
+      labels.push(month.slice(0, 3)); // 'Jan', 'Feb', etc.
+      newVisitorData.push(entry ? entry.firstTimeUsers : 0);
+      loopVisitorData.push(entry ? entry.loopUsers : 0);
+      employeeData.push(entry ? entry.totalEmployees : 0);
+    }
+   console.log("employeeData", employeeData);
+    setChartData1({
+      series: [
+        { name: "NewVisitor", data: newVisitorData },
+        { name: "LoopVisitor", data: loopVisitorData },
+        { name: "Employee", data: employeeData },
+      ],
+      options: {
+        dataLabels: { enabled: false },
+        colors: [
+          "var(--chart-color1)",
+          "var(--chart-color2)",
+          "var(--chart-color3)",
+        ],
+        chart: {
+          stacked: true,
+          toolbar: { show: false },
+        },
+        tooltip: { x: { show: false } },
+        grid: { borderColor: "var(--border-color)" },
+        xaxis: {
+          categories: labels,
+          tooltip: { enabled: false },
+          axisBorder: { color: "var(--border-color)" },
+          axisTicks: { color: "var(--border-color)" },
+        },
+        yaxis: {
+          min: 0,
+          max: Math.max(...newVisitorData, ...loopVisitorData, ...employeeData) + 10, // adjust dynamically
+          tickAmount: 10,
+        },
+      },
+    });
+  }
+};
   useEffect(() => {
     visitorDataFn();
+    visitorDatamonthly()
   }, [user?.data?.businessId]);
 
   return (
@@ -265,6 +331,7 @@ export default function Analysis() {
                 <IconDots className="w-[18px] h-[18px]" />
               </button>
             </div>
+            {chartData1 && (
             <ReactApexChart
               options={chartData1.options}
               series={chartData1.series}
@@ -272,6 +339,7 @@ export default function Analysis() {
               height="280"
               className="md:px-6"
             />
+            )}
           </div>
           <div className="xxl:col-span-3 lg:col-span-4 md:col-span-6 col-span-12 card bg-card-color rounded-xl md:p-6 p-4 border border-dashed border-border-color">
             <div className="font-semibold md:mb-6 mb-4">Sales by Category</div>
