@@ -137,7 +137,6 @@ export default function Routers() {
             <Route path="/modals" element={<Modals />} />
             <Route path="/doc-overview" element={<Overview />} />
             <Route path="/privacy-policy" element={<Overview />} />
-
             <Route path="/doc-setup" element={<DevSetup />} />
             <Route path="/doc-structure" element={<FileStructure />} />
             <Route path="/doc-references" element={<References />} />

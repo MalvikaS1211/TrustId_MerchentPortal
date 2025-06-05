@@ -249,6 +249,7 @@ export default function KYCTransaction() {
             paginationDefaultPage={currentPage}
             onChangePage={handlePageChange}
             onChangeRowsPerPage={handleRowsPerPageChange}
+            noDataComponent={<></>}
           />
 
           {/* map modal */}
