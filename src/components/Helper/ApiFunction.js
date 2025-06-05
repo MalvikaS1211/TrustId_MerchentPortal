@@ -301,3 +301,38 @@ export async function getBusinessVisitors(businessId) {
     return null;
   }
 }
+
+export const Emplyoeedata = async (businessId) => {
+  try {
+    const response = await axios.get(`${URLApi}/getapi`, {
+      params: {
+        businessId,
+      },
+    });
+    console.log("response Error Emplyoeedata", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("error in getemployee", error);
+    return null;
+  }
+};
+
+export async function visitorDataMonth(businessId, token) {
+  try {
+    const response = await axios.get(`${URLApi}/vistor-dashborad-month`, {
+      params: {
+        businessId,
+      },
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response.data, "in visitorData");
+    return response.data;
+  } catch (error) {
+    console.log("Error in visitorData:", error);
+    return null;
+  }
+}
