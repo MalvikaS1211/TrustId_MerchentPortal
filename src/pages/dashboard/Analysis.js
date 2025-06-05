@@ -100,40 +100,7 @@ export default function Analysis() {
   //   },
   // };
 
-  const chartData2 = {
-    series: [55, 35, 10],
-    options: {
-      colors: [
-        "var(--chart-color1)",
-        "var(--chart-color2)",
-        "var(--chart-color3)",
-      ],
-      legend: {
-        show: true,
-        position: "bottom",
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        colors: ["var(--card-color)"],
-      },
-      plotOptions: {
-        pie: {
-          expandOnClick: true,
-          donut: {
-            labels: {
-              show: true,
-              total: {
-                show: true,
-                showAlways: true,
-              },
-            },
-          },
-        },
-      },
-    },
-  };
+ 
   const token = sessionStorage.getItem("Token");
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
@@ -145,72 +112,151 @@ export default function Analysis() {
     setVisitor(res?.data);
   };
 
+console.log(visitor, "visitor data");
+  const visitorDatamonthly = async () => {
+    const BusinessId = user?.data?.businessId;
+    const res = await visitorDataMonth(BusinessId, token);
+    console.log("res visitormonth", res);
 
-const visitorDatamonthly = async () => {
-  const BusinessId = user?.data?.businessId;
-  const res = await visitorDataMonth(BusinessId, token);
-  console.log("res visitormonth", res);
+    if (res?.status === 200 && Array.isArray(res?.data)) {
+      const monthlyData = res.data;
+      // console.log("monthlyData", monthlyData);
+      const monthsFull = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
 
-  if (res?.status === 200 && Array.isArray(res?.data)) {
-    const monthlyData = res.data;
-     console.log("monthlyData", monthlyData);
-    const monthsFull = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
+      const labels = [];
+      const newVisitorData = [];
+      const loopVisitorData = [];
+      const employeeData = [];
 
-    const labels = [];
-    const newVisitorData = [];
-    const loopVisitorData = [];
-    const employeeData = [];
-
-    for (const month of monthsFull) {
-      const entry = monthlyData.find((item) => item.month === month);
-      console.log("entry", entry?.loopUsers);
-      labels.push(month.slice(0, 3)); // 'Jan', 'Feb', etc.
-      newVisitorData.push(entry ? entry.firstTimeUsers : 0);
-      loopVisitorData.push(entry ? entry.loopUsers : 0);
-      employeeData.push(entry ? entry.totalEmployees : 0);
-    }
-   console.log("employeeData", employeeData);
-    setChartData1({
-      series: [
-        { name: "NewVisitor", data: newVisitorData },
-        { name: "LoopVisitor", data: loopVisitorData },
-        { name: "Employee", data: employeeData },
-      ],
-      options: {
-        dataLabels: { enabled: false },
-        colors: [
-          "var(--chart-color1)",
-          "var(--chart-color2)",
-          "var(--chart-color3)",
+      for (const month of monthsFull) {
+        const entry = monthlyData.find((item) => item.month === month);
+        console.log("entry", entry?.loopUsers);
+        labels.push(month.slice(0, 3)); // 'Jan', 'Feb', etc.
+        newVisitorData.push(Number(entry?.firstTimeUsers || 0));
+        loopVisitorData.push(Number(entry?.loopUsers || 0));
+        employeeData.push(Number(entry?.totalEmployees || 0));
+      }
+      //  console.log("employeeData", employeeData);
+      setChartData1({
+        series: [
+          { name: "NewVisitor", data: newVisitorData },
+          { name: "LoopVisitor", data: loopVisitorData },
+          { name: "Employee", data: employeeData },
         ],
-        chart: {
-          stacked: true,
-          toolbar: { show: false },
+        options: {
+          dataLabels: { enabled: false },
+          colors: [
+            "var(--chart-color1)",
+            "var(--chart-color2)",
+            "var(--chart-color3)",
+          ],
+          chart: {
+            stacked: true,
+            toolbar: { show: false },
+          },
+          tooltip: { x: { show: false } },
+          grid: { borderColor: "var(--border-color)" },
+          xaxis: {
+            categories: labels,
+            tooltip: { enabled: false },
+            axisBorder: { color: "var(--border-color)" },
+            axisTicks: { color: "var(--border-color)" },
+          },
+          yaxis: {
+            min: 0,
+            max: Math.max(...newVisitorData, ...loopVisitorData, ...employeeData) + 10, 
+            tickAmount: 10,
+          },
         },
-        tooltip: { x: { show: false } },
-        grid: { borderColor: "var(--border-color)" },
-        xaxis: {
-          categories: labels,
-          tooltip: { enabled: false },
-          axisBorder: { color: "var(--border-color)" },
-          axisTicks: { color: "var(--border-color)" },
-        },
-        yaxis: {
-          min: 0,
-          max: Math.max(...newVisitorData, ...loopVisitorData, ...employeeData) + 10, // adjust dynamically
-          tickAmount: 10,
-        },
-      },
-    });
-  }
-};
+      });
+    }
+  };
   useEffect(() => {
     visitorDataFn();
     visitorDatamonthly()
   }, [user?.data?.businessId]);
+
+
+  //  const chartData2 = {
+  //   series: [( name: "NewVisitor":visitor?.newUser || 0), Number(visitor?.loopVisitor || 0), Number(visitor?.totalEmployees || 0)],
+  //   options: {
+  //     colors: [
+  //       "var(--chart-color1)",
+  //       "var(--chart-color2)",
+  //       "var(--chart-color3)",
+  //     ],
+  //     legend: {
+  //       show: true,
+  //       position: "bottom",
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     stroke: {
+  //       colors: ["var(--card-color)"],
+  //     },
+  //     plotOptions: {
+  //       pie: {
+  //         expandOnClick: true,
+  //         donut: {
+  //           labels: {
+  //             show: true,
+  //             total: {
+  //               show: true,
+  //               showAlways: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // };
+
+  // console.log(chartData1, "chartData1");
+  // console.log(chartData2.series, "chartData2");
+
+  const chartData2 = {
+  series: [
+    Number(visitor?.newUser || 0),
+    Number(visitor?.loopVisitor || 0),
+    Number(visitor?.totalEmployees || 0),
+  ],
+  options: {
+    labels: ["New Visitor", "Loop Visitor", "Employee"], 
+    colors: [
+      "var(--chart-color1)",
+      "var(--chart-color2)",
+      "var(--chart-color3)",
+    ],
+    legend: {
+      show: true,
+      position: "bottom",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      colors: ["var(--card-color)"],
+    },
+    plotOptions: {
+      pie: {
+        expandOnClick: true,
+        donut: {
+          labels: {
+            show: true,
+            total: {
+              show: true,
+              showAlways: true,
+            },
+          },
+        },
+      },
+    },
+  },
+};
 
   return (
     <div className="md:px-6 sm:px-3 pt-4">
@@ -332,13 +378,13 @@ const visitorDatamonthly = async () => {
               </button>
             </div>
             {chartData1 && (
-            <ReactApexChart
-              options={chartData1.options}
-              series={chartData1.series}
-              type="bar"
-              height="280"
-              className="md:px-6"
-            />
+              <ReactApexChart
+                options={chartData1.options}
+                series={chartData1.series}
+                type="bar"
+                height="280"
+                className="md:px-6"
+              />
             )}
           </div>
           <div className="xxl:col-span-3 lg:col-span-4 md:col-span-6 col-span-12 card bg-card-color rounded-xl md:p-6 p-4 border border-dashed border-border-color">
