@@ -99,7 +99,9 @@ export default function BusinessRegistration() {
               className={`my-select ${darkMode ? "my-select--dark" : ""}`}
               classNamePrefix="my-select"
               options={options}
-              value={category}
+              value={
+                category ? options.find((opt) => opt.value === category) : null
+              }
               onChange={(selected) => setCategory(selected?.value || "")}
               menuPlacement="auto"
               menuPosition="fixed"

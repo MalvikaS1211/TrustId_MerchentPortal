@@ -301,3 +301,18 @@ export async function getBusinessVisitors(businessId) {
     return null;
   }
 }
+
+export const Emplyoeedata = async (businessId) => {
+  try {
+    const response = await axios.get(`${URLApi}/getapi`, {
+      params: {
+        businessId,
+      },
+    });
+    console.log("response Error Emplyoeedata", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("error in getemployee", error);
+    return null;
+  }
+};
