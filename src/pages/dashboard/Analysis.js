@@ -100,7 +100,6 @@ export default function Analysis() {
   //   },
   // };
 
- 
   const token = sessionStorage.getItem("Token");
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
@@ -112,7 +111,7 @@ export default function Analysis() {
     setVisitor(res?.data);
   };
 
-console.log(visitor, "visitor data");
+  console.log(visitor, "visitor data");
   const visitorDatamonthly = async () => {
     const BusinessId = user?.data?.businessId;
     const res = await visitorDataMonth(BusinessId, token);
@@ -122,8 +121,18 @@ console.log(visitor, "visitor data");
       const monthlyData = res.data;
       // console.log("monthlyData", monthlyData);
       const monthsFull = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
       ];
 
       const labels = [];
@@ -139,7 +148,7 @@ console.log(visitor, "visitor data");
         loopVisitorData.push(Number(entry?.loopUsers || 0));
         employeeData.push(Number(entry?.totalEmployees || 0));
       }
-      //  console.log("employeeData", employeeData);
+
       setChartData1({
         series: [
           { name: "NewVisitor", data: newVisitorData },
@@ -167,7 +176,9 @@ console.log(visitor, "visitor data");
           },
           yaxis: {
             min: 0,
-            max: Math.max(...newVisitorData, ...loopVisitorData, ...employeeData) + 10, 
+            max:
+              Math.max(...newVisitorData, ...loopVisitorData, ...employeeData) +
+              10,
             tickAmount: 10,
           },
         },
@@ -176,9 +187,8 @@ console.log(visitor, "visitor data");
   };
   useEffect(() => {
     visitorDataFn();
-    visitorDatamonthly()
+    visitorDatamonthly();
   }, [user?.data?.businessId]);
-
 
   //  const chartData2 = {
   //   series: [( name: "NewVisitor":visitor?.newUser || 0), Number(visitor?.loopVisitor || 0), Number(visitor?.totalEmployees || 0)],
@@ -219,44 +229,44 @@ console.log(visitor, "visitor data");
   // console.log(chartData2.series, "chartData2");
 
   const chartData2 = {
-  series: [
-    Number(visitor?.newUser || 0),
-    Number(visitor?.loopVisitor || 0),
-    Number(visitor?.totalEmployees || 0),
-  ],
-  options: {
-    labels: ["New Visitor", "Loop Visitor", "Employee"], 
-    colors: [
-      "var(--chart-color1)",
-      "var(--chart-color2)",
-      "var(--chart-color3)",
+    series: [
+      Number(visitor?.newUser || 0),
+      Number(visitor?.loopVisitor || 0),
+      Number(visitor?.totalEmployees || 0),
     ],
-    legend: {
-      show: true,
-      position: "bottom",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      colors: ["var(--card-color)"],
-    },
-    plotOptions: {
-      pie: {
-        expandOnClick: true,
-        donut: {
-          labels: {
-            show: true,
-            total: {
+    options: {
+      labels: ["New Visitor", "Loop Visitor", "Employee"],
+      colors: [
+        "var(--chart-color1)",
+        "var(--chart-color2)",
+        "var(--chart-color3)",
+      ],
+      legend: {
+        show: true,
+        position: "bottom",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        colors: ["var(--card-color)"],
+      },
+      plotOptions: {
+        pie: {
+          expandOnClick: true,
+          donut: {
+            labels: {
               show: true,
-              showAlways: true,
+              total: {
+                show: true,
+                showAlways: true,
+              },
             },
           },
         },
       },
     },
-  },
-};
+  };
 
   return (
     <div className="md:px-6 sm:px-3 pt-4">
