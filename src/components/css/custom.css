@@ -169,7 +169,7 @@ body .rdt_Pagination select {
   border-radius: 10px;
 }
 .content-card-business select {
-  color: #4c4c4c9e;
+  /* color: #4c4c4c9e; */
 }
 @media only screen and (max-width: 468px) {
   .content-card {
@@ -244,19 +244,19 @@ body .rdt_Pagination select {
   .text-brown {
     color: var(--primary-text-dark) !important;
   }
-  .btn-secondary,
+  /* .btn-secondary,
   .content-card select option {
     color: black;
-  }
+  } */
   .btn-primary {
     color: #fff;
     border: 1px solid var(--primary-text-dark);
   }
-  .content-card {
+  /* .content-card {
     background-color: #24282e;
     color: #fff;
-  }
-  .content-card input,
+  } */
+  /* .content-card input,
   .content-card select,
   .content-card textarea {
     background-color: transparent;
@@ -266,7 +266,7 @@ body .rdt_Pagination select {
   }
   .content-card select:active {
     border: 1px solid var(--primary-text-dark) !important;
-  }
+  } */
   .bn-button {
     color: black;
   }
@@ -286,7 +286,7 @@ body .rdt_Pagination select {
     color: #fff;
   }
 
-  .content-card select {
+  /* .content-card select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -304,7 +304,7 @@ body .rdt_Pagination select {
     appearance: none;
     background-color: #fff;
     color: #24282e;
-  }
+  } */
 
   .content-card-business select {
     -webkit-appearance: none;
@@ -359,6 +359,20 @@ body .rdt_Pagination select {
     color: #fff;
     box-shadow: var(--shadow-normal);
   }
+  .bn-textField-input-business {
+    background-color: transparent;
+    border: 1px solid #4c4c4c;
+  }
+  /* .login-header,
+  .phone-label,
+  .send-otp-btn,
+  .or-section {
+    color: #363535;
+    border: none;
+  }
+  .country-code-div {
+    color: #363535;
+  } */
 }
 .my-custom-loader {
   display: flex;
@@ -384,4 +398,98 @@ body .rdt_Pagination select {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* CategorySelect */
+
+.my-select__control {
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.5rem;
+  background-color: white;
+  color: #000;
+  box-shadow: none;
+  border-radius: 10px !important;
+  transition: box-shadow 0.2s ease;
+}
+
+/* Focused state on control */
+.my-select__control--is-focused {
+  border-color: #999;
+  box-shadow: 0 0 0 2px rgba(217, 189, 165, 0.6);
+}
+
+/* Value text inside the control */
+.my-select__single-value {
+  color: #000;
+}
+
+/* ────────────── Menu (the dropdown list) ────────────── */
+.my-select__menu {
+  background-color: white;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  /* ensure it layers on top */
+  z-index: 1000;
+}
+
+/* ────────────── Options (each <li> inside the menu) ────────────── */
+.my-select__option {
+  padding: 10px;
+  cursor: pointer;
+  color: black;
+  background-color: white;
+}
+
+/* Hover/focused option in light mode */
+.my-select__option--is-focused {
+  background-color: var(--button-bg) !important;
+}
+
+/* Selected option in light mode */
+.my-select__option--is-selected {
+  background-color: var(--button-bg) !important;
+  color: #000 !important;
+}
+
+.my-select--dark .my-select__control {
+  background-color: transparent;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+/* Focused control in dark mode */
+.my-select--dark .my-select__control--is-focused {
+  border-color: #777;
+  box-shadow: 0 0 0 2px rgba(217, 189, 165, 0.6);
+}
+
+/* The single‐value text in dark mode */
+.my-select--dark .my-select__single-value {
+  color: #fff;
+}
+
+/* Menu background in dark mode */
+.my-select--dark .my-select__menu {
+  background-color: #24282e !important;
+  border: 1px solid #444;
+}
+
+/* Default option background in dark mode */
+.my-select--dark .my-select__option {
+  background-color: transparent;
+  color: #fff;
+}
+
+/* Hover/focused option in dark mode */
+.my-select--dark .my-select__option--is-focused {
+  background-color: #d9bda5 !important;
+  color: #000; /* you can choose a contrasting text color if needed */
+}
+
+/* Selected option in dark mode (if you want a different “selected” shade) */
+.my-select--dark .my-select__option--is-selected {
+  background-color: #a07f64;
+  color: #fff;
 }

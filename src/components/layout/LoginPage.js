@@ -18,6 +18,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import FaceRecognition from "./FaceRecognition";
+import TrustId from "../../trustid/trustidsdk";
+import { assignWith } from "lodash";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showOTP, setshowOTP] = useState(false);
@@ -25,18 +27,58 @@ export default function LoginPage() {
   const [inputMobile, setInputMobile] = useState();
   const [OTP, setOTP] = useState();
   const [sendOTPBtn, setSendOTPBtn] = useState("Send OTP");
+  const trustid = new TrustId();
 
-  const [showPassword, setShowPassword] = useState(false);
   const [timer, setTimer] = useState(0);
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
-
+  const [connectExtension, setconnectExtension] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Close tooltip on outside click
+  const handleExtension = async () => {
+    try {
+      const resConnect = await trustid.connect();
+      const isConnected = resConnect?.data?.result?.approved;
+      console.log("resConnect", resConnect?.data?.result?.approved);
+
+      if (isConnected == true) {
+        const resToken = await trustid.getAccessToken();
+        console.log("Access token response:", resToken);
+        const res = await trustid.getKYCData();
+        console.log("KYC response:", res);
+
+        const token = resToken?.data?.result?.token;
+        console.log("token :", token);
+        const userId = res?.data?.userdata?.userId;
+        if (token && userId) {
+          sessionStorage.setItem("Token", token);
+          sessionStorage.setItem("UserId", userId);
+
+          console.log("Login successful. userId:", userId);
+          toast.success("Login Successful!");
+
+          setTimeout(() => navigate("/dashboard"), 100);
+        } else {
+          sessionStorage.removeItem("Token");
+          sessionStorage.removeItem("UserId");
+
+          console.warn("Login rejected. Missing token or userId.");
+          toast.error("Login Rejected!");
+        }
+      }
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong!";
+      toast.error(errorMessage);
+      console.error("Error during login flow:", error);
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -59,14 +101,6 @@ export default function LoginPage() {
     setshowOTP(!showOTP);
   };
   const [sessionId, setSessionId] = useState("");
-  // useEffect(() => {
-  //   const islogin = sessionStorage.getItem("Login");
-  //   console.log(islogin == "true", "islogddsin");
-  //   if (islogin == "true") {
-  //     console.log("naviogate");
-  //     navigate("/dashboard");
-  //   }
-  // }, []);
 
   const handleOTP = async () => {
     if (!phone || phone.trim().length !== 10 || !/^\d{10}$/.test(phone)) {
@@ -99,19 +133,13 @@ export default function LoginPage() {
       if (res?.status == 200) {
         sessionStorage.setItem("Token", res?.token);
         sessionStorage.setItem("UserId", res?.data?.userId);
-        sessionStorage.setItem("Login", true);
+        // sessionStorage.setItem("Login", true);
         // sessionStorage.setItem("businessAdd", res?.data?.businessAdd);
 
         console.log("UserId", res?.data?.userId);
         toast.success(res.message);
         setshowOTPSection(false);
-        // console.log(res?.data?.businessAdd, "businessAdd");
 
-        // if (res?.data?.businessAdd === true) {
-        //   navigate("/");
-        // } else {
-        //   navigate("/add-business");
-        // }
         navigate("/dashboard");
       } else {
         toast.error(res.message);
@@ -184,7 +212,7 @@ export default function LoginPage() {
               <div class="icon-wrap">
                 <img src={Logo} alt="Logo" width="13%"></img>
               </div>
-              <div className="flex justify-between items-center mb-8">
+              <div className="flex justify-between items-center mb-8 login-header">
                 <div
                   className="card-page-title !mb-0"
                   role="heading"
@@ -254,7 +282,7 @@ export default function LoginPage() {
               <form autoComplete="off">
                 <div className="bn-formItem">
                   <label
-                    className="bn-formItem-label"
+                    className="bn-formItem-label phone-label"
                     htmlFor="bn-formItem-username"
                   >
                     Phone Number
@@ -265,7 +293,7 @@ export default function LoginPage() {
                   <div className="flex items-center gap-1 ">
                     <div className="flex items-center pl-[7px] pr-[13px] py-[12px]  rounded-md border gap-1 country-code-div">
                       <img src={IndiaFlag} width={20}></img>
-                      <span>+91</span>
+                      <span className="">+91</span>
                     </div>
 
                     <div className="relative">
@@ -356,7 +384,7 @@ export default function LoginPage() {
 
               <div class="flex items-center my-4 md:mt-6 md:mb-2">
                 <div class="flex-1 bg-[--color-line] h-[1px]"></div>
-                <div class="px-4">or</div>
+                <div class="px-4 or-section">or</div>
                 <div class="flex-1 bg-[--color-line] h-[1px]"></div>
               </div>
               <button

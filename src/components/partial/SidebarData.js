@@ -65,6 +65,11 @@ export const menuList = [
     link: "Settings",
     url: "/account-setting",
   },
+  {
+    icon: IconBusinessplan,
+    link: "Privacy Policy",
+    url: "/privacy-policy",
+  },
 
   {
     icon: IconHome,

@@ -38,13 +38,15 @@ export default function KYCTransaction() {
   const token = sessionStorage.getItem("Token");
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10); // default rows per page
-
+  const [open, setOpen] = useState(false);
+  const [location, setLocation] = useState({ lat: null, lng: null });
+  const BusinessId = user?.data?.businessId;
   const handleData = async (page = 1, limit) => {
     try {
-      const BusinessId = user?.data?.businessId;
       if (!BusinessId) return;
 
       const res = await KycTranscations(BusinessId, page, limit, token);
+      console.log("response KYC", res);
       if (res?.data) {
         setKYCTransactions(res.data);
         setTotalData(res?.pagination?.totalRecords);
@@ -68,7 +70,7 @@ export default function KYCTransaction() {
   useEffect(() => {
     handleData(currentPage, limit);
     console.log(KYCTransactions, "KYCTransactions");
-  }, [user]);
+  }, [BusinessId]);
   const columnsFilter = [
     {
       name: "Sr",
@@ -192,9 +194,6 @@ export default function KYCTransaction() {
     },
   ];
 
-  const [open, setOpen] = useState(false);
-  const [location, setLocation] = useState({ lat: null, lng: null });
-
   // Get user's current location
   useEffect(() => {
     if (open) {
@@ -249,6 +248,7 @@ export default function KYCTransaction() {
             paginationDefaultPage={currentPage}
             onChangePage={handlePageChange}
             onChangeRowsPerPage={handleRowsPerPageChange}
+            noDataComponent={<></>}
           />
 
           {/* map modal */}

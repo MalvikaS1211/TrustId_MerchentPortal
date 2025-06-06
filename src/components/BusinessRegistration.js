@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { addBusiness, getCategory } from "./Helper/ApiFunction";
 import toast from "react-hot-toast";
+import Select from "react-select";
+import { useSelector } from "react-redux";
 export default function BusinessRegistration() {
   const [businessName, setBusinessName] = useState("");
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
   const [owner, setOwner] = useState("");
+  const selectRef = useRef();
   const [phoneNumber, setPhoneNumber] = useState("");
   const token = sessionStorage.getItem("Token");
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const handleSubmit = async () => {
     const userId = sessionStorage.getItem("UserId");
 
@@ -61,6 +65,10 @@ export default function BusinessRegistration() {
   useEffect(() => {
     handleCategory();
   }, []);
+  const options = categories.map((item) => ({
+    value: item.name,
+    label: item.name,
+  }));
 
   return (
     <div className="container-fluid">
@@ -86,7 +94,22 @@ export default function BusinessRegistration() {
 
           <div className="relative w-full">
             <label className="block text-sm font-medium mb-3">Category</label>
-            <select
+            <Select
+              ref={selectRef}
+              className={`my-select ${darkMode ? "my-select--dark" : ""}`}
+              classNamePrefix="my-select"
+              options={options}
+              value={
+                category ? options.find((opt) => opt.value === category) : null
+              }
+              onChange={(selected) => setCategory(selected?.value || "")}
+              menuPlacement="auto"
+              menuPosition="fixed"
+              menuShouldScrollIntoView={true}
+              placeholder="  Select a business category "
+            />
+
+            {/* <select
               name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -109,7 +132,7 @@ export default function BusinessRegistration() {
 
             <div className="pointer-events-none absolute right-3 top-[47px] text-gray-400">
               <IoIosArrowDown />
-            </div>
+            </div> */}
           </div>
 
           <div>

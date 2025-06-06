@@ -13,9 +13,9 @@ export default function HeaderCards() {
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
   const token = sessionStorage.getItem("Token");
+  const BusinessId = user?.data?.businessId;
   const visitorDataFn = async () => {
     try {
-      const BusinessId = user?.data?.businessId;
       const res = await visitorData(BusinessId, token);
       console.log("res visitor", res);
       setVisitor(res?.data);
@@ -25,7 +25,7 @@ export default function HeaderCards() {
   };
   useEffect(() => {
     visitorDataFn();
-  }, [user?.data?.businessId]);
+  }, [BusinessId]);
 
   return (
     <>
