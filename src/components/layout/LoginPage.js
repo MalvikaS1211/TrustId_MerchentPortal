@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import FaceRecognition from "./FaceRecognition";
 import TrustId from "../../trustid/trustidsdk";
 import { assignWith } from "lodash";
+import FaceRecognitionModal from "./FaceRecognitionModal";
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showOTP, setshowOTP] = useState(false);
@@ -28,7 +29,7 @@ export default function LoginPage() {
   const [OTP, setOTP] = useState();
   const [sendOTPBtn, setSendOTPBtn] = useState("Send OTP");
   const trustid = new TrustId();
-
+  const [showModal, setShowModal] = useState(false);
   const [timer, setTimer] = useState(0);
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
@@ -413,30 +414,15 @@ export default function LoginPage() {
                   className="bn-button bn-button__primary data-size-large w-full"
                   type="button"
                   data-e2e="btn-accounts-form-submit"
-                  onClick={openModal}
+                  onClick={() => setShowModal(true)}
                 >
                   Log In with Face ID
                 </button>
 
-                {isModalOpen && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <FaceRecognition />
-                    <div className="bg-white p-8 rounded-lg w-[90%] max-w-md text-center">
-                      <h2 className="text-xl font-semibold mb-4">
-                        Face ID Authentication
-                      </h2>
-                      <p className="mb-6">
-                        Please look into your camera to log in.
-                      </p>
-                      <button
-                        onClick={closeModal}
-                        className="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
-                      >
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                )}
+                <FaceRecognitionModal
+                  isOpen={showModal}
+                  onClose={() => setShowModal(false)}
+                />
               </div> */}
             </div>
           </div>

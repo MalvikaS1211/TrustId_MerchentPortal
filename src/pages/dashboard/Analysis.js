@@ -23,6 +23,11 @@ import {
 import { useSelector } from "react-redux";
 
 export default function Analysis() {
+  const token = sessionStorage.getItem("Token");
+  const user = useSelector((state) => state.user.userInfo);
+  const [visitor, setVisitor] = useState({});
+  const [chartData1, setChartData1] = useState(null);
+  const BusinessId = user?.data?.businessId;
   const breadcrumbItem = [
     {
       name: "Dashboard",
@@ -100,133 +105,99 @@ export default function Analysis() {
   //   },
   // };
 
-  const token = sessionStorage.getItem("Token");
-  const user = useSelector((state) => state.user.userInfo);
-  const [visitor, setVisitor] = useState({});
-  const [chartData1, setChartData1] = useState(null);
   const visitorDataFn = async () => {
-    const BusinessId = user?.data?.businessId;
-    const res = await visitorData(BusinessId, token);
-    // console.log("res visitor", res);
-    setVisitor(res?.data);
+    try {
+      const res = await visitorData(BusinessId, token);
+      // console.log("res visitor", res);
+      setVisitor(res?.data);
+      console.log(user, "user:::");
+      console.log(user?.data?.name, "username");
+    } catch (error) {
+      console.log("Error in visitorDataFn", error);
+    }
   };
 
   console.log(visitor, "visitor data");
   const visitorDatamonthly = async () => {
-    const BusinessId = user?.data?.businessId;
-    const res = await visitorDataMonth(BusinessId, token);
-    console.log("res visitormonth", res);
+    try {
+      const res = await visitorDataMonth(BusinessId, token);
+      console.log("res visitormonth", res);
 
-    if (res?.status === 200 && Array.isArray(res?.data)) {
-      const monthlyData = res.data;
-      // console.log("monthlyData", monthlyData);
-      const monthsFull = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
+      if (res?.status === 200 && Array.isArray(res?.data)) {
+        const monthlyData = res.data;
+        // console.log("monthlyData", monthlyData);
+        const monthsFull = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
 
-      const labels = [];
-      const newVisitorData = [];
-      const loopVisitorData = [];
-      const employeeData = [];
+        const labels = [];
+        const newVisitorData = [];
+        const loopVisitorData = [];
+        const employeeData = [];
 
-      for (const month of monthsFull) {
-        const entry = monthlyData.find((item) => item.month === month);
-        console.log("entry", entry?.loopUsers);
-        labels.push(month.slice(0, 3)); // 'Jan', 'Feb', etc.
-        newVisitorData.push(Number(entry?.firstTimeUsers || 0));
-        loopVisitorData.push(Number(entry?.loopUsers || 0));
-        employeeData.push(Number(entry?.totalEmployees || 0));
-      }
+        for (const month of monthsFull) {
+          const entry = monthlyData.find((item) => item.month === month);
+          console.log("entry", entry?.loopUsers);
+          console.log("entry::", entry);
+          labels.push(month.slice(0, 3)); // 'Jan', 'Feb', etc.
+          newVisitorData.push(Number(entry?.firstTimeUsers || 0));
+          loopVisitorData.push(Number(entry?.loopUsers || 0));
+          employeeData.push(Number(entry?.totalEmployees || 0));
+        }
 
-      setChartData1({
-        series: [
-          { name: "NewVisitor", data: newVisitorData },
-          { name: "LoopVisitor", data: loopVisitorData },
-          { name: "Employee", data: employeeData },
-        ],
-        options: {
-          dataLabels: { enabled: false },
-          colors: [
-            "var(--chart-color1)",
-            "var(--chart-color2)",
-            "var(--chart-color3)",
+        setChartData1({
+          series: [
+            { name: "NewVisitor", data: newVisitorData },
+            { name: "LoopVisitor", data: loopVisitorData },
+            { name: "Employee", data: employeeData },
           ],
-          chart: {
-            stacked: true,
-            toolbar: { show: false },
+          options: {
+            dataLabels: { enabled: false },
+            colors: [
+              "var(--chart-color1)",
+              "var(--chart-color2)",
+              "var(--chart-color3)",
+            ],
+            chart: {
+              stacked: true,
+              toolbar: { show: false },
+            },
+            tooltip: { x: { show: false } },
+            grid: { borderColor: "var(--border-color)" },
+            xaxis: {
+              categories: labels,
+              tooltip: { enabled: false },
+              axisBorder: { color: "var(--border-color)" },
+              axisTicks: { color: "var(--border-color)" },
+            },
+            yaxis: {
+              min: 0,
+              max:
+                Math.max(
+                  ...newVisitorData,
+                  ...loopVisitorData,
+                  ...employeeData
+                ) + 10,
+              tickAmount: 10,
+            },
           },
-          tooltip: { x: { show: false } },
-          grid: { borderColor: "var(--border-color)" },
-          xaxis: {
-            categories: labels,
-            tooltip: { enabled: false },
-            axisBorder: { color: "var(--border-color)" },
-            axisTicks: { color: "var(--border-color)" },
-          },
-          yaxis: {
-            min: 0,
-            max:
-              Math.max(...newVisitorData, ...loopVisitorData, ...employeeData) +
-              10,
-            tickAmount: 10,
-          },
-        },
-      });
+        });
+      }
+    } catch (error) {
+      console.log("Error in visitorDatamonthly", error);
     }
   };
-  useEffect(() => {
-    visitorDataFn();
-    visitorDatamonthly();
-  }, [user?.data?.businessId]);
-
-  //  const chartData2 = {
-  //   series: [( name: "NewVisitor":visitor?.newUser || 0), Number(visitor?.loopVisitor || 0), Number(visitor?.totalEmployees || 0)],
-  //   options: {
-  //     colors: [
-  //       "var(--chart-color1)",
-  //       "var(--chart-color2)",
-  //       "var(--chart-color3)",
-  //     ],
-  //     legend: {
-  //       show: true,
-  //       position: "bottom",
-  //     },
-  //     dataLabels: {
-  //       enabled: false,
-  //     },
-  //     stroke: {
-  //       colors: ["var(--card-color)"],
-  //     },
-  //     plotOptions: {
-  //       pie: {
-  //         expandOnClick: true,
-  //         donut: {
-  //           labels: {
-  //             show: true,
-  //             total: {
-  //               show: true,
-  //               showAlways: true,
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // };
-
-  // console.log(chartData1, "chartData1");
-  // console.log(chartData2.series, "chartData2");
 
   const chartData2 = {
     series: [
@@ -268,6 +239,49 @@ export default function Analysis() {
     },
   };
 
+  useEffect(() => {
+    visitorDataFn();
+    visitorDatamonthly();
+  }, [BusinessId]);
+
+  //  const chartData2 = {
+  //   series: [( name: "NewVisitor":visitor?.newUser || 0), Number(visitor?.loopVisitor || 0), Number(visitor?.totalEmployees || 0)],
+  //   options: {
+  //     colors: [
+  //       "var(--chart-color1)",
+  //       "var(--chart-color2)",
+  //       "var(--chart-color3)",
+  //     ],
+  //     legend: {
+  //       show: true,
+  //       position: "bottom",
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     stroke: {
+  //       colors: ["var(--card-color)"],
+  //     },
+  //     plotOptions: {
+  //       pie: {
+  //         expandOnClick: true,
+  //         donut: {
+  //           labels: {
+  //             show: true,
+  //             total: {
+  //               show: true,
+  //               showAlways: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // };
+
+  // console.log(chartData1, "chartData1");
+  // console.log(chartData2.series, "chartData2");
+
   return (
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
@@ -282,7 +296,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  {visitor?.newUser}
+                  {visitor?.newUser || 0}
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
@@ -305,7 +319,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  {visitor?.loopVisitor}
+                  {visitor?.loopVisitor || 0}
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
@@ -328,7 +342,7 @@ export default function Analysis() {
               </div>
               <div className="flex items-end gap-1 mb-1">
                 <span className="inline-block text-[24px]/[30px] font-medium">
-                  {visitor?.totalEmployees}
+                  {visitor?.totalEmployees || 0}
                 </span>
                 <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
                 <span className="text-font-color-100 text-[14px]/[20px]">
@@ -368,7 +382,7 @@ export default function Analysis() {
           </div>
           <div className="xxl:col-span-3 lg:col-span-4 col-span-12 card flex flex-col items-center justify-center  text-center md:p-6 p-4 bg-gradient-to-br card-bg rounded-xl border border-dashed border-border-color">
             <h4 className="text-[24px]/[28px] font-medium mb-2">
-              Welcome Back, {user?.data?.name}!!
+              Welcome Back, {user?.data?.name || "Guest"}!!
             </h4>
             <p className="mb-8">
               <strong>Need help?</strong> Check out the documentation of Luno
