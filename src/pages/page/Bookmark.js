@@ -18,6 +18,7 @@ import {
     IconDots,
     IconX,
 } from '@tabler/icons-react'
+import Loader from '../../components/common/Loader'
 
 export default function Bookmark() {
 
@@ -41,6 +42,7 @@ export default function Bookmark() {
     return (
         <div className='md:px-6 sm:px-3 pt-4'>
             <div className='container-fluid'>
+                <Loader />
                 <Breadcrumb breadcrumbItem={breadcrumbItem} />
                 <WelcomeHeader income />
                 <Tabs>
