@@ -42,7 +42,6 @@ export default function Bookmark() {
     return (
         <div className='md:px-6 sm:px-3 pt-4'>
             <div className='container-fluid'>
-                <Loader />
                 <Breadcrumb breadcrumbItem={breadcrumbItem} />
                 <WelcomeHeader income />
                 <Tabs>
