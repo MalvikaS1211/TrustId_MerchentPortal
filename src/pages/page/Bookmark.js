@@ -18,7 +18,6 @@ import {
     IconDots,
     IconX,
 } from '@tabler/icons-react'
-import Loader from '../../components/common/Loader'
 
 export default function Bookmark() {
 
