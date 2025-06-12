@@ -7,6 +7,7 @@
   --background-dark: #2d3238;
   --dark-brown: #734116;
 }
+
 .qr-container {
   width: fit-content;
 }
@@ -31,6 +32,7 @@
 .width-80 {
   width: 80% !important;
 }
+
 .card-bg {
   background-color: #f6eee3;
   border: 1px solid var(--color-line);
@@ -44,6 +46,7 @@
 .text-brown {
   color: var(--dark-brown) !important;
 }
+
 .before\:text-brown::before {
   content: var(--tw-content);
   background-color: var(--dark-brown);
@@ -78,6 +81,7 @@ select option:hover {
   background: var(--primary-text-dark);
   border-radius: 10px;
 }
+
 .business-qr-sub-container {
   display: flex;
   justify-content: center;
@@ -95,6 +99,7 @@ select option:hover {
   background-color: #fff;
   border-radius: 18px;
 }
+
 .stroke-primary {
   stroke: var(--dark-brown);
 }
@@ -102,6 +107,7 @@ select option:hover {
 .content-card select option:hover {
   background-color: #734116 !important;
 }
+
 .content-card select {
   color: #adadac;
 }
@@ -111,6 +117,7 @@ select option:hover {
     width: 80% !important;
   }
 }
+
 @media (max-width: 639px) {
   .business-container {
     min-height: 100vh !important;
@@ -123,6 +130,7 @@ select option:hover {
     min-height: 100vh;
   }
 }
+
 @media (min-width: 900px) and (max-width: 1350px) {
   .business-container {
     width: 50% !important;
@@ -134,6 +142,7 @@ select option:hover {
   .business-qr-container {
     padding: 30px;
   }
+
   .modal-container {
     padding: 25px;
     padding-top: 35px;
@@ -148,6 +157,7 @@ body .rdt_Pagination select {
 .category-item:hover {
   background-color: #f6eee3 !important;
 }
+
 .heading-addBusiness {
   color: #d9bda5;
 }
@@ -162,15 +172,18 @@ body .rdt_Pagination select {
   /* border: 1px solid var(--color-line); */
   border: 1px solid #24282e40;
 }
+
 .bn-textField-input-business {
   padding: 10px;
   /* border: 1px solid var(--color-line); */
   border: 1px solid #24282e40;
   border-radius: 10px;
 }
+
 .content-card-business select {
   /* color: #4c4c4c9e; */
 }
+
 @media only screen and (max-width: 468px) {
   .content-card {
     /* padding: 0px; */
@@ -180,6 +193,7 @@ body .rdt_Pagination select {
     border: 1px solid var(--color-line);
   }
 }
+
 .map-container {
   background-color: white;
   border-radius: 0.5rem;
@@ -201,6 +215,7 @@ body .rdt_Pagination select {
 }
 
 [data-theme="dark"] {
+
   /* .map-container {
     background-color: #24282e;
   } */
@@ -212,38 +227,49 @@ body .rdt_Pagination select {
     background-color: #2d3238;
     width: 100%;
   }
+
   .my-custom-loader p {
     color: #fff;
   }
+
   .text-secondary {
     color: var(--primary-text-dark);
   }
+
   .hover\:text-secondary:hover {
     --tw-text-opacity: 1;
     color: var(--primary-text-dark);
   }
+
   .text-secondary {
     color: var(--primary-text-dark);
   }
+
   .business-container {
     background-color: var(--background-dark);
     color: var(--background-dark);
   }
+
   .card-bg {
     color: var(--background-dark);
   }
+
   .modal-container {
     background-color: var(--background-dark);
   }
+
   .stroke-primary {
     stroke: var(--primary-text-dark);
   }
+
   body .rdt_Pagination select {
     background-color: var(--background-dark) !important;
   }
+
   .text-brown {
     color: var(--primary-text-dark) !important;
   }
+
   /* .btn-secondary,
   .content-card select option {
     color: black;
@@ -252,6 +278,7 @@ body .rdt_Pagination select {
     color: #fff;
     border: 1px solid var(--primary-text-dark);
   }
+
   /* .content-card {
     background-color: #24282e;
     color: #fff;
@@ -270,10 +297,12 @@ body .rdt_Pagination select {
   .bn-button {
     color: black;
   }
+
   .bg-secondary {
     background-color: var(--primary-text-dark);
     color: black;
   }
+
   body .rdt_Table,
   body .rdt_TableHeadRow,
   body .rdt_TableRow,
@@ -281,6 +310,7 @@ body .rdt_Pagination select {
     background-color: transparent;
     color: #fff;
   }
+
   .ejfNUe {
     background-color: transparent;
     color: #fff;
@@ -318,6 +348,7 @@ body .rdt_Pagination select {
     background-color: #24282e;
     color: #fff;
   }
+
   .content-card-business select option:hover {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -335,15 +366,18 @@ body .rdt_Pagination select {
     color: #fff;
     border: 1px solid #4c4c4c;
   }
+
   .content-card-business input,
   .content-card-business select,
   .content-card-business textarea {
     background-color: transparent;
     border: 1px solid #4c4c4c;
   }
+
   .content-card-business select {
     border: 1px solid var(--primary-text-dark) !important;
   }
+
   .content-card-business select option {
     background-color: #24282e;
     color: #fff;
@@ -352,6 +386,7 @@ body .rdt_Pagination select {
   .content-card-business select:active {
     border: 1px solid var(--primary-text-dark) !important;
   }
+
   .form-control .form-input:focus,
   .form-control .form-textarea:focus {
     outline: none;
@@ -359,10 +394,12 @@ body .rdt_Pagination select {
     color: #fff;
     box-shadow: var(--shadow-normal);
   }
+
   .bn-textField-input-business {
     background-color: transparent;
     border: 1px solid #4c4c4c;
   }
+
   /* .login-header,
   .phone-label,
   .send-otp-btn,
@@ -374,6 +411,7 @@ body .rdt_Pagination select {
     color: #363535;
   } */
 }
+
 .my-custom-loader {
   display: flex;
   flex-direction: column;
@@ -395,6 +433,7 @@ body .rdt_Pagination select {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -485,7 +524,8 @@ body .rdt_Pagination select {
 /* Hover/focused option in dark mode */
 .my-select--dark .my-select__option--is-focused {
   background-color: #d9bda5 !important;
-  color: #000; /* you can choose a contrasting text color if needed */
+  color: #000;
+  /* you can choose a contrasting text color if needed */
 }
 
 /* Selected option in dark mode (if you want a different “selected” shade) */
