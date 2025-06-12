@@ -585,7 +585,7 @@ export default function KYCTransaction() {
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="rounded-lg p-[15px]"
+                  className="rounded-lg inset-0 p-[10px]"
                 />
               </div>
             </div>
