@@ -170,7 +170,7 @@ export default function TeamManagement() {
 
   useEffect(() => {
     Visitors();
-  }, [businessId]);
+  }, [businessId, isFetch]);
 
   useEffect(() => {
     handleData(currentPage, limit, searchQuery);

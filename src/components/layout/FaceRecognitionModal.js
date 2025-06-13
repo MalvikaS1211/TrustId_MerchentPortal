@@ -9,11 +9,20 @@ const FaceRecognitionModal = ({ isOpen, onClose }) => {
   const canvasRef = useRef();
   const intervalId = useRef(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
+  const [showPermissionHelp, setShowPermissionHelp] = useState(false);
+
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
   useEffect(() => {
     if (!isOpen) {
       stopVideo();
       setPermissionGranted(false);
+      return;
+    }
+
+    if (isMobile) {
+      setPermissionGranted(true);
+      startVideo();
     }
 
     return () => {
@@ -21,14 +30,70 @@ const FaceRecognitionModal = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
-  const handleAllowCamera = () => {
-    setPermissionGranted(true);
-    startVideo();
+  const handleAllowCamera = async () => {
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Your browser does not support camera access.");
+        return;
+      }
+
+      if (navigator.permissions && navigator.permissions.query) {
+        const permission = await navigator.permissions.query({
+          name: "camera",
+        });
+
+        if (permission.state === "granted") {
+          setPermissionGranted(true);
+          startVideo();
+        } else if (permission.state === "prompt") {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: true,
+            });
+            if (videoRef.current) {
+              videoRef.current.srcObject = stream;
+              videoRef.current.onloadedmetadata = () => {
+                videoRef.current.play();
+                loadModels();
+              };
+              setPermissionGranted(true);
+            }
+          } catch (err) {
+            console.warn("User denied camera on prompt:", err);
+            setShowPermissionHelp(true);
+          }
+        } else if (permission.state === "denied") {
+          console.warn("Camera permission is blocked.");
+          setShowPermissionHelp(true);
+        }
+      } else {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+          });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.onloadedmetadata = () => {
+              videoRef.current.play();
+              loadModels();
+            };
+            setPermissionGranted(true);
+          }
+        } catch (error) {
+          setShowPermissionHelp(true);
+        }
+      }
+    } catch (err) {
+      console.error("Camera permission handling failed:", err);
+      setShowPermissionHelp(true);
+    }
   };
+
   const handleDoNotAllow = () => {
     alert("You denied camera access. Face ID login is not possible.");
     onClose();
   };
+
   const startVideo = () => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -109,33 +174,57 @@ const FaceRecognitionModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-transparent rounded-xl w-[90%] md:w-[70%] p-4 relative">
-        {!permissionGranted ? (
+        {!permissionGranted && !isMobile && !showPermissionHelp && (
           <div className="flex flex-col items-center justify-center h-64 text-center bg-white rounded-xl">
             <p className="mb-4">
               We need your permission to access the camera.
             </p>
-            <div class="md:px-6 px-4 py-4 flex gap-10">
+            <div className="md:px-6 px-4 py-4 flex gap-10">
               <button
-                class="btn btn-outline-secondary w-full"
+                className="btn btn-outline-secondary w-full"
                 onClick={handleDoNotAllow}
               >
                 No
               </button>
               <button
-                class="btn btn-outline-secondary w-full"
+                className="btn btn-outline-secondary w-full"
                 onClick={handleAllowCamera}
               >
                 Yes
               </button>
             </div>
-            {/* <button
-              onClick={handleAllowCamera}
-              className="btn bg-blue-500 hover:bg-blue-600  font-semibold px-4 py-2 rounded"
-            >
-              Yes, allow camera access
-            </button> */}
           </div>
-        ) : (
+        )}
+
+        {showPermissionHelp && (
+          <div className="flex flex-col items-center justify-center h-64 text-center bg-white rounded-xl p-4">
+            <p className="mb-4 text-red-600 font-medium">
+              Camera access is blocked. Please enable it in your browser
+              settings.
+            </p>
+            <ul className="text-sm text-gray-700 list-disc text-left mb-4">
+              <li>Click the lock icon near the address bar.</li>
+              <li>Go to Permissions → Allow Camera.</li>
+              <li>Then reload the page.</li>
+            </ul>
+            <a
+              href="chrome://settings/content/camera"
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600 underline"
+            >
+              Open Chrome Camera Settings
+            </a>
+            <button
+              className="mt-4 btn btn-outline-secondary"
+              onClick={() => window.location.reload()}
+            >
+              Reload
+            </button>
+          </div>
+        )}
+
+        {permissionGranted && (
           <>
             <button
               className="absolute right-4 text-2xl font-bold text-white"

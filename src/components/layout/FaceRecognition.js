@@ -13,7 +13,7 @@ const FaceRecognition = () => {
     console.log(res, "handleFaceLogin");
   };
   useEffect(() => {
-    // startVideo();
+    startVideo();
   }, []);
 
   const startVideo = () => {
@@ -271,7 +271,7 @@ const FaceRecognition = () => {
           <img src={scan} alt="Scan" className="absolute top-[-7%] w-[85%] " />
         </div>
       </div>
-      <div className="face-recognition-container-mob block md:hidden">
+      {/* <div className="face-recognition-container-mob block md:hidden">
         <div className="relative face-scanner">
           <video
             ref={videoRef}
@@ -287,7 +287,7 @@ const FaceRecognition = () => {
 
           <img src={scan} alt="Scan" className="absolute top-[-7%] w-[85%]" />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

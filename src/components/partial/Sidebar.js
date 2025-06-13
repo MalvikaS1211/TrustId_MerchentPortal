@@ -160,8 +160,8 @@ export default function Sidebar({
     sessionStorage.removeItem("SessionId");
 
     // Set light mode in sessionStorage and Redux
-    sessionStorage.setItem("darkMode", "false");
-    dispatch(toggleDarkMode(1)); // This should set darkMode to false
+    sessionStorage.setItem("darkMode", false);
+    // dispatch(toggleDarkMode(1)); // This should set darkMode to false
 
     // Set HTML attribute for theme
     document.documentElement.setAttribute("data-theme", "light");
