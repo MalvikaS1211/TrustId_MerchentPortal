@@ -1023,11 +1023,10 @@ export default function Header({
             <div className="flex">
               <div
                 onClick={toggleDarkMode}
-                className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${
-                  !darkMode
-                    ? "bg-primary-10 border-dashed border-primary"
-                    : "bg-card-color border-transparent"
-                }`}
+                className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${!darkMode
+                  ? "bg-primary-10 border-dashed border-primary"
+                  : "bg-card-color border-transparent"
+                  }`}
               >
                 <img
                   src={light_version}
@@ -1038,11 +1037,10 @@ export default function Header({
               </div>
               <div
                 onClick={toggleDarkMode}
-                className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${
-                  darkMode
-                    ? "bg-primary-10 border-dashed border-primary"
-                    : "bg-card-color border-transparent"
-                }`}
+                className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${darkMode
+                  ? "bg-primary-10 border-dashed border-primary"
+                  : "bg-card-color border-transparent"
+                  }`}
               >
                 <img
                   src={dark_version}
@@ -1053,11 +1051,10 @@ export default function Header({
               </div>
               <div
                 onClick={toggleRtlMode}
-                className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${
-                  rtlMode
-                    ? "bg-primary-10 border-dashed border-primary"
-                    : "bg-card-color border-transparent"
-                }`}
+                className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${rtlMode
+                  ? "bg-primary-10 border-dashed border-primary"
+                  : "bg-card-color border-transparent"
+                  }`}
               >
                 <img
                   src={rtl_version}
@@ -1077,11 +1074,10 @@ export default function Header({
                 <div
                   key={key}
                   onClick={() => toggleFontFamily(item.font)}
-                  className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${
-                    selectedFontFamily === item.font
-                      ? "bg-primary-10 border-dashed border-primary"
-                      : "bg-card-color border-transparent"
-                  }`}
+                  className={`p-2 m-1 rounded-xl border cursor-pointer hover:bg-primary-10 ${selectedFontFamily === item.font
+                    ? "bg-primary-10 border-dashed border-primary"
+                    : "bg-card-color border-transparent"
+                    }`}
                 >
                   <img
                     src={item.image}
@@ -1187,11 +1183,10 @@ export default function Header({
                           width="40"
                           height="100"
                           alt="Sidebar BG"
-                          className={`w-50 h-100 rounded-md object-cover border-2 ${
-                            activeBgImage === item.image
-                              ? "grayscale-0 border-primary"
-                              : "grayscale border-transparent"
-                          }`}
+                          className={`w-50 h-100 rounded-md object-cover border-2 ${activeBgImage === item.image
+                            ? "grayscale-0 border-primary"
+                            : "grayscale border-transparent"
+                            }`}
                         />
                       </button>
                     ))}
