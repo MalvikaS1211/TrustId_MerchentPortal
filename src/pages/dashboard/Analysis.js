@@ -148,8 +148,8 @@ export default function Analysis() {
 
         for (const month of monthsFull) {
           const entry = monthlyData.find((item) => item.month === month);
-          console.log("entry", entry?.loopUsers);
-          console.log("entry::", entry);
+          // console.log("entry", entry?.loopUsers);
+          // console.log("entry::", entry);
           labels.push(month.slice(0, 3)); // 'Jan', 'Feb', etc.
           newVisitorData.push(Number(entry?.firstTimeUsers || 0));
           loopVisitorData.push(Number(entry?.loopUsers || 0));
