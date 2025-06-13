@@ -35,7 +35,9 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [connectExtension, setconnectExtension] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [countryCode, setCountryCode] = useState("+91");
+  const [phone, setPhone] = useState("");
+  const [sessionId, setSessionId] = useState("");
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -52,8 +54,9 @@ export default function LoginPage() {
         console.log("KYC response:", res);
 
         const token = resToken?.data?.result?.token;
-        console.log("token :", token);
-        const userId = res?.data?.userdata?.userId;
+
+        const userId = res?.data?.userinfo?.userId;
+        console.log("token :", token, userId);
         if (token && userId) {
           sessionStorage.setItem("Token", token);
           sessionStorage.setItem("UserId", userId);
@@ -63,10 +66,6 @@ export default function LoginPage() {
 
           setTimeout(() => navigate("/dashboard"), 100);
         } else {
-          sessionStorage.removeItem("Token");
-          sessionStorage.removeItem("UserId");
-
-          console.warn("Login rejected. Missing token or userId.");
           toast.error("Login Rejected!");
         }
       }
@@ -101,7 +100,6 @@ export default function LoginPage() {
   const togglePasswordVisibility = () => {
     setshowOTP(!showOTP);
   };
-  const [sessionId, setSessionId] = useState("");
 
   const handleOTP = async () => {
     if (!phone || phone.trim().length !== 10 || !/^\d{10}$/.test(phone)) {
@@ -151,8 +149,6 @@ export default function LoginPage() {
       console.error("Error during OTP verification:", error);
     }
   };
-  const [countryCode, setCountryCode] = useState("+91");
-  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (showTooltip) {
@@ -255,7 +251,7 @@ export default function LoginPage() {
                           <div
                             role="tooltip"
                             tabIndex="0"
-                            className="top-full mt-2 right-0 z-50 w-[385px] bg-[#f6eee3] rounded-xl shadow-lg p-[2rem] border border-gray-200 qrcode-container"
+                            className=" qrcode-container"
                           >
                             <div className="absolute w-3 h-3 bg-[#f6eee3]  rotate-45 arrow-style"></div>
 
@@ -393,6 +389,7 @@ export default function LoginPage() {
                 style={{ width: "100%" }}
                 type="button"
                 data-e2e="btn-accounts-form-submit"
+                onClick={handleExtension}
               >
                 Connect with Trust Id
               </button>

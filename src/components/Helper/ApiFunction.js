@@ -219,32 +219,6 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
   }
 }
 
-// export async function getEmployeeData(businessId, token, page, limit, searchQuery) {
-//   try {
-//     const response = await axios.get(
-//       `${URLApi}/employees-by-businessId`,
-//       {
-//         params: {
-//           businessId,
-//           page,
-//           limit,
-//           searchQuery
-//         },
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
-
-//     console.log(response.data, "in getEmployeeData");
-//     return response.data;
-//   } catch (error) {
-//     console.log("Error in getEmployeeData:", error);
-//     return null;
-//   }
-// }
 export async function getEmployeeData(
   businessId,
   token,
