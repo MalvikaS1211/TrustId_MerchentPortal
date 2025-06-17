@@ -213,12 +213,16 @@ body .rdt_Pagination select {
     width: 70vw;
   }
 }
-
+.css-13cymwt-control:hover {
+  border-color: 1px solid #444 !important;
+}
 [data-theme="dark"] {
-
   /* .map-container {
     background-color: #24282e;
   } */
+  .btn-secondary {
+    color: black;
+  }
   .my-custom-loader {
     display: flex;
     flex-direction: column;

@@ -61,7 +61,6 @@ export default function TeamManagement() {
   const [isSearching, setIsSearching] = useState(false);
   // const [debounceTimer, setDebounceTimer] = useState(null);
 
-
   // const debounceSearch = useCallback((value) => {
   //   if (debounceTimer) {
   //     clearTimeout(debounceTimer);
@@ -72,7 +71,6 @@ export default function TeamManagement() {
   //   }, 500);
 
   //   setDebounceTimer(timer);
-
 
   //   return () => {
   //     if (debounceTimer) {
@@ -215,8 +213,8 @@ export default function TeamManagement() {
               row.userDetails?.profileImage?.startsWith("data:image")
                 ? row.userDetails.profileImage
                 : row.userDetails?.profileImage
-                  ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
-                  : "/avatar2.png"
+                ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
+                : "/avatar2.png"
             }
             alt="profile"
             className="w-[26px] h-[26px] rounded-md object-cover"
@@ -394,7 +392,7 @@ export default function TeamManagement() {
                   setShowScanQR(false);
                   setMobileNumber("");
                 }}
-                className="absolute top-2 right-3 text-gray-500 text-xl font-bold"
+                className="absolute top-[18px] right-[22px] text-gray-500 text-xl font-bold"
               >
                 <MdOutlineClose />
               </button>

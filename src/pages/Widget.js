@@ -887,7 +887,7 @@ export default function Widget() {
                 </p>
                 <span className="text-font-color-100">
                   Thanks for choosing
-                  <strong className="text-primary">Trust Id</strong> Admin.
+                  <strong className="text-primary"> Trust Id</strong> Admin.
                 </span>
               </div>
               <div className="md:p-6 p-4 flex flex-wrap gap-4 border-t border-dashed border-border-color">

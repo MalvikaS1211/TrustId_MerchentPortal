@@ -251,21 +251,22 @@ export default function MyProfile() {
                   type="text"
                   id="editProfileName"
                   className="form-input"
-                  placeholder="Allie Grater"
+                  placeholder={user?.data?.name}
                 />
               </div>
-              <div className="form-control sm:col-span-6 col-span-12">
+              <div className="form-control sm:col-span-12 col-span-12">
                 <label htmlFor="editProfileEmail" className="form-label">
                   Email
                 </label>
                 <input
                   type="text"
                   id="editProfileEmail"
+                  autoComplete="off"
                   className="form-input"
                   placeholder="alliegrater@luno.com"
                 />
               </div>
-              <div className="form-control sm:col-span-6 col-span-12">
+              {/* <div className="form-control sm:col-span-6 col-span-12">
                 <label htmlFor="editProfilePassword" className="form-label">
                   Password
                 </label>
@@ -275,7 +276,7 @@ export default function MyProfile() {
                   className="form-input"
                   placeholder="Chris@123"
                 />
-              </div>
+              </div> */}
               <div className="form-control col-span-12">
                 <label htmlFor="editProfileAddress" className="form-label">
                   Address
@@ -306,7 +307,7 @@ export default function MyProfile() {
                   type="text"
                   id="editProfileCity"
                   className="form-input"
-                  placeholder="Chris@123"
+                  placeholder={user?.data?.address?.postOffice}
                 />
               </div>
               <div className="form-control sm:col-span-6 col-span-12">
@@ -314,7 +315,9 @@ export default function MyProfile() {
                   State
                 </label>
                 <select className="form-select w-full cursor-pointer rounded-md bg-card-color py-[10px] ps-[12px] pe-30 appearance-none border border-border-color focus:outline-0 focus:border-primary">
-                  <option defaultValue="">Choose...</option>
+                  <option defaultValue={user?.data?.address?.state}>
+                    {user?.data?.address?.state}
+                  </option>
                   <option value="1">...</option>
                 </select>
               </div>
