@@ -123,6 +123,7 @@ export default function BusinessRegistration() {
               menuPlacement="auto"
               menuPosition="fixed"
               menuShouldScrollIntoView={true}
+              isSearchable={false}
               placeholder="  Select a business category "
             /> */}
             <Select
