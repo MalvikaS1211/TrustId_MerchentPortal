@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../components/css/Login.css";
 import QRcode from "./QRcode";
 import QRious from "qrious";
+import TrustIdSDK from "trustid-sdk";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import Logo from "../../assets/images/TrustIdLogo.png";
 import IndiaFlag from "../../assets/images/IndiaFlag.png";
@@ -18,7 +19,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import FaceRecognition from "./FaceRecognition";
-import TrustId from "../../trustid/trustidsdk";
+// import TrustId from "../../trustid/trustidsdk";
 import { assignWith } from "lodash";
 import FaceRecognitionModal from "./FaceRecognitionModal";
 
@@ -29,7 +30,7 @@ export default function LoginPage() {
   const [inputMobile, setInputMobile] = useState();
   const [OTP, setOTP] = useState();
   const [sendOTPBtn, setSendOTPBtn] = useState("Send OTP");
-  const trustid = new TrustId();
+  // const trustid = new TrustId();
   const [showModal, setShowModal] = useState(false);
   const [timer, setTimer] = useState(0);
   const wrapperRef = useRef(null);
@@ -52,6 +53,10 @@ export default function LoginPage() {
 
   const handleExtension = async () => {
     try {
+      const trustid = new TrustIdSDK({
+        apiKey: "trustid@hnpakgifhianijcabdkhflifcinndeai",
+        apiUrl: "https://trst.ink/merchnat",
+      });
       const resConnect = await trustid.connect();
       const isConnected = resConnect?.data?.result?.approved;
       console.log("resConnect", resConnect?.data?.result?.approved);
@@ -340,8 +345,8 @@ export default function LoginPage() {
                       >
                         {timer > 0
                           ? `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
-                            .toString()
-                            .padStart(2, "0")}`
+                              .toString()
+                              .padStart(2, "0")}`
                           : sendOTPBtn}
                       </button>
                       {phone && (

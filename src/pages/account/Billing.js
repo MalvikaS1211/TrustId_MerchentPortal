@@ -31,13 +31,13 @@ export default function Billing() {
             </h2>
             <p className="mb-4">
               Your subscription has 3 (included)
-              <code className="text-brown font-base">team members</code>. Your
+              <code className="text-brown font-base"> team members</code>. Your
               next payment of <strong>$990</strong> (yearly) occurs on
-              <strong>April 20, 2023</strong>.
+              <strong> April 20, 2023</strong>.
             </p>
             <span className="text-font-color-100">
               Thanks for choosing
-              <strong className="text-brown">TrustID</strong> Admin.
+              <strong className="text-brown"> TrustID</strong> Admin.
             </span>
           </div>
           <div className="md:p-6 p-4 flex flex-wrap gap-4 border-t border-dashed border-border-color">
