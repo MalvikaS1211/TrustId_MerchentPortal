@@ -15,6 +15,7 @@ import {
   IconDevices,
   IconBrandTeams,
   IconFileInvoice,
+  IconLifebuoy,
 } from "@tabler/icons-react";
 
 export const menuList = [
@@ -51,7 +52,7 @@ export const menuList = [
     url: "/account-billing",
   },
   {
-    icon: IconShieldLock,
+    icon: IconLifebuoy,
     link: "Support",
     url: "/page-support-ticket",
   },
@@ -66,7 +67,7 @@ export const menuList = [
     url: "/account-setting",
   },
   {
-    icon: IconBusinessplan,
+    icon: IconShieldLock,
     link: "Privacy Policy",
     url: "/privacy-policy",
   },
