@@ -22,6 +22,7 @@ import FaceRecognition from "./FaceRecognition";
 // import TrustId from "../../trustid/trustidsdk";
 import { assignWith } from "lodash";
 import FaceRecognitionModal from "./FaceRecognitionModal";
+
 export default function LoginPage() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showOTP, setshowOTP] = useState(false);
@@ -39,8 +40,16 @@ export default function LoginPage() {
   const [countryCode, setCountryCode] = useState("+91");
   const [phone, setPhone] = useState("");
   const [sessionId, setSessionId] = useState("");
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  // Function to check and set darkMode in sessionStorage if not present
+  const checkAndSetDarkMode = () => {
+    if (!sessionStorage.getItem("darkMode")) {
+      sessionStorage.setItem("darkMode", JSON.stringify(false));
+    }
+  };
 
   const handleExtension = async () => {
     try {
@@ -59,10 +68,13 @@ export default function LoginPage() {
         console.log("KYC response:", res);
 
         const token = resToken?.data?.result?.token;
-
         const userId = res?.data?.userinfo?.userId;
         console.log("token :", token, userId);
+
         if (token && userId) {
+          // Check and set darkMode before proceeding with login
+          checkAndSetDarkMode();
+
           sessionStorage.setItem("Token", token);
           sessionStorage.setItem("UserId", userId);
 
@@ -93,6 +105,7 @@ export default function LoginPage() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   useEffect(() => {
     if (timer <= 0) return;
 
@@ -102,6 +115,7 @@ export default function LoginPage() {
 
     return () => clearInterval(countdown);
   }, [timer]);
+
   const togglePasswordVisibility = () => {
     setshowOTP(!showOTP);
   };
@@ -135,6 +149,9 @@ export default function LoginPage() {
       console.log(res, "handleLogin");
 
       if (res?.status == 200) {
+        // Check and set darkMode before proceeding with login
+        checkAndSetDarkMode();
+
         sessionStorage.setItem("Token", res?.token);
         sessionStorage.setItem("UserId", res?.data?.userId);
         // sessionStorage.setItem("Login", true);
@@ -160,6 +177,7 @@ export default function LoginPage() {
       genrateSeeionId();
     }
   }, [showTooltip]);
+
   const genrateSeeionId = async () => {
     try {
       const response = await createSession();
@@ -175,6 +193,7 @@ export default function LoginPage() {
       console.log(error, "Erroe In the genrateSeeionId()");
     }
   };
+
   useEffect(() => {
     if (!showTooltip || !sessionId) return;
     let interval;
@@ -186,6 +205,9 @@ export default function LoginPage() {
 
         console.log(response, "checkSession");
         if (response?.status === 200 && response?.token) {
+          // Check and set darkMode before proceeding with login
+          checkAndSetDarkMode();
+
           console.log("Session Verified!", response);
           console.log(response?.userInfo, "Userinfo");
           sessionStorage.setItem("Token", response.token);

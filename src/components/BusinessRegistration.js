@@ -4,6 +4,22 @@ import { addBusiness, getCategory } from "./Helper/ApiFunction";
 import toast from "react-hot-toast";
 import Select from "react-select";
 import { useSelector } from "react-redux";
+
+
+const customStyles = (darkMode) => ({
+  input: (provided) => ({
+    ...provided,
+    color: darkMode ? "white" : "black",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: darkMode ? "white" : "black",
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: darkMode ? "#cccccc" : "#666666",
+  }),
+});
 export default function BusinessRegistration() {
   const [businessName, setBusinessName] = useState("");
   const [categories, setCategories] = useState([]);
@@ -94,7 +110,8 @@ export default function BusinessRegistration() {
 
           <div className="relative w-full">
             <label className="block text-sm font-medium mb-3">Category</label>
-            <Select
+            {/* Malvika Old Working code without theme wise management */}
+            {/* <Select
               ref={selectRef}
               className={`my-select ${darkMode ? "my-select--dark" : ""}`}
               classNamePrefix="my-select"
@@ -108,7 +125,21 @@ export default function BusinessRegistration() {
               menuShouldScrollIntoView={true}
               isSearchable={false}
               placeholder="  Select a business category "
+            /> */}
+            <Select
+              ref={selectRef}
+              className={`my-select ${darkMode ? "my-select--dark" : ""}`}
+              classNamePrefix="my-select"
+              options={options}
+              value={category ? options.find((opt) => opt.value === category) : null}
+              onChange={(selected) => setCategory(selected?.value || "")}
+              menuPlacement="auto"
+              menuPosition="fixed"
+              menuShouldScrollIntoView={true}
+              placeholder="  Select a business category "
+              styles={customStyles(darkMode)}
             />
+
 
             {/* <select
               name="category"

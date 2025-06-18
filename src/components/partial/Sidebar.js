@@ -160,7 +160,7 @@ export default function Sidebar({
     sessionStorage.removeItem("SessionId");
 
     // Set light mode in sessionStorage and Redux
-    sessionStorage.setItem("darkMode", false);
+    // sessionStorage.setItem("darkMode", false);
     // dispatch(toggleDarkMode(1)); // This should set darkMode to false
 
     // // Set HTML attribute for theme
@@ -231,9 +231,8 @@ export default function Sidebar({
             <li key={key} className="sidebar-listitem">
               <button
                 onClick={() => menuToggle(key)}
-                className={`sidebar-list-button flex items-center gap-10 w-full py-10 transition-all hover:text-brown ${
-                  menuActive === key ? "text-brown" : ""
-                }`}
+                className={`sidebar-list-button flex items-center gap-10 w-full py-10 transition-all hover:text-brown ${menuActive === key ? "text-brown" : ""
+                  }`}
               >
                 <item.icon className="stroke-[1.5] w-[22px] h-[22px]" />
                 <span className="link">{item.link}</span>
@@ -244,20 +243,18 @@ export default function Sidebar({
                 )}
               </button>
               <ul
-                className={`sidebar-sublist ps-30 relative before:absolute before:h-full before:w-[1px] ltr:before:left-10 rtl:before:right-10 before:top-0 before:text-brown ${
-                  menuActive === key ? "block" : "hidden"
-                }`}
+                className={`sidebar-sublist ps-30 relative before:absolute before:h-full before:w-[1px] ltr:before:left-10 rtl:before:right-10 before:top-0 before:text-brown ${menuActive === key ? "block" : "hidden"
+                  }`}
               >
                 {item.children.map((res, key) =>
                   res.children ? (
                     <li key={key}>
                       <button
                         onClick={() => menuToggleSub(key)}
-                        className={`flex items-center gap-10 w-full py-2 text-[14px]/[20px] relative before:hidden before:absolute before:rounded-full before:h-[9px] before:w-[9px] ltr:before:left-[-24px] rtl:before:right-[-24px] before:top-[50%] before:translate-y-[-50%] before:bg-secondary hover:text-secondary hover:before:block transition-all ${
-                          menuActiveSub === key
-                            ? "text-secondary before:!block"
-                            : ""
-                        }`}
+                        className={`flex items-center gap-10 w-full py-2 text-[14px]/[20px] relative before:hidden before:absolute before:rounded-full before:h-[9px] before:w-[9px] ltr:before:left-[-24px] rtl:before:right-[-24px] before:top-[50%] before:translate-y-[-50%] before:bg-secondary hover:text-secondary hover:before:block transition-all ${menuActiveSub === key
+                          ? "text-secondary before:!block"
+                          : ""
+                          }`}
                       >
                         <span>{res.link}</span>
                         {menuActiveSub === key ? (
@@ -267,9 +264,8 @@ export default function Sidebar({
                         )}
                       </button>
                       <ul
-                        className={`ps-30 relative before:absolute before:h-full before:w-[1px] ltr:before:left-10 rtl:before:right-10 before:top-0 before:bg-secondary ${
-                          menuActiveSub === key ? "block" : "hidden"
-                        }`}
+                        className={`ps-30 relative before:absolute before:h-full before:w-[1px] ltr:before:left-10 rtl:before:right-10 before:top-0 before:bg-secondary ${menuActiveSub === key ? "block" : "hidden"
+                          }`}
                       >
                         {res.children.map((sub, key) => (
                           <li key={key}>
@@ -278,11 +274,10 @@ export default function Sidebar({
                               onClick={() => {
                                 window.innerWidth < 1200 && setMobileNav(false);
                               }}
-                              className={`py-1 text-[14px]/[20px] flex relative before:hidden before:absolute before:rounded-full before:h-[9px] before:w-[9px] ltr:before:left-[-24px] rtl:before:right-[-24px] before:top-[50%] before:translate-y-[-50%] before:bg-secondary hover:text-secondary hover:before:block transition-all ${
-                                pageUrl === sub.url
-                                  ? "text-secondary before:!block"
-                                  : ""
-                              }`}
+                              className={`py-1 text-[14px]/[20px] flex relative before:hidden before:absolute before:rounded-full before:h-[9px] before:w-[9px] ltr:before:left-[-24px] rtl:before:right-[-24px] before:top-[50%] before:translate-y-[-50%] before:bg-secondary hover:text-secondary hover:before:block transition-all ${pageUrl === sub.url
+                                ? "text-secondary before:!block"
+                                : ""
+                                }`}
                             >
                               {sub.link}
                             </Link>
@@ -297,11 +292,10 @@ export default function Sidebar({
                         onClick={() => {
                           window.innerWidth < 1200 && setMobileNav(false);
                         }}
-                        className={`py-1 text-[14px]/[20px] flex relative before:hidden before:absolute before:rounded-full before:h-[9px] before:w-[9px] ltr:before:left-[-24px] rtl:before:right-[-24px] before:top-[50%] before:translate-y-[-50%] before:bg-secondary hover:text-secondary hover:before:block transition-all ${
-                          pageUrl === res.url
-                            ? "text-secondary before:!block"
-                            : ""
-                        }`}
+                        className={`py-1 text-[14px]/[20px] flex relative before:hidden before:absolute before:rounded-full before:h-[9px] before:w-[9px] ltr:before:left-[-24px] rtl:before:right-[-24px] before:top-[50%] before:translate-y-[-50%] before:bg-secondary hover:text-secondary hover:before:block transition-all ${pageUrl === res.url
+                          ? "text-secondary before:!block"
+                          : ""
+                          }`}
                       >
                         {res.link}
                       </Link>
@@ -317,9 +311,8 @@ export default function Sidebar({
                 onClick={() => {
                   window.innerWidth < 1200 && setMobileNav(false);
                 }}
-                className={`sidebar-list-link flex items-center gap-10 w-full py-2 transition-all hover:text-secondary ${
-                  pageUrl === item.url ? "text-secondary" : ""
-                }`}
+                className={`sidebar-list-link flex items-center gap-10 w-full py-2 transition-all hover:text-secondary ${pageUrl === item.url ? "text-secondary" : ""
+                  }`}
               >
                 {item.icon ? (
                   <item.icon className="stroke-[1.5] w-[22px] h-[22px] rtl:rotate-180" />
@@ -332,9 +325,8 @@ export default function Sidebar({
           ) : (
             <li
               key={key}
-              className={`devider py-3 menu-devider uppercase text-[12px]/[15px]${
-                item.color ? ` text-${item.color}` : ""
-              }${item.fontWeight ? ` font-${item.fontWeight}` : ""}`}
+              className={`devider py-3 menu-devider uppercase text-[12px]/[15px]${item.color ? ` text-${item.color}` : ""
+                }${item.fontWeight ? ` font-${item.fontWeight}` : ""}`}
             >
               {item.devider}
             </li>
@@ -344,11 +336,10 @@ export default function Sidebar({
       <div className="sidebar-bottom-link flex justify-evenly gap-3 mx-3 border border-dashed rounded-xl p-2 mt-auto">
         <button
           onClick={toggleSchedule}
-          className={`transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${
-            schedule
-              ? "after:opacity-1 after:visible after:overflow-auto"
-              : "after:opacity-0 after:invisible after:overflow-hidden"
-          }`}
+          className={`transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${schedule
+            ? "after:opacity-1 after:visible after:overflow-auto"
+            : "after:opacity-0 after:invisible after:overflow-hidden"
+            }`}
         >
           <span title="My Schedule">
             <IconCalendar className="stroke-[1.5] w-[20px] h-[20px]" />
@@ -356,11 +347,10 @@ export default function Sidebar({
         </button>
         <button
           onClick={toggleNote}
-          className={`transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${
-            note
-              ? "after:opacity-1 after:visible after:overflow-auto"
-              : "after:opacity-0 after:invisible after:overflow-hidden"
-          }`}
+          className={`transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${note
+            ? "after:opacity-1 after:visible after:overflow-auto"
+            : "after:opacity-0 after:invisible after:overflow-hidden"
+            }`}
         >
           <span title="My Note">
             <IconNote className="stroke-[1.5] w-[20px] h-[20px]" />
@@ -388,9 +378,8 @@ export default function Sidebar({
         </Link>
       </div>
       <div
-        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[300px] transition-all duration-200 ${
-          schedule ? "ltr:left-0 rtl:right-0" : "ltr:-left-full rtl:-right-full"
-        }`}
+        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[300px] transition-all duration-200 ${schedule ? "ltr:left-0 rtl:right-0" : "ltr:-left-full rtl:-right-full"
+          }`}
       >
         <div className="p-4 flex items-center justify-between gap-15 bg-secondary">
           <div className="text-[20px]/[30px] font-medium text-white">
@@ -484,9 +473,8 @@ export default function Sidebar({
         </div>
       </div>
       <div
-        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[500px] transition-all duration-200 ${
-          note ? "ltr:left-0 rtl:right-0" : "ltr:-left-full rtl:-right-full"
-        }`}
+        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[500px] transition-all duration-200 ${note ? "ltr:left-0 rtl:right-0" : "ltr:-left-full rtl:-right-full"
+          }`}
       >
         <div className="p-4 flex items-center justify-between gap-15 border-b border-border-color">
           <div className="text-[20px]/[30px] font-medium flex items-center gap-10">
@@ -789,9 +777,8 @@ export default function Sidebar({
         </Tabs>
       </div>
       <div
-        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[460px] transition-all duration-200 ${
-          chat ? "ltr:right-0 rtl:left-0" : "ltr:-right-full rtl:-left-full"
-        }`}
+        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[460px] transition-all duration-200 ${chat ? "ltr:right-0 rtl:left-0" : "ltr:-right-full rtl:-left-full"
+          }`}
       >
         <Tabs className="flex h-full">
           <div className="sm:w-[calc(100%-66px)] w-[calc(100%-50px)] shadow-shadow-sm">
