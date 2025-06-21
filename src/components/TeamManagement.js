@@ -213,8 +213,8 @@ export default function TeamManagement() {
               row.userDetails?.profileImage?.startsWith("data:image")
                 ? row.userDetails.profileImage
                 : row.userDetails?.profileImage
-                  ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
-                  : "/avatar2.png"
+                ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
+                : "/avatar2.png"
             }
             alt="profile"
             className="w-[26px] h-[26px] rounded-md object-cover"
@@ -396,7 +396,7 @@ export default function TeamManagement() {
                   setOpen(false);
                   resetModal();
                 }}
-                className="absolute top-[15px] right-[18px] text-gray-500 text-xl font-bold hover:bg-gray-500 hover:text-gray-300 transition-all duration-200 hover:rounded-sm"
+                className="absolute top-[15px] right-[18px]  text-xl font-bold transition-all duration-200 hover:rounded-sm"
               >
                 <MdOutlineClose />
               </button>
@@ -405,7 +405,7 @@ export default function TeamManagement() {
               {(showMobileForm || showScanQR) && (
                 <button
                   onClick={resetModal}
-                  className="absolute top-[15px] right-[46px] text-gray-500 text-xl font-bold hover:bg-gray-500 hover:text-gray-300 transition-all duration-200 hover:rounded-sm"
+                  className="absolute top-[15px] right-[46px] text-gray-500 text-xl font-bold  transition-all duration-200 hover:rounded-sm"
                 >
                   <MdKeyboardBackspace />
                 </button>
