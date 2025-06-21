@@ -370,7 +370,9 @@ export default function BusinessRegistration() {
               required
             />
           </div>
+          <div>
 
+          </div>
           <button
             type="button"
             onClick={handleSubmit}
