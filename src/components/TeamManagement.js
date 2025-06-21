@@ -396,7 +396,7 @@ export default function TeamManagement() {
                   setOpen(false);
                   resetModal();
                 }}
-                className="absolute top-[15px] right-[18px] text-gray-500 text-xl font-bold hover:bg-gray-500 hover:text-gray-300 transition-all duration-200 hover:rounded-sm"
+                className="absolute top-[15px] right-[18px] text-gray-500 text-xl font-bold hover:text-gray-100 transition-all duration-200 hover:rounded-sm"
               >
                 <MdOutlineClose />
               </button>
@@ -405,7 +405,7 @@ export default function TeamManagement() {
               {(showMobileForm || showScanQR) && (
                 <button
                   onClick={resetModal}
-                  className="absolute top-[15px] right-[46px] text-gray-500 text-xl font-bold hover:bg-gray-500 hover:text-gray-300 transition-all duration-200 hover:rounded-sm"
+                  className="absolute top-[15px] right-[46px] text-gray-500 text-xl font-bold hover:text-gray-100 transition-all duration-200 hover:rounded-sm"
                 >
                   <MdKeyboardBackspace />
                 </button>
