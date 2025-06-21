@@ -31,7 +31,7 @@ import {
 import moment from "moment";
 import ReactDataTable, { Alignment } from "react-data-table-component";
 import toast from "react-hot-toast";
-import { MdOutlineClose } from "react-icons/md";
+import { MdOutlineClose, MdKeyboardBackspace } from "react-icons/md";
 import { debounce } from "lodash";
 
 export default function TeamManagement() {
@@ -213,8 +213,8 @@ export default function TeamManagement() {
               row.userDetails?.profileImage?.startsWith("data:image")
                 ? row.userDetails.profileImage
                 : row.userDetails?.profileImage
-                ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
-                : "/avatar2.png"
+                  ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
+                  : "/avatar2.png"
             }
             alt="profile"
             className="w-[26px] h-[26px] rounded-md object-cover"
@@ -251,6 +251,13 @@ export default function TeamManagement() {
       <p>Loading employees...</p>
     </div>
   );
+
+  const resetModal = () => {
+    setShowMobileForm(false);
+    setShowScanQR(false);
+    setMobileNumber("");
+  };
+
   return (
     <div className="md:px-6 sm:px-3 pt-4">
       <div className="container-fluid">
@@ -376,26 +383,33 @@ export default function TeamManagement() {
             onClick={(e) => {
               if (e.target.classList.contains("modal-overlay")) {
                 setOpen(false);
-                setShowMobileForm(false);
-                setShowScanQR(false);
-                setMobileNumber("");
+                resetModal();
               }
             }}
           >
             <div className="modal-overlay absolute inset-0" />
 
-            <div className="rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative modal-container z-10 ">
+            <div className="rounded-lg p-[3rem] w-full max-w-md shadow-2xl relative modal-container z-10">
+              {/* Close Button - Always visible */}
               <button
                 onClick={() => {
                   setOpen(false);
-                  setShowMobileForm(false);
-                  setShowScanQR(false);
-                  setMobileNumber("");
+                  resetModal();
                 }}
-                className="absolute top-[18px] right-[22px] text-gray-500 text-xl font-bold"
+                className="absolute top-[15px] right-[18px] text-gray-500 text-xl font-bold hover:bg-gray-500 hover:text-gray-300 transition-all duration-200 hover:rounded-sm"
               >
                 <MdOutlineClose />
               </button>
+
+              {/* Back Button - Only visible in sub-views */}
+              {(showMobileForm || showScanQR) && (
+                <button
+                  onClick={resetModal}
+                  className="absolute top-[15px] right-[46px] text-gray-500 text-xl font-bold hover:bg-gray-500 hover:text-gray-300 transition-all duration-200 hover:rounded-sm"
+                >
+                  <MdKeyboardBackspace />
+                </button>
+              )}
 
               {/* Main Menu */}
               {!showMobileForm && !showScanQR && (
@@ -423,12 +437,12 @@ export default function TeamManagement() {
               {/* Mobile Number Form */}
               {showMobileForm && !showScanQR && (
                 <>
-                  <h2 className="text-2xl font-bold mb-6 text-center">
-                    Add Employee
+                  <h2 className="text-xl font-semibold mb-6 text-center px-5">
+                    Add with Mobile Number
                   </h2>
                   <form className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1 ">
+                      <label className="block text-sm font-medium mb-1">
                         Mobile Number
                       </label>
                       <input
@@ -438,7 +452,6 @@ export default function TeamManagement() {
                         value={mobileNumber}
                         onChange={(e) => {
                           const value = e.target.value;
-                          // Allow only digits and max 10 characters
                           if (/^\d{0,10}$/.test(value)) {
                             setMobileNumber(value);
                           }
@@ -455,7 +468,7 @@ export default function TeamManagement() {
                       onClick={() => {
                         addEmp();
                         setOpen(false);
-                        setShowMobileForm(false);
+                        resetModal();
                       }}
                     >
                       Submit
@@ -467,7 +480,7 @@ export default function TeamManagement() {
               {/* QR Code Display */}
               {showScanQR && !showMobileForm && (
                 <>
-                  <h2 className="text-2xl font-bold mb-6 text-center">
+                  <h2 className="text-xl font-semibold mb-6 text-center">
                     Scan QR to Add
                   </h2>
                   <div className="flex justify-center">
