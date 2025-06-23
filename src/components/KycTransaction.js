@@ -1,292 +1,7 @@
-// import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import ReactDataTable, { Alignment } from "react-data-table-component";
-// import {
-//   avatar1,
-//   avatar10,
-//   avatar2,
-//   avatar3,
-//   avatar6,
-//   avatar7,
-//   avatar8,
-//   avatar9,
-// } from "../../src/assets/images";
-// import {
-//   IconTrash,
-//   IconCloudDownload,
-//   IconCloudUpload,
-//   IconBrandFacebook,
-//   IconBrandGithub,
-//   IconMail,
-//   IconPencil,
-//   IconHeart,
-//   IconBrandLinkedin,
-//   IconBrandTwitter,
-// } from "@tabler/icons-react";
-// import moment from "moment";
-// import HeaderCards from "./HeaderCards";
-// import { useSelector } from "react-redux";
-// import { KycTranscations } from "./Helper/ApiFunction";
-// import MapModal from "./MapModal";
-// import Breadcrumb from "./common/Breadcrumb";
-// import { MdOutlineClose } from "react-icons/md";
-// export default function KYCTransaction() {
-//   const user = useSelector((state) => state.user.userInfo);
-//   const [KYCTransactions, setKYCTransactions] = useState([]);
-//   const [totalData, setTotalData] = useState(0);
-//   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
-//   const token = sessionStorage.getItem("Token");
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [limit, setLimit] = useState(10); // default rows per page
-//   const [open, setOpen] = useState(false);
-//   const [location, setLocation] = useState({ lat: null, lng: null });
-//   const BusinessId = user?.data?.businessId;
-//   const handleData = async (page = 1, limit) => {
-//     try {
-//       if (!BusinessId) return;
-
-//       const res = await KycTranscations(BusinessId, page, limit, token);
-//       console.log("response KYC", res);
-//       if (res?.data) {
-//         setKYCTransactions(res.data);
-//         setTotalData(res?.pagination?.totalRecords);
-//         setCurrentPage(page);
-//       } else {
-//         setKYCTransactions([]);
-//       }
-//     } catch (error) {
-//       console.error("Error fetching KYC data:", error);
-//       setKYCTransactions([]);
-//     }
-//   };
-//   const handlePageChange = (page) => {
-//     handleData(page, limit);
-//   };
-
-//   const handleRowsPerPageChange = (newLimit, page) => {
-//     setLimit(newLimit);
-//     handleData(page, newLimit);
-//   };
-//   useEffect(() => {
-//     handleData(currentPage, limit);
-//     console.log(KYCTransactions, "KYCTransactions");
-//   }, [BusinessId]);
-//   const columnsFilter = [
-//     {
-//       name: "Sr",
-//       selector: (row, index) => (currentPage - 1) * limit + index + 1,
-//       width: "60px",
-//     },
-//     {
-//       name: "Visitor",
-//       selector: (row) => row.userInfo?.name,
-//       width: "200px",
-//       cell: (row) => (
-//         <div className="flex items-center gap-2">
-//           <img
-//             src={
-//               row.userInfo?.address?.profile_image?.startsWith("data:image")
-//                 ? row.userInfo.address.profile_image
-//                 : row.userInfo?.address?.profile_image
-//                 ? `data:image/jpeg;base64,${row.userInfo.address.profile_image}`
-//                 : "/default-avatar.png"
-//             }
-//             alt="profile"
-//             className="w-[26px] h-[26px] rounded-md object-cover"
-//           />
-//           <span>{row.userInfo?.name || "N/A"}</span>
-//         </div>
-//       ),
-//     },
-//     {
-//       name: "Phone",
-//       selector: (row) => row.userInfo.mobileNumber,
-//       width: "140px",
-//       cell: (row) =>
-//         row.userInfo.mobileNumber
-//           ? row.userInfo.mobileNumber.replace(/.(?=.{4})/g, "*")
-//           : "N/A",
-//     },
-//     {
-//       name: "Address",
-//       selector: (row) => row.userInfo.fullAddress || "N/A",
-//       width: "250px",
-//       style: {
-//         justifyContent: "flex-start",
-//         whiteSpace: "normal",
-//         wordWrap: "break-word",
-//       },
-//       wrap: true,
-//     },
-//     {
-//       name: "In Time",
-//       selector: (row) => row.createdAt,
-//       width: "180px",
-//       cell: (row) => {
-//         const created = moment(row.createdAt);
-//         if (!created.isValid()) return "N/A";
-
-//         const time = created.format("hh:mm A");
-
-//         if (created.isSame(moment(), "day")) {
-//           return `Today ${time}`;
-//         } else if (created.isSame(moment().subtract(1, "day"), "day")) {
-//           return `Yesterday ${time}`;
-//         } else {
-//           return created.format("DD MMM YYYY, hh:mm A");
-//         }
-//       },
-//     },
-//     {
-//       name: "Out Time",
-//       selector: (row) => row.outTime,
-//       width: "180px",
-//       cell: (row) => (row.outTime ? moment(row.outTime).format("hh:mm A") : ""),
-//     },
-//     {
-//       name: "Device Contract",
-//       selector: (row) => row.device || "",
-//       width: "160px",
-//     },
-
-//     {
-//       name: "Visitor Type",
-//       selector: (row) => {
-//         if (row.employee === false) {
-//           if (row.firstTime === true) return "New Visitor";
-//           if (row.firstTime === false) return "Loop Visitor";
-//         }
-//         if (row.employee === true) return "Employee";
-
-//         return "N/A";
-//       },
-//       width: "150px",
-//     },
-
-//     {
-//       name: "Coordinator",
-//       selector: (row) =>
-//         `${row?.location?.latitude ?? "N/A"}, ${
-//           row?.location?.longitude ?? "N/A"
-//         }`,
-//       width: "158px",
-//       cell: (row) => {
-//         const lat = row?.location?.latitude;
-//         const lng = row?.location?.longitude;
-//         return (
-//           <div
-//             className=" cursor-pointer text-sm"
-//             onClick={() => {
-//               setSelectedCoordinates({ lat, lng });
-//               setOpen(true);
-//             }}
-//           >
-//             Lat: {lat ?? "N/A"}, Lng: {lng ?? "N/A"}
-//           </div>
-//         );
-//       },
-//       style: {
-//         justifyContent: "flex-start",
-//         whiteSpace: "normal",
-//         wordWrap: "break-word",
-//       },
-//       wrap: true,
-//     },
-//   ];
-
-//   // Get user's current location
-//   useEffect(() => {
-//     if (open) {
-//       navigator.geolocation.getCurrentPosition(
-//         (position) => {
-//           setLocation({
-//             lat: position.coords.latitude,
-//             lng: position.coords.longitude,
-//           });
-//         },
-//         (error) => {
-//           console.error("Error getting location:", error);
-//           alert("Unable to access your location.");
-//         }
-//       );
-//     }
-//   }, [open]);
-
-//   const mapSrc = location.lat
-//     ? `https://www.google.com/maps?q=${location.lat},${location.lng}&z=15&output=embed`
-//     : null;
-
-//   const breadcrumbItem = [
-//     {
-//       name: "KYC Transaction",
-//     },
-//   ];
-
-//   return (
-//     <>
-//       <div className="md:px-6 sm:px-3 pt-4">
-//         <div className="container-fluid">
-//           <div className="mb-4 ">
-//             <Breadcrumb breadcrumbItem={breadcrumbItem} />
-//             <div className="mb-4">
-//               <HeaderCards />
-//             </div>
-//           </div>
-
-//           <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
-//             KYC Transaction
-//             <span className="inline-block font-bold ms-1">({totalData})</span>
-//           </h5>
-
-//           <ReactDataTable
-//             columns={columnsFilter}
-//             data={KYCTransactions}
-//             pagination
-//             paginationServer
-//             paginationTotalRows={totalData}
-//             paginationPerPage={limit}
-//             paginationDefaultPage={currentPage}
-//             onChangePage={handlePageChange}
-//             onChangeRowsPerPage={handleRowsPerPageChange}
-//             noDataComponent={<></>}
-//           />
-
-//           {/* map modal */}
-//           {open && selectedCoordinates && (
-//             <div className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50">
-//               <div className=" map-container">
-//                 <button
-//                   onClick={() => setOpen(false)}
-//                   className="absolute top-2 right-2 text-black font-bold text-lg z-10"
-//                 >
-//                   <MdOutlineClose />
-//                 </button>
-
-//                 <iframe
-//                   src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
-//                   width="100%"
-//                   height="100%"
-//                   allowFullScreen=""
-//                   loading="lazy"
-//                   referrerPolicy="no-referrer-when-downgrade"
-//                   className="rounded-lg p-[15px]"
-//                 />
-//               </div>
-//             </div>
-//           )}
-
-//           {/* end of map modal */}
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
-
-
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import ReactDataTable, { Alignment } from "react-data-table-component";
+import { FiMapPin } from "react-icons/fi";
 import {
   avatar1,
   avatar10,
@@ -316,11 +31,13 @@ import { KycTranscations } from "./Helper/ApiFunction";
 import MapModal from "./MapModal";
 import Breadcrumb from "./common/Breadcrumb";
 import { MdOutlineClose } from "react-icons/md";
+import { sortBy } from "lodash";
 export default function KYCTransaction() {
   const user = useSelector((state) => state.user.userInfo);
   const [KYCTransactions, setKYCTransactions] = useState([]);
   const [totalData, setTotalData] = useState(0);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
+  const [selectedVisitorType, setSelectedVisitorType] = useState("");
   const token = sessionStorage.getItem("Token");
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10); // default rows per page
@@ -334,7 +51,7 @@ export default function KYCTransaction() {
       if (!BusinessId) return;
 
       const res = await KycTranscations(BusinessId, page, limit, token);
-      console.log("response KYC", res);
+      // console.log("response KYC", res);
       if (res?.data) {
         setKYCTransactions(res.data);
         setTotalData(res?.pagination?.totalRecords);
@@ -357,7 +74,7 @@ export default function KYCTransaction() {
   };
   useEffect(() => {
     handleData(currentPage, limit);
-    console.log(KYCTransactions, "KYCTransactions");
+    // console.log(KYCTransactions, "KYCTransactions");
   }, [BusinessId]);
 
   // Handle click outside of modal
@@ -376,6 +93,15 @@ export default function KYCTransaction() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+
+  const getVisitorType = (row) => {
+    if (row.employee === false) {
+      if (row.firstTime === true) return "New Visitor";
+      if (row.firstTime === false) return "Loop Visitor";
+    }
+    if (row.employee === true) return "Employee";
+    return "N/A";
+  };
 
   const columnsFilter = [
     {
@@ -403,6 +129,7 @@ export default function KYCTransaction() {
           <span>{row.userInfo?.name || "N/A"}</span>
         </div>
       ),
+      sortable: true,
     },
     {
       name: "Phone",
@@ -455,18 +182,56 @@ export default function KYCTransaction() {
       width: "160px",
     },
 
+    // {
+    //   name: "Visitor Type",
+    //   selector: (row) => {
+    //     if (row.employee === false) {
+    //       if (row.firstTime === true) return "New Visitor";
+    //       if (row.firstTime === false) return "Loop Visitor";
+    //     }
+    //     if (row.employee === true) return "Employee";
+
+    //     return "N/A";
+    //   },
+    //   width: "150px",
+    // },
+
     {
       name: "Visitor Type",
-      selector: (row) => {
-        if (row.employee === false) {
-          if (row.firstTime === true) return "New Visitor";
-          if (row.firstTime === false) return "Loop Visitor";
-        }
-        if (row.employee === true) return "Employee";
-
-        return "N/A";
-      },
+      selector: (row) => getVisitorType(row),
       width: "150px",
+      cell: (row) => {
+        const visitorType = getVisitorType(row);
+        let badgeClass = "";
+        // The color combination according to the dashboard chart ["New Visitor","Loop Visitor","Employee"]
+
+        // if (visitorType === "New Visitor") {
+        //   badgeClass = "bg-[#b9b3a8] text-black";
+        // } else if (visitorType === "Loop Visitor") {
+        //   badgeClass = "bg-[#4c3575] text-white";
+        // } else if (visitorType === "Employee") {
+        //   badgeClass = "bg-[#98427e] text-white";
+        // } else {
+        //   badgeClass = "bg-gray-100 text-gray-800";
+        // }
+
+        if (visitorType === "New Visitor") {
+          badgeClass = "bg-blue text-white";
+        } else if (visitorType === "Loop Visitor") {
+          badgeClass = "bg-purple-100 text-purple-800";
+        } else if (visitorType === "Employee") {
+          badgeClass = "bg-green-100 text-green-800";
+        } else {
+          badgeClass = "bg-gray-100 text-gray-800";
+        }
+
+        return (
+          <span className={`px-2 py-1 rounded-full text-xs font-medium ${badgeClass}`}>
+            {visitorType}
+          </span>
+        );
+      },
+      sortable: true,
     },
 
     {
@@ -480,9 +245,10 @@ export default function KYCTransaction() {
         const lng = row?.location?.longitude;
         return (
           <div
-            className=" cursor-pointer text-sm"
+            className="cursor-pointer text-sm"
             onClick={() => {
               setSelectedCoordinates({ lat, lng });
+              setSelectedVisitorType(getVisitorType(row));
               setOpen(true);
             }}
           >
@@ -527,6 +293,19 @@ export default function KYCTransaction() {
     },
   ];
 
+  const getLocationTitle = () => {
+    switch (selectedVisitorType) {
+      case "Employee":
+        return "Employee Location";
+      case "New Visitor":
+        return "New Visitor Location";
+      case "Loop Visitor":
+        return "Loop Visitor Location";
+      default:
+        return "Visitor Location";
+    }
+  };
+
   return (
     <>
       <div className="md:px-6 sm:px-3 pt-4">
@@ -557,7 +336,7 @@ export default function KYCTransaction() {
           />
 
           {/* map modal */}
-          {open && selectedCoordinates && (
+          {/* {open && selectedCoordinates && (
             <div
               className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50"
               onClick={(e) => {
@@ -589,8 +368,56 @@ export default function KYCTransaction() {
                 />
               </div>
             </div>
-          )}
+          )} */}
+          {/* Map Modal */}
+          {open && selectedCoordinates && (
+            <div
+              className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50 p-4"
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  setOpen(false);
+                }
+              }}
+            >
+              <div
+                className="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-4xl h-[80vh] relative"
+                ref={modalRef}
+              >
+                <div className="absolute top-0 left-0 right-0 bg-white py-3 px-4 flex justify-between items-center z-10">
+                  <h3 className="font-semibold text-gray-800">
+                    {getLocationTitle()}
+                  </h3>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <MdOutlineClose className="w-6 h-6" />
+                  </button>
+                </div>
 
+                <div className="h-full pt-12 p-10">
+                  <iframe
+                    src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
+                    width="100%"
+                    height="100%"
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="border-0"
+                  />
+                </div>
+
+                <div className="absolute bottom-4 left-4 bg-white px-3 py-2 rounded-md shadow-md text-sm">
+                  <div className="flex items-center gap-2">
+                    <FiMapPin className="text-blue-600" />
+                    <span>
+                      Lat: {selectedCoordinates.lat?.toFixed(6)}, Lng: {selectedCoordinates.lng?.toFixed(6)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {/* end of map modal */}
         </div>
       </div>

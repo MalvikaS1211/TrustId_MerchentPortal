@@ -169,11 +169,19 @@ export default function Sidebar({
 
   return (
     <>
-      <div className="sidebar-header px-3 mb-6 flex items-center justify-between gap-2">
+      {/* <div className="sidebar-header px-3 mb-6 flex items-center justify-between gap-2">
+        <h4 className="sidebar-title text-[24px]/[30px] font-medium mb-0">
+          <span className="sm-txt">T</span>
+          <span>rustId Merchant Portal</span>
+        </h4> */}
+
+      <div className="sidebar-header px-3 mb-6 flex items-center justify-between sticky -top-20 z-10 pb-4 backdrop-blur-3xl">
         <h4 className="sidebar-title text-[24px]/[30px] font-medium mb-0">
           <span className="sm-txt">T</span>
           <span>rustId Merchant Portal</span>
         </h4>
+
+
         {/* <div className="sidebar-dropdown relative flex">
           <button
             ref={buttonRef}
