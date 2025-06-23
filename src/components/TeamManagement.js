@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-
+import CustomLoader from "./common/CustomLoader"
 import {
   IconArchiveFilled,
   IconFileFilled,
@@ -245,12 +245,12 @@ export default function TeamManagement() {
       wrap: true,
     },
   ];
-  const CustomLoader = () => (
-    <div className="my-custom-loader">
-      <span className="spinner" />
-      <p>Loading employees...</p>
-    </div>
-  );
+  // const CustomLoader = () => (
+  //   <div className="my-custom-loader">
+  //     <span className="spinner" />
+  //     <p>Loading employees...</p>
+  //   </div>
+  // );
 
   const resetModal = () => {
     setShowMobileForm(false);
@@ -360,7 +360,8 @@ export default function TeamManagement() {
               </div>
             }
             // noDataComponent={<></>}
-            progressComponent={<CustomLoader />}
+            // progressComponent={<CustomLoader />}
+            progressComponent={<CustomLoader text="Loading employees..." />}
             progressPending={isSearching}
             pagination
             paginationServer

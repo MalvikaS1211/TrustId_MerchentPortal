@@ -1,17 +1,42 @@
 import React from 'react';
 
-const Loader = () => {
+const CustomLoader = ({ text }) => {
+  const darkMode = sessionStorage.getItem('darkMode');
+  const isDarkMode = darkMode === 'true';
+  const themeStyles = {
+    light: {
+      background: 'transparent',
+      spinnerPrimary: '#9f9f9f',
+      spinnerSecondary: '#d9bda5',
+      textColor: '#2d3748'
+    },
+    dark: {
+      background: '#2d3238',
+      spinnerPrimary: '#9f9f9f',
+      spinnerSecondary: '#d9bda5',
+      textColor: '#f7fafc'
+    }
+  };
+
+  const currentTheme = isDarkMode ? themeStyles.dark : themeStyles.light;
+
   return (
-    <div className="flex justify-center items-center w-full ">
+    <div
+      className="flex flex-col justify-center items-center w-full h-full"
+      style={{
+        backgroundColor: currentTheme.background,
+        borderRadius: 'inherit'
+      }}
+    >
       <div
-        className="loader"
+        className="loader mb-1"
         style={{
           transform: 'rotateZ(45deg)',
           perspective: '1000px',
           borderRadius: '50%',
-          width: '60px',
-          height: '60px',
-          color: '#9f9f9f',
+          width: 'clamp(40px, 5vw, 60px)',
+          height: 'clamp(40px, 5vw, 60px)',
+          color: currentTheme.spinnerPrimary,
           position: 'relative'
         }}
       >
@@ -40,14 +65,26 @@ const Loader = () => {
             width: 'inherit',
             height: 'inherit',
             borderRadius: '50%',
-            color: '#d9bda5',
+            color: currentTheme.spinnerSecondary,
             transform: 'rotateY(70deg)',
             animation: '1s spin linear infinite',
             animationDelay: '0.4s'
-
           }}
         />
       </div>
+      {text && (
+        <div
+          className="text-center"
+          style={{
+            color: currentTheme.textColor,
+            fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+            fontWeight: 500,
+            maxWidth: '90%'
+          }}
+        >
+          {text}
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes spin {
@@ -81,4 +118,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default CustomLoader;
