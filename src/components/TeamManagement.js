@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import { FaEye, FaTrashAlt } from "react-icons/fa";
 import CustomLoader from "./common/CustomLoader"
+import swal from 'sweetalert';
 import {
   IconArchiveFilled,
   IconFileFilled,
@@ -25,6 +27,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import { useSelector } from "react-redux";
 import {
   addEmployee,
+  deleteEmployee,
   getBusinessVisitors,
   getEmployeeData,
 } from "./Helper/ApiFunction";
@@ -244,6 +247,51 @@ export default function TeamManagement() {
       },
       wrap: true,
     },
+    {
+      name: "Action",
+      cell: (row) => (
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => {
+              swal({
+                title: "Are you sure?",
+                text: `Are you sure you want to delete ${row.userDetails?.name || "this employee"}?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              }).then((willDelete) => {
+                if (willDelete) {
+                  console.log("Deleted", row);
+                  // In future, replace with actual API call:
+                  deleteEmployee(row._id, row.businessId, row?.businessDetails?.ownerId, token)
+                    .then(() => {
+                      swal("Success!", "Employee deleted successfully!", "success");
+                      setIsFetch(prev => !prev); // Refresh data
+                    })
+                    .catch(error => {
+                      swal("Error!", "Failed to delete employee.", "error");
+                    });
+                } else {
+                  console.log("Deletion cancelled");
+                  swal("Cancelled", "Employee was not deleted.", "info");
+                }
+              });
+            }}
+            className="group relative p-2 rounded-md border border-red-500 dark:border-red-400 transition-all duration-200 bg-transparent hover:bg-red-500 dark:hover:bg-red-500"
+            title="Delete"
+          >
+            <FaTrashAlt
+              size={12}
+              className="text-red-500 dark:text-red-400 group-hover:text-white"
+            />
+          </button>
+        </div>
+      ),
+      width: "120px",
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    }
   ];
   // const CustomLoader = () => (
   //   <div className="my-custom-loader">

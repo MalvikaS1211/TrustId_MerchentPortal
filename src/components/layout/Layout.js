@@ -42,7 +42,8 @@ export default function Layout() {
   return (
     <div className='admin-wrapper overflow-hidden'>
       <div className='flex h-svh relative'>
-        <div className={`sidebar sm:w-[280px] sm:min-w-[280px] w-full px-2 py-4 overflow-y-scroll flex flex-col custom-scrollbar xl:static fixed xl:h-full md:h-[calc(100vh-74px)] h-[calc(100vh-64px)] md:top-[74px] top-[64px] z-[3] bg-body-color xl:shadow-none transition-all duration-300 ${mobileNav ? 'shadow-shadow-lg left-0' : '-left-full'}`}>
+        {/* <div className={`sidebar sm:w-[280px] sm:min-w-[280px] w-full px-2 py-4 overflow-y-scroll flex flex-col custom-scrollbar xl:static fixed xl:h-full md:h-[calc(100vh-74px)] h-[calc(100vh-64px)] md:top-[74px] top-[64px] z-[3] bg-body-color xl:shadow-none transition-all duration-300 ${mobileNav ? 'shadow-shadow-lg left-0' : '-left-full'}`}> */}
+        <div className={`sidebar sm:w-[280px] sm:min-w-[280px] w-full px-2 overflow-y-scroll flex flex-col custom-scrollbar xl:static fixed xl:h-full md:h-[calc(100vh-74px)] h-[calc(100vh-64px)] md:top-[74px] top-[64px] z-[3] bg-body-color xl:shadow-none transition-all duration-300 ${mobileNav ? 'shadow-shadow-lg left-0' : '-left-full'}`}>
           <Sidebar setMobileNav={setMobileNav} note={note} toggleNote={toggleNote} chat={chat} toggleChat={toggleChat} />
         </div>
         <div className='main flex-1 flex flex-col overflow-auto custom-scrollbar bg-body-color'>

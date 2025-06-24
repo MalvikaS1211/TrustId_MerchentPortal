@@ -219,6 +219,35 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
   }
 }
 
+
+
+
+export async function deleteEmployee(employeeuserId, businessId, ownerId, token) {
+  try {
+    const response = await axios.post(
+      `${URLApi}/delete-employee`,
+      {
+        employeeuserId,
+        businessId,
+        ownerId
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(employeeuserId, businessId, ownerId, ":::Delete Employee");
+    return response.data;
+  } catch (error) {
+    console.log("Error in deleteEmployee:", error);
+    throw error;
+  }
+}
+
+
+
+
 export async function getEmployeeData(
   businessId,
   token,
