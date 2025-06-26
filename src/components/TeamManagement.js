@@ -313,7 +313,7 @@ export default function TeamManagement() {
                     .catch(error => {
                       swal({
                         title: "Error",
-                        text: error.response?.data?.message || "Failed to delete employee.",
+                        text: error.response?.data?.message || "Failed to remove employee.",
                         icon: "error",
                         className: "custom-swal",
                         customClass: {
