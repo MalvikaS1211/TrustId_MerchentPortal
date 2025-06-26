@@ -222,14 +222,13 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
 
 
 
-export async function deleteEmployee(employeeuserId, businessId, ownerId, token) {
+export async function deleteEmployee(employeeuserId, businessId, token) {
   try {
     const response = await axios.post(
       `${URLApi}/delete-employee`,
       {
         employeeuserId,
-        businessId,
-        ownerId
+        businessId
       },
       {
         headers: {
@@ -237,7 +236,7 @@ export async function deleteEmployee(employeeuserId, businessId, ownerId, token)
         },
       }
     );
-    console.log(employeeuserId, businessId, ownerId, ":::Delete Employee");
+    console.log(employeeuserId, businessId, ":::Delete Employee");
     return response.data;
   } catch (error) {
     console.log("Error in deleteEmployee:", error);

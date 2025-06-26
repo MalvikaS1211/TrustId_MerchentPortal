@@ -38,6 +38,19 @@ import { MdOutlineClose, MdKeyboardBackspace } from "react-icons/md";
 import { debounce } from "lodash";
 
 export default function TeamManagement() {
+  let isDark = sessionStorage.getItem("darkMode");
+  console.log("DARK_MODE::", isDark)
+  const getSwalTheme = () => {
+    // const isDark = document.documentElement.classList.contains('dark');
+    return {
+      background: isDark ? '#1e293b' : '#ffffff',
+      textColor: isDark ? '#f8fafc' : '#1e293b',
+      confirmButtonBg: isDark ? '#3b82f6' : '#2563eb',
+      cancelButtonBg: isDark ? '#64748b' : '#94a3b8',
+      borderColor: isDark ? '#334155' : '#e2e8f0',
+      dangerButtonBg: '#ef4444'
+    };
+  };
   const breadcrumbItem = [
     // {
     //   name: "More Pages",
@@ -253,37 +266,69 @@ export default function TeamManagement() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
+              const theme = getSwalTheme();
               swal({
-                title: "Are you sure?",
-                text: `Are you sure you want to delete ${row.userDetails?.name || "this employee"}?`,
+                title: "Confirm Deletion",
+                text: `You are about to permanently delete ${row.userDetails?.name || "this employee"}. This action cannot be undone.`,
                 icon: "warning",
-                buttons: true,
+                buttons: {
+                  cancel: {
+                    text: "Cancel",
+                    value: null,
+                    visible: true,
+                    className: "swal-cancel-button",
+                  },
+                  confirm: {
+                    text: "Delete",
+                    value: true,
+                    visible: true,
+                    className: "swal-confirm-button",
+                  }
+                },
                 dangerMode: true,
+                className: "custom-swal",
+                customClass: {
+                  popup: "custom-swal-popup",
+                  title: "custom-swal-title",
+                  htmlContainer: "custom-swal-text",
+                  confirmButton: "custom-swal-confirm-button",
+                  cancelButton: "custom-swal-cancel-button",
+                  icon: "custom-swal-icon"
+                }
               }).then((willDelete) => {
                 if (willDelete) {
-                  console.log("Deleted", row);
-                  // In future, replace with actual API call:
-                  deleteEmployee(row._id, row.businessId, row?.businessDetails?.ownerId, token)
+                  deleteEmployee(row.employeeId, row.businessId, token)
                     .then(() => {
-                      swal("Success!", "Employee deleted successfully!", "success");
-                      setIsFetch(prev => !prev); // Refresh data
+                      swal({
+                        title: "Deleted!",
+                        text: "Employee has been successfully deleted.",
+                        icon: "success",
+                        className: "custom-swal",
+                        customClass: {
+                          confirmButton: "custom-swal-success-button"
+                        }
+                      });
+                      setIsFetch(prev => !prev);
                     })
                     .catch(error => {
-                      swal("Error!", "Failed to delete employee.", "error");
+                      swal({
+                        title: "Error",
+                        text: error.response?.data?.message || "Failed to delete employee.",
+                        icon: "error",
+                        className: "custom-swal",
+                        customClass: {
+                          confirmButton: "custom-swal-error-button"
+                        }
+                      });
                     });
-                } else {
-                  console.log("Deletion cancelled");
-                  swal("Cancelled", "Employee was not deleted.", "info");
                 }
               });
             }}
-            className="group relative p-2 rounded-md border border-red-500 dark:border-red-400 transition-all duration-200 bg-transparent hover:bg-red-500 dark:hover:bg-red-500"
-            title="Delete"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-200 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-800 hover:border-red-300 dark:hover:border-red-700"
+            title="Delete Employee"
           >
-            <FaTrashAlt
-              size={12}
-              className="text-red-500 dark:text-red-400 group-hover:text-white"
-            />
+            <FaTrashAlt size={10} className="flex-shrink-0" />
+            <span>Remove</span>
           </button>
         </div>
       ),

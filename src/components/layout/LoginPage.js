@@ -345,8 +345,8 @@ export default function LoginPage() {
                       >
                         {timer > 0
                           ? `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
-                              .toString()
-                              .padStart(2, "0")}`
+                            .toString()
+                            .padStart(2, "0")}`
                           : sendOTPBtn}
                       </button>
                       {phone && (
