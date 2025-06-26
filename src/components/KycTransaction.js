@@ -1,29 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import ReactDataTable, { Alignment } from "react-data-table-component";
+import { SlLocationPin } from "react-icons/sl";
 import { FiMapPin } from "react-icons/fi";
-import {
-  avatar1,
-  avatar10,
-  avatar2,
-  avatar3,
-  avatar6,
-  avatar7,
-  avatar8,
-  avatar9,
-} from "../../src/assets/images";
-import {
-  IconTrash,
-  IconCloudDownload,
-  IconCloudUpload,
-  IconBrandFacebook,
-  IconBrandGithub,
-  IconMail,
-  IconPencil,
-  IconHeart,
-  IconBrandLinkedin,
-  IconBrandTwitter,
-} from "@tabler/icons-react";
 import moment from "moment";
 import HeaderCards from "./HeaderCards";
 import { useSelector } from "react-redux";
@@ -120,8 +99,8 @@ export default function KYCTransaction() {
               row.userInfo?.address?.profile_image?.startsWith("data:image")
                 ? row.userInfo.address.profile_image
                 : row.userInfo?.address?.profile_image
-                  ? `data:image/jpeg;base64,${row.userInfo.address.profile_image}`
-                  : "/default-avatar.png"
+                ? `data:image/jpeg;base64,${row.userInfo.address.profile_image}`
+                : "/default-avatar.png"
             }
             alt="profile"
             className="w-[26px] h-[26px] rounded-md object-cover"
@@ -182,77 +161,95 @@ export default function KYCTransaction() {
       width: "160px",
     },
 
-    // {
-    //   name: "Visitor Type",
-    //   selector: (row) => {
-    //     if (row.employee === false) {
-    //       if (row.firstTime === true) return "New Visitor";
-    //       if (row.firstTime === false) return "Loop Visitor";
-    //     }
-    //     if (row.employee === true) return "Employee";
-
-    //     return "N/A";
-    //   },
-    //   width: "150px",
-    // },
-
     {
       name: "Visitor Type",
-      selector: (row) => getVisitorType(row),
-      width: "150px",
-      cell: (row) => {
-        const visitorType = getVisitorType(row);
-        let badgeClass = "";
-        // The color combination according to the dashboard chart ["New Visitor","Loop Visitor","Employee"]
-
-        // if (visitorType === "New Visitor") {
-        //   badgeClass = "bg-[#b9b3a8] text-black";
-        // } else if (visitorType === "Loop Visitor") {
-        //   badgeClass = "bg-[#4c3575] text-white";
-        // } else if (visitorType === "Employee") {
-        //   badgeClass = "bg-[#98427e] text-white";
-        // } else {
-        //   badgeClass = "bg-gray-100 text-gray-800";
-        // }
-
-        if (visitorType === "New Visitor") {
-          badgeClass = "bg-blue text-white";
-        } else if (visitorType === "Loop Visitor") {
-          badgeClass = "bg-purple-100 text-purple-800";
-        } else if (visitorType === "Employee") {
-          badgeClass = "bg-green-100 text-green-800";
-        } else {
-          badgeClass = "bg-gray-100 text-gray-800";
+      selector: (row) => {
+        if (row.employee === false) {
+          if (row.firstTime === true) return "New Visitor";
+          if (row.firstTime === false) return "Loop Visitor";
         }
+        if (row.employee === true) return "Employee";
 
-        return (
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${badgeClass}`}>
-            {visitorType}
-          </span>
-        );
+        return "N/A";
       },
-      sortable: true,
+      width: "150px",
     },
+
+    // {
+    //   name: "Visitor Type",
+    //   selector: (row) => getVisitorType(row),
+    //   width: "150px",
+    //   cell: (row) => {
+    //     const visitorType = getVisitorType(row);
+    //     let badgeClass = "";
+    //     // The color combination according to the dashboard chart ["New Visitor","Loop Visitor","Employee"]
+
+    //     // if (visitorType === "New Visitor") {
+    //     //   badgeClass = "bg-[#b9b3a8] text-black";
+    //     // } else if (visitorType === "Loop Visitor") {
+    //     //   badgeClass = "bg-[#4c3575] text-white";
+    //     // } else if (visitorType === "Employee") {
+    //     //   badgeClass = "bg-[#98427e] text-white";
+    //     // } else {
+    //     //   badgeClass = "bg-gray-100 text-gray-800";
+    //     // }
+
+    //     if (visitorType === "New Visitor") {
+    //       badgeClass = "bg-blue text-white";
+    //     } else if (visitorType === "Loop Visitor") {
+    //       badgeClass = "bg-purple-100 text-purple-800";
+    //     } else if (visitorType === "Employee") {
+    //       badgeClass = "bg-green-100 text-green-800";
+    //     } else {
+    //       badgeClass = "bg-gray-100 text-gray-800";
+    //     }
+
+    //     return (
+    //       <span className={`px-2 py-1 rounded-full text-xs font-medium ${badgeClass}`}>
+    //         {visitorType}
+    //       </span>
+    //     );
+    //   },
+    //   sortable: true,
+    // },
 
     {
       name: "Coordinator",
       selector: (row) =>
-        `${row?.location?.latitude ?? "N/A"}, ${row?.location?.longitude ?? "N/A"
+        `${row?.location?.latitude ?? "N/A"}, ${
+          row?.location?.longitude ?? "N/A"
         }`,
-      width: "158px",
+      minWidth: "150px",
       cell: (row) => {
         const lat = row?.location?.latitude;
         const lng = row?.location?.longitude;
         return (
           <div
-            className="cursor-pointer text-sm"
+            className="coordinate-cell"
             onClick={() => {
               setSelectedCoordinates({ lat, lng });
               setSelectedVisitorType(getVisitorType(row));
               setOpen(true);
             }}
           >
-            Lat: {lat ?? "N/A"}, Lng: {lng ?? "N/A"}
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 48"
+              >
+                <circle cx="12" cy="10" r="8" fill="#ff3b3b" />
+                <circle cx="13.5" cy="10" r="8" fill="#d32f2f" opacity="0.3" />
+                <rect x="11" y="18" width="2" height="20" rx="1" fill="#000" />
+                <circle cx="12" cy="40" r="1.5" fill="#000" />
+              </svg>
+            </div>
+
+            <div className="flex flex-col text-sm leading-snug">
+              <span>Lat: {lat ?? "N/A"}</span>
+              <span>Lng: {lng ?? "N/A"}</span>
+            </div>
           </div>
         );
       },
@@ -395,7 +392,7 @@ export default function KYCTransaction() {
                   </button>
                 </div>
 
-                <div className="h-full pt-12 p-10">
+                <div className="h-full pt-12 p-15">
                   <iframe
                     src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
                     width="100%"
@@ -409,9 +406,10 @@ export default function KYCTransaction() {
 
                 <div className="absolute bottom-4 left-4 bg-white px-3 py-2 rounded-md shadow-md text-sm">
                   <div className="flex items-center gap-2">
-                    <FiMapPin className="text-blue-600" />
-                    <span>
-                      Lat: {selectedCoordinates.lat?.toFixed(6)}, Lng: {selectedCoordinates.lng?.toFixed(6)}
+                    <FiMapPin className="text-red-600" />
+                    <span className="text-gray-600">
+                      Lat: {selectedCoordinates.lat?.toFixed(6)}, Lng:{" "}
+                      {selectedCoordinates.lng?.toFixed(6)}
                     </span>
                   </div>
                 </div>
