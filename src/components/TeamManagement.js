@@ -112,7 +112,7 @@ export default function TeamManagement() {
       const res = await addEmployee(userId, businessId, mobileNumber, token);
 
       if (res?.status === true) {
-        console.log("handle AddEmployee", res);
+        // console.log("handle AddEmployee", res);
         toast.success("Employee added successfully!");
         setIsFetch((prev) => !prev);
       } else {
@@ -236,8 +236,8 @@ export default function TeamManagement() {
               row.userDetails?.profileImage?.startsWith("data:image")
                 ? row.userDetails.profileImage
                 : row.userDetails?.profileImage
-                ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
-                : "/avatar2.png"
+                  ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
+                  : "/avatar2.png"
             }
             alt="profile"
             className="w-[26px] h-[26px] rounded-md object-cover"
@@ -410,7 +410,7 @@ export default function TeamManagement() {
                 onKeyPress={handleKeyPress}
               />
               <button
-                className="btn border border-border-color !rounded-s-none"
+                className={`btn border border-border-color !rounded-s-none ${isSearching ? "cursor-not-allowed" : ""}`}
                 type="button"
                 onClick={executeSearch}
                 disabled={isSearching}
@@ -555,6 +555,13 @@ export default function TeamManagement() {
                           const value = e.target.value;
                           if (/^\d{0,10}$/.test(value)) {
                             setMobileNumber(value);
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            addEmp();
+                            setOpen(false);
+                            resetModal();
                           }
                         }}
                         placeholder="Enter your mobile number"
