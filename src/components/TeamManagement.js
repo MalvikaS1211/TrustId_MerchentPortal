@@ -260,83 +260,83 @@ export default function TeamManagement() {
       },
       wrap: true,
     },
-    {
-      name: "Action",
-      cell: (row) => (
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => {
-              const theme = getSwalTheme();
-              swal({
-                title: "Confirm Deletion",
-                text: `You are about to permanently delete ${row.userDetails?.name || "this employee"}. This action cannot be undone.`,
-                icon: "warning",
-                buttons: {
-                  cancel: {
-                    text: "Cancel",
-                    value: null,
-                    visible: true,
-                    className: "swal-cancel-button",
-                  },
-                  confirm: {
-                    text: "Delete",
-                    value: true,
-                    visible: true,
-                    className: "swal-confirm-button",
-                  }
-                },
-                dangerMode: true,
-                className: "custom-swal",
-                customClass: {
-                  popup: "custom-swal-popup",
-                  title: "custom-swal-title",
-                  htmlContainer: "custom-swal-text",
-                  confirmButton: "custom-swal-confirm-button",
-                  cancelButton: "custom-swal-cancel-button",
-                  icon: "custom-swal-icon"
-                }
-              }).then((willDelete) => {
-                if (willDelete) {
-                  deleteEmployee(row.employeeId, row.businessId, token)
-                    .then(() => {
-                      swal({
-                        title: "Deleted!",
-                        text: "Employee has been successfully deleted.",
-                        icon: "success",
-                        className: "custom-swal",
-                        customClass: {
-                          confirmButton: "custom-swal-success-button"
-                        }
-                      });
-                      setIsFetch(prev => !prev);
-                    })
-                    .catch(error => {
-                      swal({
-                        title: "Error",
-                        text: error.response?.data?.message || "Failed to delete employee.",
-                        icon: "error",
-                        className: "custom-swal",
-                        customClass: {
-                          confirmButton: "custom-swal-error-button"
-                        }
-                      });
-                    });
-                }
-              });
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-200 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-800 hover:border-red-300 dark:hover:border-red-700"
-            title="Delete Employee"
-          >
-            <FaTrashAlt size={10} className="flex-shrink-0" />
-            <span>Remove</span>
-          </button>
-        </div>
-      ),
-      width: "120px",
-      ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
-    }
+    // {
+    //   name: "Action",
+    //   cell: (row) => (
+    //     <div className="flex items-center gap-3">
+    //       <button
+    //         onClick={() => {
+    //           const theme = getSwalTheme();
+    //           swal({
+    //             title: "Confirm Deletion",
+    //             text: `You are about to permanently delete ${row.userDetails?.name || "this employee"}. This action cannot be undone.`,
+    //             icon: "warning",
+    //             buttons: {
+    //               cancel: {
+    //                 text: "Cancel",
+    //                 value: null,
+    //                 visible: true,
+    //                 className: "swal-cancel-button",
+    //               },
+    //               confirm: {
+    //                 text: "Delete",
+    //                 value: true,
+    //                 visible: true,
+    //                 className: "swal-confirm-button",
+    //               }
+    //             },
+    //             dangerMode: true,
+    //             className: "custom-swal",
+    //             customClass: {
+    //               popup: "custom-swal-popup",
+    //               title: "custom-swal-title",
+    //               htmlContainer: "custom-swal-text",
+    //               confirmButton: "custom-swal-confirm-button",
+    //               cancelButton: "custom-swal-cancel-button",
+    //               icon: "custom-swal-icon"
+    //             }
+    //           }).then((willDelete) => {
+    //             if (willDelete) {
+    //               deleteEmployee(row.employeeId, row.businessId, token)
+    //                 .then(() => {
+    //                   swal({
+    //                     title: "Deleted!",
+    //                     text: "Employee has been successfully deleted.",
+    //                     icon: "success",
+    //                     className: "custom-swal",
+    //                     customClass: {
+    //                       confirmButton: "custom-swal-success-button"
+    //                     }
+    //                   });
+    //                   setIsFetch(prev => !prev);
+    //                 })
+    //                 .catch(error => {
+    //                   swal({
+    //                     title: "Error",
+    //                     text: error.response?.data?.message || "Failed to delete employee.",
+    //                     icon: "error",
+    //                     className: "custom-swal",
+    //                     customClass: {
+    //                       confirmButton: "custom-swal-error-button"
+    //                     }
+    //                   });
+    //                 });
+    //             }
+    //           });
+    //         }}
+    //         className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-200 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-800 hover:border-red-300 dark:hover:border-red-700"
+    //         title="Delete Employee"
+    //       >
+    //         <FaTrashAlt size={10} className="flex-shrink-0" />
+    //         <span>Remove</span>
+    //       </button>
+    //     </div>
+    //   ),
+    //   width: "120px",
+    //   ignoreRowClick: true,
+    //   allowOverflow: true,
+    //   button: true,
+    // }
   ];
   // const CustomLoader = () => (
   //   <div className="my-custom-loader">
