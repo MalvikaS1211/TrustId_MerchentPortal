@@ -307,33 +307,35 @@ export default function KYCTransaction() {
     <>
       <div className="md:px-6 sm:px-3 pt-4">
         <div className="container-fluid">
-          <div className="mb-4 ">
-            <Breadcrumb breadcrumbItem={breadcrumbItem} />
-            <div className="mb-4">
-              <HeaderCards />
+          <Breadcrumb breadcrumbItem={breadcrumbItem} />
+          <div className="grid grid-cols-12 gap-4">
+            <HeaderCards />
+            <div className="col-span-12 w-full overflow-auto">
+              <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
+                KYC Transaction
+                <span className="inline-block font-bold ms-1">
+                  ({totalData})
+                </span>
+              </h5>
             </div>
-          </div>
 
-          <h5 className="text-[20px] leading-[26px] font-medium mb-2 p-[10px]">
-            KYC Transaction
-            <span className="inline-block font-bold ms-1">({totalData})</span>
-          </h5>
+            <div className="col-span-12 w-full overflow-auto">
+              <ReactDataTable
+                columns={columnsFilter}
+                data={KYCTransactions}
+                pagination
+                paginationServer
+                paginationTotalRows={totalData}
+                paginationPerPage={limit}
+                paginationDefaultPage={currentPage}
+                onChangePage={handlePageChange}
+                onChangeRowsPerPage={handleRowsPerPageChange}
+                noDataComponent={<></>}
+              />
+            </div>
 
-          <ReactDataTable
-            columns={columnsFilter}
-            data={KYCTransactions}
-            pagination
-            paginationServer
-            paginationTotalRows={totalData}
-            paginationPerPage={limit}
-            paginationDefaultPage={currentPage}
-            onChangePage={handlePageChange}
-            onChangeRowsPerPage={handleRowsPerPageChange}
-            noDataComponent={<></>}
-          />
-
-          {/* map modal */}
-          {/* {open && selectedCoordinates && (
+            {/* map modal */}
+            {/* {open && selectedCoordinates && (
             <div
               className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50"
               onClick={(e) => {
@@ -366,58 +368,59 @@ export default function KYCTransaction() {
               </div>
             </div>
           )} */}
-          {/* Map Modal */}
-          {open && selectedCoordinates && (
-            <div
-              className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50 p-4"
-              onClick={(e) => {
-                if (e.target === e.currentTarget) {
-                  setOpen(false);
-                }
-              }}
-            >
+            {/* Map Modal */}
+            {open && selectedCoordinates && (
               <div
-                className="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-4xl h-[80vh] relative"
-                ref={modalRef}
+                className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50 p-4"
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setOpen(false);
+                  }
+                }}
               >
-                <div className="absolute top-0 left-0 right-0 bg-white py-3 px-4 flex justify-between items-center z-10">
-                  <h3 className="font-semibold text-gray-800">
-                    {getLocationTitle()}
-                  </h3>
-                  <button
-                    onClick={() => setOpen(false)}
-                    className="text-gray-500 hover:text-gray-700 transition-colors"
-                  >
-                    <MdOutlineClose className="w-6 h-6" />
-                  </button>
-                </div>
+                <div
+                  className="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-4xl h-[80vh] relative"
+                  ref={modalRef}
+                >
+                  <div className="absolute top-0 left-0 right-0 bg-white py-3 px-4 flex justify-between items-center z-10">
+                    <h3 className="font-semibold text-gray-800">
+                      {getLocationTitle()}
+                    </h3>
+                    <button
+                      onClick={() => setOpen(false)}
+                      className="text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      <MdOutlineClose className="w-6 h-6" />
+                    </button>
+                  </div>
 
-                <div className="h-full pt-12 p-15">
-                  <iframe
-                    src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
-                    width="100%"
-                    height="100%"
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="border-0"
-                  />
-                </div>
+                  <div className="h-full pt-12 p-15">
+                    <iframe
+                      src={`https://www.google.com/maps?q=${selectedCoordinates.lat},${selectedCoordinates.lng}&z=15&output=embed`}
+                      width="100%"
+                      height="100%"
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="border-0"
+                    />
+                  </div>
 
-                <div className="absolute bottom-4 left-4 bg-white px-3 py-2 rounded-md shadow-md text-sm">
-                  <div className="flex items-center gap-2">
-                    <FiMapPin className="text-red-600" />
-                    <span className="text-gray-600">
-                      Lat: {selectedCoordinates.lat?.toFixed(6)}, Lng:{" "}
-                      {selectedCoordinates.lng?.toFixed(6)}
-                    </span>
+                  <div className="absolute bottom-4 left-4 bg-white px-3 py-2 rounded-md shadow-md text-sm">
+                    <div className="flex items-center gap-2">
+                      <FiMapPin className="text-red-600" />
+                      <span className="text-gray-600">
+                        Lat: {selectedCoordinates.lat?.toFixed(6)}, Lng:{" "}
+                        {selectedCoordinates.lng?.toFixed(6)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-          {/* end of map modal */}
-        </div>
+            )}
+            {/* end of map modal */}
+          </div>
+        </div>{" "}
       </div>
     </>
   );

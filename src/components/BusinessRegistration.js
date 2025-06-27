@@ -5,7 +5,6 @@
 // import Select from "react-select";
 // import { useSelector } from "react-redux";
 
-
 // const customStyles = (darkMode) => ({
 //   input: (provided) => ({
 //     ...provided,
@@ -180,35 +179,32 @@
 //   );
 // }
 
-
-
-
-
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import toast from "react-hot-toast";
 import { addBusiness, getCategory } from "./Helper/ApiFunction";
+import { IconBuildingSkyscraper } from "@tabler/icons-react";
 
 const customStyles = (darkMode) => ({
   control: (provided) => ({
     ...provided,
-    width: '100%',
-    minWidth: '100%',
-    maxWidth: '100%',
+    width: "100%",
+    minWidth: "100%",
+    maxWidth: "100%",
   }),
   input: (provided) => ({
     ...provided,
     color: darkMode ? "white" : "black",
-    width: '100%',
-    overflow: 'hidden',
+    width: "100%",
+    overflow: "hidden",
   }),
   singleValue: (provided) => ({
     ...provided,
     color: darkMode ? "white" : "black",
-    maxWidth: 'calc(100% - 20px)',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    maxWidth: "calc(100% - 20px)",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   }),
   placeholder: (provided) => ({
     ...provided,
@@ -216,8 +212,8 @@ const customStyles = (darkMode) => ({
   }),
   valueContainer: (provided) => ({
     ...provided,
-    width: '100%',
-    overflow: 'hidden',
+    width: "100%",
+    overflow: "hidden",
   }),
 });
 
@@ -244,7 +240,7 @@ export default function BusinessRegistration() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async () => {
@@ -319,9 +315,16 @@ export default function BusinessRegistration() {
               className={`my-select ${darkMode ? "my-select--dark" : ""}`}
               classNamePrefix="my-select"
               options={options}
-              value={formData.category ? options.find(opt => opt.value === formData.category) : null}
+              value={
+                formData.category
+                  ? options.find((opt) => opt.value === formData.category)
+                  : null
+              }
               onChange={(selected) =>
-                setFormData(prev => ({ ...prev, category: selected?.value || "" }))
+                setFormData((prev) => ({
+                  ...prev,
+                  category: selected?.value || "",
+                }))
               }
               menuPlacement="auto"
               menuPosition="fixed"
@@ -370,9 +373,7 @@ export default function BusinessRegistration() {
               required
             />
           </div>
-          <div>
-
-          </div>
+          <div></div>
           <button
             type="button"
             onClick={handleSubmit}

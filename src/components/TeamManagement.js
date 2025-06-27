@@ -6,9 +6,16 @@ import CustomLoader from "./common/CustomLoader";
 import swal from "sweetalert";
 import {
   IconArchiveFilled,
+  IconCalendarUser,
+  IconChartBar,
+  IconDeviceAnalytics,
   IconFileFilled,
   IconLayout2Filled,
   IconSearch,
+  IconUserCog,
+  IconUsers,
+  IconUsersGroup,
+  IconUserStar,
 } from "@tabler/icons-react";
 import {
   avatar1,
@@ -359,7 +366,7 @@ export default function TeamManagement() {
         <div className="grid xxl:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
           <div className="card bg-card-color rounded-xl md:p-6 p-4 flex md:gap-4 gap-2 items-center border border-dashed border-border-color">
             <div className="sm:w-[56px] sm:h-[56px] sm:min-w-[56px] w-[40px] h-[40px] min-w-[40px] text-secondary bg-primary-10 rounded-full flex items-center justify-center">
-              <IconArchiveFilled />
+              <IconUsers />
             </div>
             <div>
               <p className="text-font-color-100">Total Employees</p>
@@ -370,7 +377,7 @@ export default function TeamManagement() {
           </div>
           <div className="card bg-card-color rounded-xl md:p-6 p-4 flex md:gap-4 gap-2 items-center border border-dashed border-border-color">
             <div className="sm:w-[56px] sm:h-[56px] sm:min-w-[56px] w-[40px] h-[40px] min-w-[40px] text-secondary bg-primary-10 rounded-full flex items-center justify-center">
-              <IconLayout2Filled />
+              <IconDeviceAnalytics />
             </div>
             <div>
               <p className="text-font-color-100">Total Visitors</p>
@@ -381,7 +388,7 @@ export default function TeamManagement() {
           </div>
           <div className="card bg-card-color rounded-xl md:p-6 p-4 flex md:gap-4 gap-2 items-center border border-dashed border-border-color">
             <div className="sm:w-[56px] sm:h-[56px] sm:min-w-[56px] w-[40px] h-[40px] min-w-[40px] text-secondary bg-primary-10 rounded-full flex items-center justify-center">
-              <IconFileFilled />
+              <IconCalendarUser />
             </div>
             <div>
               <p className="text-font-color-100">Total Monthly Visitors</p>
