@@ -132,6 +132,7 @@ export default function LoginPage() {
         setshowOTPSection(true);
         setSendOTPBtn("Resend OTP");
         setTimer(120); // Start 2-minute countdown
+        toast.success(res?.message);
       } else {
         toast.error(res?.message || "User Not Exist");
       }
@@ -169,6 +170,18 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error("Error during OTP verification:", error);
+    }
+  };
+
+  // Handle Enter key press for OTP submission
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent form submission
+      if (showOTPSection && OTP) {
+        handleLogin();
+      } else if (phone && !showOTPSection) {
+        handleOTP();
+      }
     }
   };
 
@@ -303,7 +316,7 @@ export default function LoginPage() {
                   </div>
                 </div>
               </div>
-              <form autoComplete="off">
+              <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
                 <div className="bn-formItem">
                   <label
                     className="bn-formItem-label phone-label"
@@ -335,6 +348,7 @@ export default function LoginPage() {
                             setPhone(value);
                           }
                         }}
+                        onKeyDown={handleKeyDown}
                       />
 
                       <button
@@ -376,6 +390,7 @@ export default function LoginPage() {
                           value={OTP}
                           onChange={(e) => setOTP(e.target.value)}
                           autoComplete="off"
+                          onKeyDown={handleKeyDown}
                         />
 
                         <button
