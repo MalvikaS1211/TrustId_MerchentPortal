@@ -103,7 +103,9 @@ select option:hover {
 .stroke-primary {
   stroke: var(--dark-brown);
 }
-
+.icon-employee {
+  color: var(--dark-brown);
+}
 .content-card select option:hover {
   background-color: #734116 !important;
 }
@@ -265,7 +267,9 @@ body .rdt_Pagination select {
   .stroke-primary {
     stroke: var(--primary-text-dark);
   }
-
+  .icon-employee {
+    color: var(--primary-text-dark);
+  }
   body .rdt_Pagination select {
     background-color: var(--background-dark) !important;
   }
