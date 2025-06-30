@@ -622,30 +622,36 @@ body .rdt_Pagination select {
     bottom: 0;
     width: 280px;
   }
+  .sidebar-header {
+    position: fixed;
+  }
+  .sidebar {
+    width: 310px;
+  }
   .overflow-y-scroll {
-    padding-bottom: 6rem;
+    padding-bottom: 5rem;
   }
 }
 
 /* Responsive adjustments */
 @media screen and (min-width: 300px) and (max-width: 374px) {
-  .sidebar {
-    width: 300px;
-  }
   @-moz-document url-prefix() {
     .sidebar-bottom-link {
       width: 300px;
+    }
+    .sidebar {
+      width: 334px;
     }
   }
 }
 
 @media screen and (min-width: 200px) and (max-width: 299px) {
-  .sidebar {
-    width: 100vw;
-  }
   @-moz-document url-prefix() {
     .sidebar-bottom-link {
-      width: 100vw;
+      width: 100vw !important;
+    }
+    .sidebar {
+      width: 100vw !important;
     }
   }
 }

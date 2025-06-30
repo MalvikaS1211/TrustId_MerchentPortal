@@ -141,7 +141,6 @@ export default function Sidebar({
       const token = sessionStorage.getItem("Token");
 
       const data = await myProfile(userId, token);
-      // sessionStorage.setItem("BusinessAdd", data?.data?.businessAdd);
 
       console.log(data, "my::::::");
       if (data) {
@@ -159,11 +158,6 @@ export default function Sidebar({
     sessionStorage.removeItem("Login");
     sessionStorage.removeItem("SessionId");
 
-    // Set light mode in sessionStorage and Redux
-    // sessionStorage.setItem("darkMode", false);
-    // dispatch(toggleDarkMode(1)); // This should set darkMode to false
-
-    // // Set HTML attribute for theme
     document.documentElement.setAttribute("data-theme", "light");
   };
 

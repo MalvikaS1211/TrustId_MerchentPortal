@@ -946,7 +946,7 @@ body .apexcharts-legend-marker {
       .sidebar-list-button .arrow-icon,
       .sidebar-sublist
     ) {
-    display: block !important;
+    display: none;
   }
 
   .mini-sidebar .sidebar {
