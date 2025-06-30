@@ -235,34 +235,28 @@ body.radius-0 *:after {
   border-radius: 0 !important;
 }
 
-body:is(
-    .app-email,
-    .app-email-detail,
-    .app-email-compose,
-    .app-chat,
-    .app-social,
-    .app-file-manager,
-    .app-task,
-    .app-project,
-    .app-project-detail
-  )
-  .main {
+body:is(.app-email,
+  .app-email-detail,
+  .app-email-compose,
+  .app-chat,
+  .app-social,
+  .app-file-manager,
+  .app-task,
+  .app-project,
+  .app-project-detail) .main {
   padding: 0 !important;
   overflow: hidden;
 }
 
-body:is(
-    .app-email,
-    .app-email-detail,
-    .app-email-compose,
-    .app-chat,
-    .app-social,
-    .app-file-manager,
-    .app-task,
-    .app-project,
-    .app-project-detail
-  )
-  .footer {
+body:is(.app-email,
+  .app-email-detail,
+  .app-email-compose,
+  .app-chat,
+  .app-social,
+  .app-file-manager,
+  .app-task,
+  .app-project,
+  .app-project-detail) .footer {
   display: none;
 }
 
@@ -609,27 +603,24 @@ body .react-data-table.striped .rdt_TableCol:not(:last-of-type) {
   box-shadow: var(--shadow-normal);
 }
 
-.floating-form-control .form-input:focus ~ label,
-.floating-form-control .form-input:not(:placeholder-shown) ~ label,
-.floating-form-control .form-select ~ label,
-.floating-form-control .form-textarea:focus ~ label,
-.floating-form-control .form-textarea:not(:placeholder-shown) ~ label {
+.floating-form-control .form-input:focus~label,
+.floating-form-control .form-input:not(:placeholder-shown)~label,
+.floating-form-control .form-select~label,
+.floating-form-control .form-textarea:focus~label,
+.floating-form-control .form-textarea:not(:placeholder-shown)~label {
   color: var(--font-color-100);
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
 
-[dir="rtl"] .floating-form-control .form-input:focus ~ label,
-[dir="rtl"] .floating-form-control .form-input:not(:placeholder-shown) ~ label,
-[dir="rtl"] .floating-form-control .form-select ~ label,
-[dir="rtl"] .floating-form-control .form-textarea:focus ~ label,
-[dir="rtl"]
-  .floating-form-control
-  .form-textarea:not(:placeholder-shown)
-  ~ label {
+[dir="rtl"] .floating-form-control .form-input:focus~label,
+[dir="rtl"] .floating-form-control .form-input:not(:placeholder-shown)~label,
+[dir="rtl"] .floating-form-control .form-select~label,
+[dir="rtl"] .floating-form-control .form-textarea:focus~label,
+[dir="rtl"] .floating-form-control .form-textarea:not(:placeholder-shown)~label {
   transform: scale(0.85) translateY(-0.5rem) translateX(0.75rem);
 }
 
-.floating-form-control .form-textarea:not(:placeholder-shown) ~ label::after {
+.floating-form-control .form-textarea:not(:placeholder-shown)~label::after {
   position: absolute;
   inset: 1rem 0.375rem;
   z-index: -1;
@@ -652,7 +643,7 @@ body .react-data-table.striped .rdt_TableCol:not(:last-of-type) {
 }
 
 .form-check input:disabled,
-.form-check input:disabled ~ label {
+.form-check input:disabled~label {
   opacity: 0.5;
   cursor: auto;
 }
@@ -692,7 +683,7 @@ body .react-data-table.striped .rdt_TableCol:not(:last-of-type) {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
-.form-check .form-check-input.check-line:checked + .form-check-label {
+.form-check .form-check-input.check-line:checked+.form-check-label {
   text-decoration: line-through;
   color: var(--primary);
 }
@@ -758,7 +749,7 @@ body .react-data-table.striped .rdt_TableCol:not(:last-of-type) {
 }
 
 .form-radio input:disabled,
-.form-radio input:disabled ~ label {
+.form-radio input:disabled~label {
   opacity: 0.5;
   cursor: auto;
 }
@@ -910,11 +901,9 @@ body .apexcharts-legend-marker {
 /* full calendar css start */
 
 .project-activity .design-card div::before {
-  background: linear-gradient(
-    to bottom,
-    rgba(72, 76, 97, 0) 0,
-    rgba(72, 76, 97, 0.8) 75%
-  );
+  background: linear-gradient(to bottom,
+      rgba(72, 76, 97, 0) 0,
+      rgba(72, 76, 97, 0.8) 75%);
 }
 
 @media (min-width: 1200px) {
@@ -934,18 +923,14 @@ body .apexcharts-legend-marker {
   }
 
   /* mini-sidebar */
-  .mini-sidebar
-    .sidebar
-    :is(
-      .sidebar-dropdown,
-      .sidebar-title span,
-      .create-new-project,
-      .sidebar-list .devider,
-      .sidebar-list-button .link,
-      .sidebar-list-link .link,
-      .sidebar-list-button .arrow-icon,
-      .sidebar-sublist
-    ) {
+  .mini-sidebar .sidebar :is(.sidebar-dropdown,
+    .sidebar-title span,
+    .create-new-project,
+    .sidebar-list .devider,
+    .sidebar-list-button .link,
+    .sidebar-list-link .link,
+    .sidebar-list-button .arrow-icon,
+    .sidebar-sublist) {
     display: none;
   }
 
@@ -970,10 +955,7 @@ body .apexcharts-legend-marker {
     align-items: center;
   }
 
-  .mini-sidebar
-    .sidebar
-    .sidebar-listitem
-    :is(.sidebar-list-button, .sidebar-list-link) {
+  .mini-sidebar .sidebar .sidebar-listitem :is(.sidebar-list-button, .sidebar-list-link) {
     justify-content: center;
     position: relative;
   }
@@ -1020,18 +1002,16 @@ body .apexcharts-legend-marker {
 }
 
 @media (max-width: 1023px) {
-  body:is(
-      .app-email,
-      .app-email-detail,
-      .app-email-compose,
-      .app-chat,
-      .app-social,
-      .app-file-manager,
-      .app-task,
-      .app-project,
-      .app-project-detail
-    )
-    .main {
+
+  body:is(.app-email,
+    .app-email-detail,
+    .app-email-compose,
+    .app-chat,
+    .app-social,
+    .app-file-manager,
+    .app-task,
+    .app-project,
+    .app-project-detail) .main {
     overflow: auto;
   }
 }
