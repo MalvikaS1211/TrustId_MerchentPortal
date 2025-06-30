@@ -6,8 +6,16 @@ import { profile_av } from "../../assets/images";
 import { useSelector } from "react-redux";
 
 export default function Setting() {
-  const [editUser, setEditUser] = useState(profile_av);
   const user = useSelector((state) => state.user.userInfo);
+
+  const profileImage = user?.data?.address?.profileImage?.startsWith(
+    "data:image"
+  )
+    ? user?.data?.address?.profileImage
+    : user?.data?.address?.profileImage
+    ? `data:image/jpeg;base64,${user?.data?.address?.profileImage}`
+    : "/default-avatar.png";
+  const [editUser, setEditUser] = useState(profileImage);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
