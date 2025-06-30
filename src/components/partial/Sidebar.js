@@ -227,7 +227,7 @@ export default function Sidebar({
                 </button>
                 <NewProject newProjectSidebar={newProjectSidebar} toggleNewProject={toggleNewProject} />
             </div> */}
-      <ul className="sidebar-list px-3 mb-4 main-menu overflow-y-scroll pb-[3rem]">
+      <ul className="sidebar-list px-3 mb-4 main-menu overflow-y-scroll pb-[3rem] custom-scrollbar">
         {data.map((item, key) =>
           item.children ? (
             <li key={key} className="sidebar-listitem">
