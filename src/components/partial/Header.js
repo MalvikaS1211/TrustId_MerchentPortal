@@ -404,11 +404,21 @@ export default function Header({
     },
   ];
 
+  // console.log(user?.data?.address?.profileImage, "123:::");
+  const profileImage = user?.data?.address?.profileImage?.startsWith(
+    "data:image"
+  )
+    ? user?.data?.address?.profileImage
+    : user?.data?.address?.profileImage
+    ? `data:image/jpeg;base64,${user?.data?.address?.profileImage}`
+    : "/default-avatar.png";
+
   return (
     <>
       <div
-        className={`md:py-4 md:px-6 sm:p-3 py-3 border-b-4 border-card-color bg-body-color ${headerFix ? "sticky top-0 z-[2] xl:shadow-none shadow-lg" : ""
-          }`}
+        className={`md:py-4 md:px-6 sm:p-3 py-3 border-b-4 border-card-color bg-body-color ${
+          headerFix ? "sticky top-0 z-[2] xl:shadow-none shadow-lg" : ""
+        }`}
       >
         <div className="container-fluid flex items-center">
           <div className="flex items-center gap-3 sm:pe-4 pe-2">
@@ -417,10 +427,11 @@ export default function Header({
               className="xl:flex hidden items-center justify-center w-[36px] h-[36px] min-w-[36px] text-brown bg-primary-10 rounded-full"
             >
               <IconArrowBigLeftFilled
-                className={`transition-all ${miniSidebar
-                  ? "rotate-180 rtl:rotate-0"
-                  : "rotate-0 rtl:rotate-180"
-                  }`}
+                className={`transition-all ${
+                  miniSidebar
+                    ? "rotate-180 rtl:rotate-0"
+                    : "rotate-0 rtl:rotate-180"
+                }`}
               />
             </button>
             <Link to="/">
@@ -434,14 +445,16 @@ export default function Header({
               type="text"
               placeholder="Enter your search key word"
               onClick={toggleSearchBar}
-              className={`w-full py-[6px] px-[12px] bg-card-color rounded-md border border-border-color focus:outline-0 ${searchBar ? "z-[5] relative" : ""
-                }`}
+              className={`w-full py-[6px] px-[12px] bg-card-color rounded-md border border-border-color focus:outline-0 ${
+                searchBar ? "z-[5] relative" : ""
+              }`}
             />
             <div
-              className={`bg-card-color border border-dashed border-border-color text-font-color xl:absolute fixed xl:left-0 left-30 xl:top-[40px] top-[68px] z-[5] xl:w-full w-[calc(100%-60px)] rounded-xl p-6 transition-all duration-300 origin-top ${searchBar
-                ? "opacity-1 visible scale-y-100"
-                : "opacity-0 invisible scale-y-0"
-                }`}
+              className={`bg-card-color border border-dashed border-border-color text-font-color xl:absolute fixed xl:left-0 left-30 xl:top-[40px] top-[68px] z-[5] xl:w-full w-[calc(100%-60px)] rounded-xl p-6 transition-all duration-300 origin-top ${
+                searchBar
+                  ? "opacity-1 visible scale-y-100"
+                  : "opacity-0 invisible scale-y-0"
+              }`}
             >
               <p className="text-font-color-100 text-[14px]/[20px] mb-3 uppercase">
                 RECENT SEARCHES
@@ -862,7 +875,8 @@ export default function Header({
             <div className="relative group flex">
               <button className="md:px-3 px-2">
                 <img
-                  src={profile_av}
+                  // src={profile_av}
+                  src={profileImage}
                   alt="profile"
                   width="36"
                   height="36"
@@ -930,8 +944,9 @@ export default function Header({
               <IconSettings className="stroke-[1.5] xl:w-[24px] xl:h-[24px] w-[20px] h-[20px]" />
             </button>
             <button
-              className={`md:py-2 md:px-3 p-2 hover:bg-primary-10 transition-all duration-300 xl:hidden hamburger-menu ${mobileNav ? "opened" : ""
-                }`}
+              className={`md:py-2 md:px-3 p-2 hover:bg-primary-10 transition-all duration-300 xl:hidden hamburger-menu ${
+                mobileNav ? "opened" : ""
+              }`}
               onClick={toggleMobileNav}
             >
               <svg width="20" height="20" viewBox="0 0 100 100">
@@ -950,10 +965,11 @@ export default function Header({
         </div>
       </div>
       <div
-        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[500px] transition-all duration-200 ${themeSetting
-          ? "ltr:right-0 rtl:left-0"
-          : "ltr:-right-full rtl:-left-full"
-          }`}
+        className={`fixed top-0 bg-card-color z-[5] h-svh w-full max-w-[500px] transition-all duration-200 ${
+          themeSetting
+            ? "ltr:right-0 rtl:left-0"
+            : "ltr:-right-full rtl:-left-full"
+        }`}
       >
         <div className="md:px-6 px-4 md:py-4 py-3 flex items-center justify-between gap-15 border-b border-border-color">
           <div className="text-[20px]/[30px] font-medium">Theme Setting</div>
@@ -971,11 +987,13 @@ export default function Header({
                 <li
                   key={key}
                   onClick={() => handleThemeChange(item.name)}
-                  className={`sm:w-[30px] w-[24px] sm:h-[26px] h-[20px] rounded-md flex items-center justify-center relative cursor-pointer ${item.color
-                    } ${selectedTheme === item.name
+                  className={`sm:w-[30px] w-[24px] sm:h-[26px] h-[20px] rounded-md flex items-center justify-center relative cursor-pointer ${
+                    item.color
+                  } ${
+                    selectedTheme === item.name
                       ? "after:absolute after:-left-1 after:-top-1 sm:after:w-[38px] after:w-[32px] sm:after:h-[34px] after:h-[28px] after:rounded-md after:border after:border-primary"
                       : ""
-                    }`}
+                  }`}
                 >
                   {item.icon && (
                     <item.icon className="stroke-[1.5] w-[20px] h-[20px] cursor-pointer" />
@@ -1239,10 +1257,11 @@ export default function Header({
       </div>
       <div
         onClick={toggleThemeSetting}
-        className={`fixed z-[4] w-full h-full left-0 top-0 bg-black-50 backdrop-blur-[2px] transition-all duration-500 ease-in-out ${themeSetting
-          ? "opacity-1 visible overflow-auto"
-          : "opacity-0 invisible overflow-hidden"
-          }`}
+        className={`fixed z-[4] w-full h-full left-0 top-0 bg-black-50 backdrop-blur-[2px] transition-all duration-500 ease-in-out ${
+          themeSetting
+            ? "opacity-1 visible overflow-auto"
+            : "opacity-0 invisible overflow-hidden"
+        }`}
       ></div>
     </>
   );
