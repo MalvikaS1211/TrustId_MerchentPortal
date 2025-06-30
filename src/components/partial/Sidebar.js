@@ -227,7 +227,7 @@ export default function Sidebar({
                 </button>
                 <NewProject newProjectSidebar={newProjectSidebar} toggleNewProject={toggleNewProject} />
             </div> */}
-      <ul className="sidebar-list px-3 mb-4 main-menu">
+      <ul className="sidebar-list px-3 mb-4 main-menu overflow-y-scroll pb-[3rem]">
         {data.map((item, key) =>
           item.children ? (
             <li key={key} className="sidebar-listitem">
@@ -343,7 +343,7 @@ export default function Sidebar({
           )
         )}
       </ul>
-      <div className="sidebar-bottom-link flex justify-evenly gap-3 mx-3 border border-dashed rounded-xl p-2 mt-auto">
+      <div className="sidebar-bottom-link flex justify-evenly gap-3 mx-3 border border-dashed rounded-xl p-2 mt-auto custom-sidebar">
         <button
           onClick={toggleSchedule}
           className={`transition-all duration-300 hover:text-secondary after:fixed after:z-[4] after:w-full after:h-full after:left-0 after:top-0 after:bg-black-50 after:backdrop-blur-[2px] after:transition-all after:duration-500 after:ease-in-out ${

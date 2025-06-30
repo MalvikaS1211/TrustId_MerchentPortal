@@ -946,7 +946,7 @@ body .apexcharts-legend-marker {
       .sidebar-list-button .arrow-icon,
       .sidebar-sublist
     ) {
-    display: none;
+    display: block !important;
   }
 
   .mini-sidebar .sidebar {
@@ -979,11 +979,13 @@ body .apexcharts-legend-marker {
   }
 
   .mini-sidebar .sidebar .sidebar-bottom-link {
-    flex-direction: column;
+    flex-direction: row;
     margin-inline-start: 8px;
     margin-inline-end: 8px;
-  }
 
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+  }
   .mini-sidebar .sidebar {
     -ms-overflow-style: none;
     scrollbar-width: none;
