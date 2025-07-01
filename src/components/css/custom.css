@@ -103,9 +103,11 @@ select option:hover {
 .stroke-primary {
   stroke: var(--dark-brown);
 }
+
 .icon-employee {
   color: var(--dark-brown);
 }
+
 .content-card select option:hover {
   background-color: #734116 !important;
 }
@@ -215,16 +217,20 @@ body .rdt_Pagination select {
     width: 70vw;
   }
 }
+
 .css-13cymwt-control:hover {
   border-color: 1px solid #444 !important;
 }
+
 [data-theme="dark"] {
+
   /* .map-container {
     background-color: #24282e;
   } */
   .btn-secondary {
     color: black;
   }
+
   .my-custom-loader {
     display: flex;
     flex-direction: column;
@@ -267,9 +273,11 @@ body .rdt_Pagination select {
   .stroke-primary {
     stroke: var(--primary-text-dark);
   }
+
   .icon-employee {
     color: var(--primary-text-dark);
   }
+
   body .rdt_Pagination select {
     background-color: var(--background-dark) !important;
   }
@@ -541,6 +549,7 @@ body .rdt_Pagination select {
   background-color: #a07f64;
   color: #fff;
 }
+
 .coordinate-cell {
   display: flex !important;
   cursor: pointer;
@@ -554,6 +563,7 @@ body .rdt_Pagination select {
   text-decoration: underline;
   text-decoration-color: #a07f64;
 }
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -622,12 +632,15 @@ body .rdt_Pagination select {
     bottom: 0;
     width: 280px;
   }
+
   .sidebar-header {
     position: fixed;
   }
+
   .sidebar {
     width: 310px;
   }
+
   .overflow-y-scroll {
     padding-bottom: 5rem;
   }
@@ -639,6 +652,7 @@ body .rdt_Pagination select {
     .sidebar-bottom-link {
       width: 300px;
     }
+
     .sidebar {
       width: 334px;
     }
@@ -650,6 +664,7 @@ body .rdt_Pagination select {
     .sidebar-bottom-link {
       width: 100vw !important;
     }
+
     .sidebar {
       width: 100vw !important;
     }
