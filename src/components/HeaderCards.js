@@ -17,11 +17,13 @@ export default function HeaderCards() {
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
   const token = sessionStorage.getItem("Token");
-  const BusinessId = user?.data?.businessId;
+  // const BusinessId = user?.data?.businessId;
+  const BusinessId = "66225b0ac289a04f05144983";
+
   const visitorDataFn = async () => {
     try {
       const res = await visitorData(BusinessId, token);
-      console.log("res visitor", res);
+      console.log("res visitor", BusinessId);
       setVisitor(res?.data);
     } catch (error) {
       console.log("Error in visitorData", error);

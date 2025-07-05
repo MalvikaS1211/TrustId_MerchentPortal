@@ -157,16 +157,19 @@ export async function businessQR(userId) {
 
 export async function KycTranscations(businessId, page, limit, token) {
   try {
-    const response = await axios.get(`${URLApi}/token-transfers-userdata`, {
-      params: {
+    const response = await axios.post(
+      `${URLApi}/token-transfers-userdata`,
+      {
         businessId,
         page,
         limit,
       },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     console.log(response.data, "in KycTranscations");
     return response.data;
@@ -196,12 +199,34 @@ export async function visitorData(businessId, token) {
   }
 }
 
-export async function addEmployee(userId, businessId, mobile_Number, token) {
+// export async function addEmployee(userId, businessId, mobile_Number, token) {
+//   try {
+//     const response = await axios.post(
+//       `${URLApi}/add-employee`,
+//       {
+//         userId,
+//         businessId,
+//         mobile_Number,
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+//     console.log(userId, businessId, mobile_Number, ":::Employee");
+//     return response.data;
+//   } catch (error) {
+//     console.log("Error in addEmployee:", error);
+//     throw error;
+//   }
+// }
+
+export async function addEmployee(businessId, mobile_Number, token) {
   try {
     const response = await axios.post(
-      `${URLApi}/add-employee`,
+      `${URLApi}//business-employee-invite`,
       {
-        userId,
         businessId,
         mobile_Number,
       },
@@ -211,7 +236,7 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
         },
       }
     );
-    console.log(userId, businessId, mobile_Number, ":::Employee");
+    console.log(businessId, mobile_Number, ":::Employee");
     return response.data;
   } catch (error) {
     console.log("Error in addEmployee:", error);
@@ -219,16 +244,13 @@ export async function addEmployee(userId, businessId, mobile_Number, token) {
   }
 }
 
-
-
-
 export async function deleteEmployee(employeeuserId, businessId, token) {
   try {
     const response = await axios.post(
       `${URLApi}/delete-employee`,
       {
         employeeuserId,
-        businessId
+        businessId,
       },
       {
         headers: {
@@ -243,10 +265,6 @@ export async function deleteEmployee(employeeuserId, businessId, token) {
     throw error;
   }
 }
-
-
-
-
 export async function getEmployeeData(
   businessId,
   token,
@@ -255,21 +273,26 @@ export async function getEmployeeData(
   searchQuery = ""
 ) {
   try {
-    const params = {
-      businessId: businessId,
-      page: page,
-      limit: limit,
+    const requestBody = {
+      businessId,
+      page,
+      limit,
+      searchQuery,
     };
+
     if (searchQuery && searchQuery.trim() !== "") {
-      params.searchQuery = searchQuery.trim();
+      requestBody.searchQuery = searchQuery.trim();
     }
 
-    const response = await axios.get(`${URLApi}/employees-by-businessId`, {
-      params: params,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      `${URLApi}/employees-by-businessId`,
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     console.log(response.data, "in getEmployeeData");
     return response.data;

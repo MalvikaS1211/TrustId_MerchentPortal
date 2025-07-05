@@ -76,31 +76,14 @@ export default function TeamManagement() {
   const [isFetch, setIsFetch] = useState(false);
   const token = sessionStorage.getItem("Token");
   const businessId = user?.data?.businessId;
+  // const businessId = "66225b0ac289a04f05144983";
+
   const userId = user?.data?.userId;
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [visitors, setVisitors] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  // const [debounceTimer, setDebounceTimer] = useState(null);
-
-  // const debounceSearch = useCallback((value) => {
-  //   if (debounceTimer) {
-  //     clearTimeout(debounceTimer);
-  //   }
-  //   const timer = setTimeout(() => {
-  //     setCurrentPage(1);
-  //     handleData(1, limit, value);
-  //   }, 500);
-
-  //   setDebounceTimer(timer);
-
-  //   return () => {
-  //     if (debounceTimer) {
-  //       clearTimeout(debounceTimer);
-  //     }
-  //   };
-  // }, [debounceTimer, limit]);
 
   const addEmp = async () => {
     try {
@@ -109,11 +92,11 @@ export default function TeamManagement() {
         setMobileNumber("");
         return;
       }
-      const res = await addEmployee(userId, businessId, mobileNumber, token);
+      const res = await addEmployee(businessId, mobileNumber, token);
 
-      if (res?.status === true) {
+      if (res?.status === 200) {
         // console.log("handle AddEmployee", res);
-        toast.success("Employee added successfully!");
+        toast.success(res?.message);
         setIsFetch((prev) => !prev);
       } else {
         toast.error(res?.message || "Failed to add employee.");
@@ -137,6 +120,9 @@ export default function TeamManagement() {
 
   const handleData = useCallback(
     async (page, limit, query = "") => {
+      if (!businessId) {
+        return;
+      }
       try {
         setIsSearching(true);
         const res = await getEmployeeData(
@@ -146,10 +132,12 @@ export default function TeamManagement() {
           limit,
           query
         );
+        console.log("res.data:", res.data);
 
         if (res?.status !== false) {
-          setEmployeeData(res.data || []);
+          setEmployeeData(Array.isArray(res.data) ? res.data : []);
           setTotalEmployee(res?.pagination?.total || 0);
+          setVisitors(res?.visitorData);
         } else {
           setEmployeeData([]);
           setTotalEmployee(0);
@@ -193,30 +181,10 @@ export default function TeamManagement() {
       debouncedSearch.cancel();
     };
   }, [debouncedSearch]);
-  const Visitors = async () => {
-    try {
-      // if (!businessId) {
-      //   toast.error("Business ID is required");
-      //   setMobileNumber("");
-      //   return;
-      // }
-      const res = await getBusinessVisitors(businessId);
-      if (res?.success === true) {
-        setVisitors(res);
-        console.log(res, "visitors");
-      }
-    } catch (error) {
-      console.log("error in visitors", error);
-    }
-  };
-
-  useEffect(() => {
-    Visitors();
-  }, [businessId, isFetch]);
 
   useEffect(() => {
     handleData(currentPage, limit, searchQuery);
-  }, [user, isFetch, currentPage, limit]);
+  }, [businessId, isFetch, currentPage, limit]);
 
   const columnsFilter = [
     {
@@ -227,38 +195,48 @@ export default function TeamManagement() {
 
     {
       name: "Name",
-      selector: (row) => row.userInfo?.name,
+      selector: (row) => row?.name,
       width: "200px",
-      cell: (row) => (
-        <div className="flex items-center gap-2">
-          <img
-            src={
-              row.userDetails?.profileImage?.startsWith("data:image")
-                ? row.userDetails.profileImage
-                : row.userDetails?.profileImage
-                  ? `data:image/jpeg;base64,${row.userDetails.profileImage}`
+      cell: (row) => {
+        console.log("Row data:", row);
+        return (
+          <div className="flex items-center gap-2">
+            <img
+              src={
+                row?.address?.profile_image?.startsWith("data:image")
+                  ? row?.address?.profile_image
+                  : row?.address?.profile_image
+                  ? `data:image/jpeg;base64,${row?.address?.profile_image}`
                   : "/avatar2.png"
-            }
-            alt="profile"
-            className="w-[26px] h-[26px] rounded-md object-cover"
-          />
-          <span>{row.userDetails?.name || "N/A"}</span>
-        </div>
-      ),
+              }
+              alt="profile"
+              className="w-[26px] h-[26px] rounded-md object-cover"
+            />
+            <span>{row?.name || "N/A"}</span>
+          </div>
+        );
+      },
     },
 
     {
       name: "Phone",
-      selector: (row) => row.userDetails.mobileNumber,
+      selector: (row) => row.mobileNumber,
       width: "140px",
       cell: (row) =>
-        row.userDetails.mobileNumber
-          ? row.userDetails.mobileNumber.replace(/.(?=.{4})/g, "*")
-          : "N/A",
+        row.mobileNumber ? row.mobileNumber.replace(/.(?=.{4})/g, "*") : "N/A",
     },
     {
       name: "Address",
-      selector: (row) => row.userDetails.fullAddress || "N/A",
+      selector: (row) =>
+        row.address?.house +
+          " " +
+          row.address?.street +
+          " " +
+          row.address.loc +
+          " " +
+          row.address?.state +
+          " " +
+          row.address.country || "N/A",
       width: "250px",
       style: {
         justifyContent: "flex-start",
@@ -276,7 +254,9 @@ export default function TeamManagement() {
     //           const theme = getSwalTheme();
     //           swal({
     //             title: "Confirm Deletion",
-    //             text: `You are about to permanently delete ${row.userDetails?.name || "this employee"}. This action cannot be undone.`,
+    //             text: `You are about to permanently delete ${
+    //               row?.name || "this employee"
+    //             }. This action cannot be undone.`,
     //             icon: "warning",
     //             buttons: {
     //               cancel: {
@@ -290,7 +270,7 @@ export default function TeamManagement() {
     //                 value: true,
     //                 visible: true,
     //                 className: "swal-confirm-button",
-    //               }
+    //               },
     //             },
     //             dangerMode: true,
     //             className: "custom-swal",
@@ -300,8 +280,8 @@ export default function TeamManagement() {
     //               htmlContainer: "custom-swal-text",
     //               confirmButton: "custom-swal-confirm-button",
     //               cancelButton: "custom-swal-cancel-button",
-    //               icon: "custom-swal-icon"
-    //             }
+    //               icon: "custom-swal-icon",
+    //             },
     //           }).then((willDelete) => {
     //             if (willDelete) {
     //               deleteEmployee(row.employeeId, row.businessId, token)
@@ -312,20 +292,22 @@ export default function TeamManagement() {
     //                     icon: "success",
     //                     className: "custom-swal",
     //                     customClass: {
-    //                       confirmButton: "custom-swal-success-button"
-    //                     }
+    //                       confirmButton: "custom-swal-success-button",
+    //                     },
     //                   });
-    //                   setIsFetch(prev => !prev);
+    //                   setIsFetch((prev) => !prev);
     //                 })
-    //                 .catch(error => {
+    //                 .catch((error) => {
     //                   swal({
     //                     title: "Error",
-    //                     text: error.response?.data?.message || "Failed to delete employee.",
+    //                     text:
+    //                       error.response?.data?.message ||
+    //                       "Failed to delete employee.",
     //                     icon: "error",
     //                     className: "custom-swal",
     //                     customClass: {
-    //                       confirmButton: "custom-swal-error-button"
-    //                     }
+    //                       confirmButton: "custom-swal-error-button",
+    //                     },
     //                   });
     //                 });
     //             }
@@ -343,14 +325,8 @@ export default function TeamManagement() {
     //   ignoreRowClick: true,
     //   allowOverflow: true,
     //   button: true,
-    // }
+    // },
   ];
-  // const CustomLoader = () => (
-  //   <div className="my-custom-loader">
-  //     <span className="spinner" />
-  //     <p>Loading employees...</p>
-  //   </div>
-  // );
 
   const resetModal = () => {
     setShowMobileForm(false);
@@ -371,7 +347,7 @@ export default function TeamManagement() {
             <div>
               <p className="text-font-color-100">Total Employees</p>
               <h5 className="text-[20px]/[24px] font-medium">
-                {visitors?.data?.total_employees}
+                {visitors?.total_employees}
               </h5>
             </div>
           </div>
@@ -382,7 +358,7 @@ export default function TeamManagement() {
             <div>
               <p className="text-font-color-100">Total Visitors</p>
               <h5 className="text-[20px]/[24px] font-medium">
-                {visitors?.data?.total_visitors}
+                {visitors?.total_visitors}
               </h5>
             </div>
           </div>
@@ -393,7 +369,7 @@ export default function TeamManagement() {
             <div>
               <p className="text-font-color-100">Total Monthly Visitors</p>
               <h5 className="text-[20px]/[24px] font-medium">
-                {visitors?.data?.monthly_visitors}
+                {visitors?.monthly_visitors}
               </h5>
             </div>
           </div>
@@ -410,7 +386,9 @@ export default function TeamManagement() {
                 onKeyPress={handleKeyPress}
               />
               <button
-                className={`btn border border-border-color !rounded-s-none ${isSearching ? "cursor-not-allowed" : ""}`}
+                className={`btn border border-border-color !rounded-s-none ${
+                  isSearching ? "cursor-not-allowed" : ""
+                }`}
                 type="button"
                 onClick={executeSearch}
                 disabled={isSearching}
@@ -558,7 +536,7 @@ export default function TeamManagement() {
                           }
                         }}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === "Enter") {
                             addEmp();
                             setOpen(false);
                             resetModal();

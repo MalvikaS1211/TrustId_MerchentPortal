@@ -12,7 +12,7 @@ import Breadcrumb from "./common/Breadcrumb";
 import { MdOutlineClose } from "react-icons/md";
 import { sortBy } from "lodash";
 export default function KYCTransaction() {
-  const user = useSelector((state) => state.user.userInfo);
+  const user = useSelector((state) => state.user);
   const [KYCTransactions, setKYCTransactions] = useState([]);
   const [totalData, setTotalData] = useState(0);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
@@ -22,15 +22,18 @@ export default function KYCTransaction() {
   const [limit, setLimit] = useState(10); // default rows per page
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState({ lat: null, lng: null });
-  const BusinessId = user?.data?.businessId;
+  // const BusinessId = user?.userInfo?.data?.businessId;
+  const BusinessId = "66225b0ac289a04f05144983";
+
   const modalRef = useRef(null);
 
   const handleData = async (page = 1, limit) => {
     try {
-      if (!BusinessId) return;
+      // if (!BusinessId) return;
 
       const res = await KycTranscations(BusinessId, page, limit, token);
-      // console.log("response KYC", res);
+      console.log("response data", res.data[0]);
+      console.log("response KYC", user?.userInfo?.data?.businessId);
       if (res?.data) {
         setKYCTransactions(res.data);
         setTotalData(res?.pagination?.totalRecords);
@@ -90,38 +93,36 @@ export default function KYCTransaction() {
     },
     {
       name: "Visitor",
-      selector: (row) => row.userInfo?.name,
+      selector: (row) => row?.name,
       width: "200px",
       cell: (row) => (
         <div className="flex items-center gap-2">
           <img
             src={
-              row.userInfo?.address?.profile_image?.startsWith("data:image")
-                ? row.userInfo.address.profile_image
-                : row.userInfo?.address?.profile_image
-                ? `data:image/jpeg;base64,${row.userInfo.address.profile_image}`
+              row?.address?.profile_image?.startsWith("data:image")
+                ? row.address.profile_image
+                : row?.address?.profile_image
+                ? `data:image/jpeg;base64,${row.address.profile_image}`
                 : "/default-avatar.png"
             }
             alt="profile"
             className="w-[26px] h-[26px] rounded-md object-cover"
           />
-          <span>{row.userInfo?.name || "N/A"}</span>
+          <span>{row?.name || "N/A"}</span>
         </div>
       ),
       sortable: true,
     },
     {
       name: "Phone",
-      selector: (row) => row.userInfo.mobileNumber,
+      selector: (row) => row.mobileNumber,
       width: "140px",
       cell: (row) =>
-        row.userInfo.mobileNumber
-          ? row.userInfo.mobileNumber.replace(/.(?=.{4})/g, "*")
-          : "N/A",
+        row.mobileNumber ? row.mobileNumber.replace(/.(?=.{4})/g, "*") : "N/A",
     },
     {
       name: "Address",
-      selector: (row) => row.userInfo.fullAddress || "N/A",
+      selector: (row) => row.address.full_address || "N/A",
       width: "250px",
       style: {
         justifyContent: "flex-start",
@@ -132,10 +133,10 @@ export default function KYCTransaction() {
     },
     {
       name: "In Time",
-      selector: (row) => row.createdAt,
+      selector: (row) => row.checkInTime,
       width: "180px",
       cell: (row) => {
-        const created = moment(row.createdAt);
+        const created = moment(row.checkInTime);
         if (!created.isValid()) return "N/A";
 
         const time = created.format("hh:mm A");
@@ -151,29 +152,38 @@ export default function KYCTransaction() {
     },
     {
       name: "Out Time",
-      selector: (row) => row.outTime,
+      selector: (row) => row.checkOutTime,
       width: "180px",
-      cell: (row) => (row.outTime ? moment(row.outTime).format("hh:mm A") : ""),
+      cell: (row) =>
+        row.checkOutTime ? moment(row.checkOutTime).format("hh:mm A") : "",
     },
     {
       name: "Device Contract",
       selector: (row) => row.device || "",
       width: "160px",
     },
-
     {
       name: "Visitor Type",
       selector: (row) => {
-        if (row.employee === false) {
-          if (row.firstTime === true) return "New Visitor";
-          if (row.firstTime === false) return "Loop Visitor";
-        }
-        if (row.employee === true) return "Employee";
-
-        return "N/A";
+        if (row.userType === "loopvisitor") return "Loop Visitor";
+        if (row.userType === "employee") return "Employee";
+        if (row.userType === "visitor") return "New Visitor";
       },
       width: "150px",
     },
+    // {
+    //   name: "Visitor Type",
+    //   selector: (row) => {
+    //     if (row.employee === false) {
+    //       if (row.firstTime === true) return "New Visitor";
+    //       if (row.firstTime === false) return "Loop Visitor";
+    //     }
+    //     if (row.employee === true) return "Employee";
+
+    //     return "N/A";
+    //   },
+    //   width: "150px",
+    // },
 
     // {
     //   name: "Visitor Type",
@@ -225,8 +235,11 @@ export default function KYCTransaction() {
         const lng = row?.location?.longitude;
         return (
           <div
-            className="coordinate-cell"
+            className={`coordinate-cell ${
+              !lat || !lng ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+            }`}
             onClick={() => {
+              if (!lat || !lng) return; // Prevent action when lat/lng is missing
               setSelectedCoordinates({ lat, lng });
               setSelectedVisitorType(getVisitorType(row));
               setOpen(true);
