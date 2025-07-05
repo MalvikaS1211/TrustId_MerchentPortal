@@ -17,8 +17,8 @@ export default function HeaderCards() {
   const user = useSelector((state) => state.user.userInfo);
   const [visitor, setVisitor] = useState({});
   const token = sessionStorage.getItem("Token");
-  // const BusinessId = user?.data?.businessId;
-  const BusinessId = "66225b0ac289a04f05144983";
+  const BusinessId = user?.data?.businessId;
+  // const BusinessId = "66225b0ac289a04f05144983";
 
   const visitorDataFn = async () => {
     try {
@@ -85,7 +85,7 @@ export default function HeaderCards() {
           </div>
           <div className="flex items-end gap-1 mb-1">
             <span className="inline-block text-[24px]/[30px] font-medium">
-              {visitor?.totalEmployees || 0}
+              {visitor?.totalempolyee || 0}
             </span>
             <IconCornerRightUp className="stroke-font-color-100 w-[18px] h-[18px]" />
             <span className="text-font-color-100 text-[14px]/[20px]">78%</span>

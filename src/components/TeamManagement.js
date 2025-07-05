@@ -95,7 +95,7 @@ export default function TeamManagement() {
       const res = await addEmployee(businessId, mobileNumber, token);
 
       if (res?.status === 200) {
-        // console.log("handle AddEmployee", res);
+        console.log("handle AddEmployee", res);
         toast.success(res?.message);
         setIsFetch((prev) => !prev);
       } else {
