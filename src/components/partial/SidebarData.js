@@ -62,6 +62,11 @@ export const menuList = [
     url: "/add-business",
   },
   {
+    icon: IconBusinessplan,
+    link: "My Businesses ",
+    url: "/my-businesses",
+  },
+  {
     icon: IconSettings,
     link: "Settings",
     url: "/account-setting",

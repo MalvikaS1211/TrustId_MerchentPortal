@@ -39,7 +39,7 @@ import {
 } from "@tabler/icons-react";
 import NewProject from "../../pages/app/project/NewProject";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserInfo } from "../../Redux/reducer";
+import { setBusinessId, setUserInfo } from "../../Redux/reducer";
 import { myProfile } from "../Helper/ApiFunction";
 import { resetTheme, toggleDarkMode } from "../../Redux/darkLightThemeReducer";
 import { IoIosLogOut } from "react-icons/io";
@@ -134,7 +134,6 @@ export default function Sidebar({
       }
     });
   }, [pageUrl, data]);
-
   useEffect(() => {
     const fetchProfile = async () => {
       const userId = sessionStorage.getItem("UserId");
@@ -144,7 +143,13 @@ export default function Sidebar({
 
       console.log(data, "my::::::");
       if (data) {
-        dispatch(setUserInfo(data));
+        dispatch(setUserInfo(data)); // ✅ Set full userInfo to Redux
+
+        // ✅ Set businessId from profile if available
+        console.log(data.data.businessId, "businessId:::");
+        if (data.data.businessId) {
+          dispatch(setBusinessId(data.data.businessId));
+        }
       }
     };
 

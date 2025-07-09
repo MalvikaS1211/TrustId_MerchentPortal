@@ -82,7 +82,7 @@ export async function addBusiness(
   userId,
   category,
   businessName,
-  addresh,
+  address,
   owner,
   number,
   token
@@ -92,7 +92,7 @@ export async function addBusiness(
       userId,
       category,
       businessName,
-      addresh,
+      address,
       owner,
       number,
       "In addBusiness api call"
@@ -103,7 +103,7 @@ export async function addBusiness(
         userId,
         category,
         businessName,
-        addresh,
+        address,
         owner,
         number,
       },
@@ -358,6 +358,28 @@ export async function visitorDataMonth(businessId, token) {
     return response.data;
   } catch (error) {
     console.log("Error in visitorData:", error);
+    return null;
+  }
+}
+
+export async function businessList(userId, token) {
+  try {
+    const response = await axios.post(
+      `${URLApi}/business-list`,
+      {
+        userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log(response.data, "in BusinessList");
+    return response.data;
+  } catch (error) {
+    console.log("Error in BusinessList:", error);
     return null;
   }
 }

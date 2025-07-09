@@ -233,9 +233,9 @@ export default function TeamManagement() {
           row.address?.street +
           " " +
           row.address.loc +
-          " " +
+          ", " +
           row.address?.state +
-          " " +
+          ", " +
           row.address.country || "N/A",
       width: "250px",
       style: {
