@@ -75,8 +75,10 @@ export default function TeamManagement() {
   const [employeeData, setEmployeeData] = useState([]);
   const [isFetch, setIsFetch] = useState(false);
   const token = sessionStorage.getItem("Token");
-  const businessId = user?.data?.businessId;
+  const businessId = useSelector((state) => state.user.businessId);
+  // const businessId = localStorage.getItem("businessId");
   // const businessId = "66225b0ac289a04f05144983";
+  // const businessId = "686cbf1937368a2c815ccda5";
 
   const userId = user?.data?.userId;
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,6 +100,7 @@ export default function TeamManagement() {
         console.log("handle AddEmployee", res);
         toast.success(res?.message);
         setIsFetch((prev) => !prev);
+        handleData(1, limit, searchQuery);
       } else {
         toast.error(res?.message || "Failed to add employee.");
       }

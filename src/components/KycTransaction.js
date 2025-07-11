@@ -22,7 +22,8 @@ export default function KYCTransaction() {
   const [limit, setLimit] = useState(10); // default rows per page
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState({ lat: null, lng: null });
-  const BusinessId = user?.userInfo?.data?.businessId;
+  const BusinessId = useSelector((state) => state.user.businessId);
+  console.log("BusinessId::", BusinessId);
   // const BusinessId = "66225b0ac289a04f05144983";
 
   const modalRef = useRef(null);

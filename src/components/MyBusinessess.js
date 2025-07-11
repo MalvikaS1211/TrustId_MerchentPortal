@@ -7,7 +7,8 @@ import { setBusinessId } from "../Redux/reducer";
 
 export default function MyBusinessess() {
   const user = useSelector((state) => state.user.userInfo);
-  const businessId = useSelector((state) => state.user.businessId);
+  const BusinessId = useSelector((state) => state.user.businessId);
+  console.log("BusinessId", BusinessId);
   const dispatch = useDispatch();
 
   const [Business, setBusiness] = useState([]);
@@ -51,23 +52,14 @@ export default function MyBusinessess() {
   };
 
   const toggleStatus = (id) => {
-    const updatedBusiness = Business.map((item) => {
-      if (item.businessId === id) {
-        return { ...item, isActive: !item.isActive };
-      }
-      return item;
-    });
+    const isActivating = BusinessId !== id;
 
-    setBusiness(updatedBusiness);
-
-    const activeBusiness = updatedBusiness.find(
-      (item) => item.businessId === id
-    );
-
-    if (activeBusiness && activeBusiness.isActive) {
-      dispatch(setBusinessId(activeBusiness.businessId)); // ✅ Set to Redux when activating
+    if (isActivating) {
+      dispatch(setBusinessId(id));
+      localStorage.setItem("businessId", id); // ✅ Save to localStorage
     } else {
-      dispatch(setBusinessId(null)); // ✅ Clear Redux when deactivating
+      dispatch(setBusinessId(null));
+      localStorage.removeItem("businessId"); // ✅ Remove from localStorage
     }
   };
 
@@ -75,9 +67,16 @@ export default function MyBusinessess() {
     handleData(currentPage, limit);
   }, [userId]);
 
+  useEffect(() => {
+    const storedBusinessId = localStorage.getItem("businessId");
+    if (storedBusinessId) {
+      dispatch(setBusinessId(storedBusinessId));
+    }
+  }, [dispatch]);
+
   const columnsFilter = [
     {
-      name: "Sr",
+      name: "Sr No.",
       selector: (row, index) => (currentPage - 1) * limit + index + 1,
       width: "60px",
     },
@@ -108,10 +107,10 @@ export default function MyBusinessess() {
         <div className="flex flex-col gap-2 items-start">
           <span
             className={`font-semibold ${
-              row.isActive ? "text-green-600" : "text-gray-500"
+              BusinessId === row.businessId ? "text-green-600" : "text-gray-500"
             }`}
           >
-            {row.isActive ? (
+            {BusinessId === row.businessId ? (
               "Active Business"
             ) : (
               <button
