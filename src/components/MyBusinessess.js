@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { businessList } from "./Helper/ApiFunction";
 import Breadcrumb from "./common/Breadcrumb";
 import { setBusinessId } from "../Redux/reducer";
+import { MdCheckCircle } from "react-icons/md";
 
 export default function MyBusinessess() {
   const user = useSelector((state) => state.user.userInfo);
@@ -76,7 +77,7 @@ export default function MyBusinessess() {
 
   const columnsFilter = [
     {
-      name: "Sr No.",
+      name: "Sr",
       selector: (row, index) => (currentPage - 1) * limit + index + 1,
       width: "60px",
     },
@@ -111,7 +112,12 @@ export default function MyBusinessess() {
             }`}
           >
             {BusinessId === row.businessId ? (
-              "Active Business"
+              <>
+                <div className="flex items-center gap-1">
+                  <MdCheckCircle size={20} color="green" />
+                  <span>Active Business</span>
+                </div>
+              </>
             ) : (
               <button
                 onClick={() => toggleStatus(row.businessId)}
@@ -175,6 +181,15 @@ export default function MyBusinessess() {
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           customStyles={customStyles}
+          conditionalRowStyles={[
+            {
+              when: (row) => BusinessId === row.businessId,
+              style: {
+                border: "1px solid #74b49b !important",
+                borderRadius: "6px",
+              },
+            },
+          ]}
         />
       </div>
     </div>
